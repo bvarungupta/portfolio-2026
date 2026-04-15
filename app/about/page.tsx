@@ -234,6 +234,7 @@ export default function About() {
         </div>
 
         {/* ── Experience timeline ──────────────────────────────── */}
+        {false && (
         <div className="mb-20">
           <p
             className="text-xl md:text-2xl text-gray-700 leading-snug mb-10"
@@ -311,6 +312,7 @@ export default function About() {
             })}
           </div>
         </div>
+        )}
 
         {/* ── Toolkit ──────────────────────────────────────────── */}
         <div className="mb-20">
