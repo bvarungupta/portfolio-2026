@@ -87,7 +87,7 @@ export default function Home() {
         </div>
 
         {/* Unplugged section */}
-        <div data-section="unplugged">
+        <div data-section="unplugged" className="hidden">
           <UnpluggedGallery />
         </div>
 
