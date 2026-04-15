@@ -10,15 +10,15 @@ const companies: {
   shadow: string;
   tags: { label: string; rotate: number; x: number }[];
 }[] = [
-  { src: "/images/inAbout/Abhi.svg",       name: "Abhiyantrik",  year: "2025",           shadow: "rgba(99, 102, 241, 0.22)",  tags: [{ label: "IoT", rotate: -9, x: -26 }, { label: "Smart Home", rotate: 6, x: 28 }] },
-  { src: "/images/inAbout/blumeH.svg",     name: "BlumeHealth", year: "2025",           shadow: "rgba(52, 211, 153, 0.28)",  tags: [{ label: "SaaS", rotate: -7, x: -26 }, { label: "Health", rotate: 5, x: 30 }] },
-  { src: "/images/inAbout/SR.svg",         name: "SkillRadius",  year: "2026",           shadow: "rgba(109, 84, 224, 0.25)",  tags: [{ label: "LMS", rotate: -8, x: -24 }, { label: "EdTech", rotate: 6, x: 30 }] },
-  { src: "/images/inAbout/SS.svg",         name: "SkinSage",     year: "2026",           shadow: "rgba(34, 197, 94, 0.28)",   tags: [{ label: "AI", rotate: -6, x: -24 }, { label: "MedTech", rotate: 8, x: 30 }] },
-  { src: "/images/inAbout/fuellstack.svg", name: "Fuellstack",   year: "2025",           shadow: "rgba(220, 88, 20, 0.25)",   tags: [{ label: "IT Agency", rotate: -7, x: 0 }] },
-  { src: "/images/inAbout/LV.svg",         name: "LogicVeda",    year: "2025",           shadow: "rgba(109, 84, 224, 0.25)",  tags: [{ label: "EdTech", rotate: 7, x: 0 }] },
-  { src: "/images/inAbout/Storuage.svg",   name: "Storuage",     year: "2025",           shadow: "rgba(245, 158, 11, 0.28)",  tags: [{ label: "IoT", rotate: -6, x: -28 }, { label: "Smart Kitchen", rotate: 5, x: 34 }] },
-  { src: "/images/inAbout/Wagwan.svg",     name: "Wagwan",       year: "2025 - Present", shadow: "rgba(239, 68, 68, 0.25)",   tags: [{ label: "Social", rotate: -7, x: -22 }, { label: "Events", rotate: 6, x: 24 }] },
-];
+    { src: "/images/inAbout/Abhi.svg", name: "Abhiyantrik", year: "2025", shadow: "rgba(99, 102, 241, 0.22)", tags: [{ label: "IoT", rotate: -9, x: -26 }, { label: "Smart Home", rotate: 6, x: 28 }] },
+    { src: "/images/inAbout/blumeH.svg", name: "BlumeHealth", year: "2025", shadow: "rgba(52, 211, 153, 0.28)", tags: [{ label: "SaaS", rotate: -7, x: -26 }, { label: "Health", rotate: 5, x: 30 }] },
+    { src: "/images/inAbout/SR.svg", name: "SkillRadius", year: "2026", shadow: "rgba(109, 84, 224, 0.25)", tags: [{ label: "LMS", rotate: -8, x: -24 }, { label: "EdTech", rotate: 6, x: 30 }] },
+    { src: "/images/inAbout/SS.svg", name: "SkinSage", year: "2026", shadow: "rgba(34, 197, 94, 0.28)", tags: [{ label: "AI", rotate: -6, x: -24 }, { label: "MedTech", rotate: 8, x: 30 }] },
+    { src: "/images/inAbout/fuellstack.svg", name: "Fuellstack", year: "2025", shadow: "rgba(220, 88, 20, 0.25)", tags: [{ label: "IT Agency", rotate: -7, x: 0 }] },
+    { src: "/images/inAbout/LV.svg", name: "LogicVeda", year: "2025", shadow: "rgba(109, 84, 224, 0.25)", tags: [{ label: "EdTech", rotate: 7, x: 0 }] },
+    { src: "/images/inAbout/Storuage.svg", name: "Storuage", year: "2025", shadow: "rgba(245, 158, 11, 0.28)", tags: [{ label: "IoT", rotate: -6, x: -28 }, { label: "Smart Kitchen", rotate: 5, x: 34 }] },
+    { src: "/images/inAbout/Wagwan.svg", name: "Wagwan", year: "2025 - Present", shadow: "rgba(239, 68, 68, 0.25)", tags: [{ label: "Social", rotate: -7, x: -22 }, { label: "Events", rotate: 6, x: 24 }] },
+  ];
 
 export default function About() {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -34,7 +34,7 @@ export default function About() {
 
   return (
     <div className="bg-white min-h-screen pt-24 pb-12" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
-    <style>{`
+      <style>{`
       @keyframes football-spin {
         from { transform: rotate(0deg); }
         to   { transform: rotate(360deg); }
@@ -61,7 +61,7 @@ export default function About() {
         100% { transform: rotate(-10deg); }
       }
     `}</style>
-    <style>{`
+      <style>{`
       @media (max-width: 767px) {
         .himg-pen    { top: -16px !important; left: 10px !important; right: auto !important; }
         .himg-enter  { top: 2px !important; right: 10px !important; left: auto !important; }
@@ -75,34 +75,34 @@ export default function About() {
 
         {/* ── Logo ─────────────────────────────────────────────── */}
         <div className="mb-6 mt-2 flex justify-center md:hidden">
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <Image
-            src="/images/HomeImages/Satish-logo-kannada.svg"
-            alt="Varun in Kannada"
-            width={70}
-            height={26}
-            style={{
-              opacity: logoHovered ? 0 : 1,
-              transition: "opacity 0.15s ease",
-              position: "relative",
-              filter: "brightness(0) opacity(0.5)",
-            }}
-          />
-          <Image
-            src="/images/HomeImages/satish-logo-english.svg"
-            alt="Varun"
-            width={70}
-            height={26}
-            style={{
-              opacity: logoHovered ? 1 : 0,
-              transition: "opacity 0.15s ease",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              filter: "brightness(0) opacity(0.5)",
-            }}
-          />
-        </div>
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <Image
+              src="/images/HomeImages/Satish-logo-kannada.svg"
+              alt="Varun in Kannada"
+              width={70}
+              height={26}
+              style={{
+                opacity: logoHovered ? 0 : 1,
+                transition: "opacity 0.15s ease",
+                position: "relative",
+                filter: "brightness(0) opacity(0.5)",
+              }}
+            />
+            <Image
+              src="/images/HomeImages/satish-logo-english.svg"
+              alt="Varun"
+              width={70}
+              height={26}
+              style={{
+                opacity: logoHovered ? 1 : 0,
+                transition: "opacity 0.15s ease",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                filter: "brightness(0) opacity(0.5)",
+              }}
+            />
+          </div>
         </div>
 
         {/* ── Section 1: intro + photo ─────────────────────────── */}
@@ -128,13 +128,13 @@ export default function About() {
           >
             {/* Text chips */}
             {[
-              { label: "UI/UX Designer",      top: "28px",   left: "5px",    rotate: -8,  delay: 0,    duration: "0.55s" },
-              { label: "Developer",           top: "28px",   right: "5px",   rotate: 5,   delay: 0.07, duration: "0.45s" },
-              { label: "Vibe Coder",          top: "48px",   right: "8px",   rotate: -4,  delay: 0.09, duration: "0.5s"  },
-              { label: "Attacking Midfielder",top: "48%",    left: "-8px",   rotate: -6,  delay: 0.12, duration: "0.6s"  },
-              { label: "Carpenter",           top: "70%",    right: "-6px",  rotate: -7,  delay: 0.05, duration: "0.5s"  },
-              { label: "Craftsman",           top: "79%",    right: "-2px",  rotate: 5,   delay: 0.06, duration: "0.52s" },
-              { label: "Artist",              bottom: "-20px",left: "15px",   rotate: -5,  delay: 0.1,  duration: "0.48s" },
+              { label: "UI/UX Designer", top: "28px", left: "5px", rotate: -8, delay: 0, duration: "0.55s" },
+              { label: "Developer", top: "28px", right: "5px", rotate: 5, delay: 0.07, duration: "0.45s" },
+              { label: "Vibe Coder", top: "48px", right: "8px", rotate: -4, delay: 0.09, duration: "0.5s" },
+              { label: "Attacking Midfielder", top: "48%", left: "-8px", rotate: -6, delay: 0.12, duration: "0.6s" },
+              { label: "Carpenter", top: "70%", right: "-6px", rotate: -7, delay: 0.05, duration: "0.5s" },
+              { label: "Craftsman", top: "79%", right: "-2px", rotate: 5, delay: 0.06, duration: "0.52s" },
+              { label: "Artist", bottom: "-20px", left: "15px", rotate: -5, delay: 0.1, duration: "0.48s" },
             ].map((chip, i) => (
               <div
                 key={`chip-${i}`}
@@ -235,83 +235,83 @@ export default function About() {
 
         {/* ── Experience timeline ──────────────────────────────── */}
         {false && (
-        <div className="mb-20">
-          <p
-            className="text-xl md:text-2xl text-gray-700 leading-snug mb-10"
-            style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
-          >
-            I've helped startups take their digital products from idea to launch. These are some of the companies I've partnered with.
-          </p>
-          <div className="grid grid-cols-4 justify-items-center gap-8 md:gap-12 pb-4">
-            {companies.map((co, i) => {
-              const isHovered = hovered === i;
-              return (
-                <div
-                  key={i}
-                  className="flex flex-col items-center gap-3 flex-shrink-0"
-                  onMouseEnter={() => setHovered(i)}
-                  onMouseLeave={() => setHovered(null)}
-                >
-                  {/* Logo + chips wrapper */}
-                  <div style={{ position: "relative", display: "flex", justifyContent: "center", width: "60px", height: "60px" }}>
+          <div className="mb-20">
+            <p
+              className="text-xl md:text-2xl text-gray-700 leading-snug mb-10"
+              style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
+            >
+              I've helped startups take their digital products from idea to launch. These are some of the companies I've partnered with.
+            </p>
+            <div className="grid grid-cols-4 justify-items-center gap-8 md:gap-12 pb-4">
+              {companies.map((co, i) => {
+                const isHovered = hovered === i;
+                return (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center gap-3 flex-shrink-0"
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    {/* Logo + chips wrapper */}
+                    <div style={{ position: "relative", display: "flex", justifyContent: "center", width: "60px", height: "60px" }}>
 
-                    {/* Chips — behind logo, pop up on hover */}
-                    {co.tags.map((tag, ti) => (
+                      {/* Chips — behind logo, pop up on hover */}
+                      {co.tags.map((tag, ti) => (
+                        <div
+                          key={ti}
+                          style={{
+                            position: "absolute",
+                            bottom: isHovered ? "68px" : "20px",
+                            left: "50%",
+                            transform: `translateX(calc(-50% + ${tag.x}px)) rotate(${tag.rotate}deg)`,
+                            opacity: isHovered ? 1 : 0,
+                            transition: `bottom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) ${ti * 0.06}s, opacity 0.2s ease ${ti * 0.06}s`,
+                            zIndex: 0,
+                            background: "white",
+                            border: "1px solid #e5e7eb",
+                            borderRadius: "20px",
+                            padding: "3px 8px",
+                            fontSize: "10px",
+                            fontFamily: "FunnelDisplay, sans-serif",
+                            color: "#374151",
+                            whiteSpace: "nowrap",
+                            pointerEvents: "none",
+                            boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
+                          }}
+                        >
+                          {tag.label}
+                        </div>
+                      ))}
+
+                      {/* Logo box */}
                       <div
-                        key={ti}
                         style={{
-                          position: "absolute",
-                          bottom: isHovered ? "68px" : "20px",
-                          left: "50%",
-                          transform: `translateX(calc(-50% + ${tag.x}px)) rotate(${tag.rotate}deg)`,
-                          opacity: isHovered ? 1 : 0,
-                          transition: `bottom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) ${ti * 0.06}s, opacity 0.2s ease ${ti * 0.06}s`,
-                          zIndex: 0,
-                          background: "white",
+                          position: "relative",
+                          zIndex: 1,
+                          width: "60px",
+                          height: "60px",
+                          background: "#f3f4f6",
                           border: "1px solid #e5e7eb",
-                          borderRadius: "20px",
-                          padding: "3px 8px",
-                          fontSize: "10px",
-                          fontFamily: "FunnelDisplay, sans-serif",
-                          color: "#374151",
-                          whiteSpace: "nowrap",
-                          pointerEvents: "none",
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
+                          borderRadius: "30%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          overflow: "hidden",
+                          boxShadow: isHovered ? `inset 0 -14px 20px 4px ${co.shadow}` : "none",
+                          transition: "box-shadow 0.3s ease",
                         }}
                       >
-                        {tag.label}
+                        <Image src={co.src} alt={co.name} width={60} height={60} className="w-full h-full object-contain" />
                       </div>
-                    ))}
-
-                    {/* Logo box */}
-                    <div
-                      style={{
-                        position: "relative",
-                        zIndex: 1,
-                        width: "60px",
-                        height: "60px",
-                        background: "#f3f4f6",
-                        border: "1px solid #e5e7eb",
-                        borderRadius: "30%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        overflow: "hidden",
-                        boxShadow: isHovered ? `inset 0 -14px 20px 4px ${co.shadow}` : "none",
-                        transition: "box-shadow 0.3s ease",
-                      }}
-                    >
-                      <Image src={co.src} alt={co.name} width={60} height={60} className="w-full h-full object-contain" />
                     </div>
-                  </div>
 
-                  <span className="text-[11px] text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{co.name}</span>
-                  <span className="text-[10px] text-gray-300 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{co.year}</span>
-                </div>
-              );
-            })}
+                    <span className="text-[11px] text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{co.name}</span>
+                    <span className="text-[10px] text-gray-300 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{co.year}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
         )}
 
         {/* ── Toolkit ──────────────────────────────────────────── */}
@@ -333,11 +333,15 @@ export default function About() {
               <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
               <div className="flex flex-col gap-4">
                 {[
-                  { name: "Figma",         src: "/images/ToolsIcons/figma-icon.svg" },
-                  { name: "Photoshop",     src: "/images/ToolsIcons/adobe-photoshop-icon.svg" },
+                  { name: "Figma", src: "/images/ToolsIcons/figma-icon.svg" },
+                  { name: "Photoshop", src: "/images/ToolsIcons/adobe-photoshop-icon.svg" },
                   { name: "After Effects", src: "/images/ToolsIcons/adobe-after-effects-icon.svg" },
-                  { name: "Blender",       src: "/images/ToolsIcons/blender-icon.svg" },
-                  { name: "LottieFiles",   src: "/images/ToolsIcons/lottiefiles.svg" },
+                  { name: "Blender", src: "/images/ToolsIcons/blender-icon.svg" },
+                  { name: "LottieFiles", src: "/images/ToolsIcons/lottiefiles.svg" },
+                  { name: "Rive", src: "/images/ToolsIcons/rive-icon.svg" },
+                  { name: "Zeplin", src: "/images/ToolsIcons/zeplin-icon.webp" },
+                  { name: "Paper", src: "/images/ToolsIcons/paper-icon.png" },
+                  { name: "Spline", src: "/images/ToolsIcons/spline-icon.webp" },
                 ].map((tool) => (
                   <div key={tool.name} className="flex items-center gap-3">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
@@ -355,41 +359,41 @@ export default function About() {
             {/* Development + AI combined on mobile */}
             <div className="flex flex-col gap-10 md:contents">
 
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
-              <div className="flex flex-col gap-4">
-                {[
-                  { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
-                  { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
-                ].map((tool) => (
-                  <div key={tool.name} className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
+                <div className="flex flex-col gap-4">
+                  {[
+                    { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
+                    { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
+                  ].map((tool) => (
+                    <div key={tool.name} className="flex items-center gap-3">
+                      <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
+                        <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
                     </div>
-                    <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* AI & Assistive */}
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>AI & Assistive Tools</p>
-              <div className="flex flex-col gap-4">
-                {[
-                  { name: "Claude Code",   src: "/images/ToolsIcons/claude-ai-icon.svg" },
-                  { name: "ChatGPT",       src: "/images/ToolsIcons/chatgpt-icon.svg" },
-                  { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
-                ].map((tool) => (
-                  <div key={tool.name} className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
+              {/* AI & Assistive */}
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>AI & Assistive Tools</p>
+                <div className="flex flex-col gap-4">
+                  {[
+                    { name: "Claude Code", src: "/images/ToolsIcons/claude-ai-icon.svg" },
+                    { name: "ChatGPT", src: "/images/ToolsIcons/chatgpt-icon.svg" },
+                    { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
+                  ].map((tool) => (
+                    <div key={tool.name} className="flex items-center gap-3">
+                      <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
+                        <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
                     </div>
-                    <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
 
             </div>{/* closes mobile wrapper */}
 
@@ -412,7 +416,7 @@ export default function About() {
             >
               say hello
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
             <div
@@ -426,9 +430,9 @@ export default function About() {
                 title="Copy email"
               >
                 {copied ? (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 ) : (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2"/><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
                 )}
               </button>
             </div>
