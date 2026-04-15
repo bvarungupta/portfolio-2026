@@ -31,7 +31,7 @@ export default function Footer() {
           </p>
           <Image
             src="/images/common/sa26.svg"
-            alt="Satish"
+            alt="Varun"
             width={56}
             height={56}
             className="w-12 h-12 mb-4 opacity-80"
@@ -52,7 +52,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 shrink-0 w-full md:w-auto">
           <button
-            onClick={() => handleCopy('email', 'satishdezn@gmail.com')}
+            onClick={() => handleCopy('email', 'bvarungupta@gmail.com')}
             className="w-full flex items-center gap-3 px-5 py-3 border border-gray-900 text-gray-900 text-xs tracking-wide hover:bg-gray-900 hover:text-white transition-colors duration-200"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
@@ -60,10 +60,10 @@ export default function Footer() {
               <rect x="2" y="4" width="20" height="16" rx="2"/>
               <path d="m2 7 10 7 10-7"/>
             </svg>
-            {copied === 'email' ? 'Copied!' : 'satishdezn@gmail.com'}
+            {copied === 'email' ? 'Copied!' : 'bvarungupta@gmail.com'}
           </button>
           <a
-            href="https://www.linkedin.com/in/satish-hebbal/"
+            href="https://linkedin.com/in/bvarungupta"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200"
@@ -86,14 +86,13 @@ export default function Footer() {
             className="text-gray-300 text-xs"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
-            &copy; {new Date().getFullYear()} Satish Hebbal. All rights reserved.
+            &copy; {new Date().getFullYear()} Varun Gupta. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {[
-              { href: 'https://www.linkedin.com/in/satish-hebbal/', src: '/images/HomeImages/social/linkedin.svg',  alt: 'LinkedIn'  },
-              { href: 'https://www.behance.net/satish-designs',     src: '/images/HomeImages/social/behance.svg',   alt: 'Behance'   },
-              { href: 'https://dribbble.com/Satish-Hebbal',         src: '/images/HomeImages/social/dribbble.svg',  alt: 'Dribbble'  },
-              { href: 'https://www.instagram.com/sat_dez',          src: '/images/HomeImages/social/instagram.svg', alt: 'Instagram' },
+              { href: 'https://linkedin.com/in/bvarungupta', src: '/images/HomeImages/social/linkedin.svg',  alt: 'LinkedIn'  },
+              { href: 'https://behance.net/bvarungupta',     src: '/images/HomeImages/social/behance.svg',   alt: 'Behance'   },
+              { href: 'https://dribbble.com/bvarungupta',         src: '/images/HomeImages/social/dribbble.svg',  alt: 'Dribbble'  },
             ].map((s) => (
               <Link key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer">
                 <Image

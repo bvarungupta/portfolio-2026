@@ -286,7 +286,7 @@ function PhoneFrame({
 function EmailCopyButton() {
   const [copied, setCopied] = useState(false);
   const copy = () => {
-    navigator.clipboard.writeText('satishdezn@gmail.com');
+    navigator.clipboard.writeText('bvarungupta@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -319,7 +319,7 @@ function EmailCopyButton() {
         </>
       ) : (
         <>
-          satishdezn@gmail.com
+          bvarungupta@gmail.com
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
             <rect x="9" y="9" width="13" height="13" rx="2" stroke="#9ca3af" strokeWidth="1.8"/>
             <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round"/>
@@ -634,7 +634,7 @@ export default function XPayProposal() {
                 <div className="xpay-byline">
               <img
                 src="/images/common/Satish0profile.png"
-                alt="Satish Hebbal"
+                alt="Varun Gupta"
                 style={{
                   outline: '0.5px solid rgb(173, 173, 173)',
                   outlineOffset: 0,
@@ -647,7 +647,7 @@ export default function XPayProposal() {
               />
               <div className="xpay-byline-meta">
                 <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#111', fontWeight: 500 }}>
-                  Satish Hebbal
+                  Varun Gupta
                 </span>
                 <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>·</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -832,7 +832,7 @@ export default function XPayProposal() {
               <EmailCopyButton />
               {/* LinkedIn button */}
               <a
-                href="https://www.linkedin.com/in/satish-hebbal/"
+                href="https://linkedin.com/in/bvarungupta"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -859,7 +859,7 @@ export default function XPayProposal() {
 
               {/* Portfolio link button */}
               <a
-                href="https://satishhebbal.design"
+                href="https://bvarungupta.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -880,7 +880,7 @@ export default function XPayProposal() {
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#111'; e.currentTarget.style.background = '#fafafa'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.background = '#fff'; }}
               >
-                satishhebbal.design
+                bvarungupta.com
                 <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
                   <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>

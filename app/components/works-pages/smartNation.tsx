@@ -1435,7 +1435,7 @@ const SmartNation = () => {
         <Plus h="right" />
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Let's Work Together</p>
-          <Image src="/images/common/sa26.svg" alt="Satish" width={56} height={56} className="w-12 h-12 mb-4" />
+          <Image src="/images/common/sa26.svg" alt="Varun" width={56} height={56} className="w-12 h-12 mb-4" />
           <h3 className="text-3xl md:text-4xl font-light text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             Great products happen<br />when the right people meet.
           </h3>
@@ -1445,15 +1445,15 @@ const SmartNation = () => {
         </div>
         <div className="flex flex-col gap-3 shrink-0">
           <button
-            onClick={() => handleCopy('email', 'satishdezn@gmail.com')}
+            onClick={() => handleCopy('email', 'bvarungupta@gmail.com')}
             className="w-full flex items-center gap-3 px-5 py-3 border border-gray-900 text-gray-900 text-xs tracking-wide hover:bg-gray-900 hover:text-white transition-colors duration-200"
             style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-            {copied === 'email' ? 'Copied!' : 'satishdezn@gmail.com'}
+            {copied === 'email' ? 'Copied!' : 'bvarungupta@gmail.com'}
           </button>
           <a
-            href="https://www.linkedin.com/in/satish-hebbal/"
+            href="https://linkedin.com/in/bvarungupta"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200"

@@ -27,7 +27,7 @@ export default function HeroGrid() {
           className="text-2xl md:text-4xl font-light tracking-tight"
           style={{ fontFamily: 'Garamond, Georgia, serif' }}
         >
-          Satish Hebbal
+          Varun Gupta
         </h1>
         <span
           className="text-[10px] uppercase tracking-widest text-gray-400"
@@ -127,7 +127,7 @@ export default function HeroGrid() {
           </p>
           <div className="flex flex-col gap-3">
             <button
-              onClick={() => handleCopy('email', 'satishdezn@gmail.com')}
+              onClick={() => handleCopy('email', 'bvarungupta@gmail.com')}
               className="w-full flex items-center gap-3 px-5 py-3 border border-gray-900 text-gray-900 text-xs tracking-wide hover:bg-gray-900 hover:text-white transition-colors duration-200"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
@@ -135,7 +135,7 @@ export default function HeroGrid() {
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="m2 7 10 7 10-7"/>
               </svg>
-              {copied === 'email' ? 'Copied!' : 'satishdezn@gmail.com'}
+              {copied === 'email' ? 'Copied!' : 'bvarungupta@gmail.com'}
             </button>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function HeroGrid() {
         <div className="flex items-end justify-center overflow-hidden border-t md:border-t-0">
           <Image
             src="/images/HomeImages/myImage.png"
-            alt="Satish Hebbal"
+            alt="Varun Gupta"
             width={340}
             height={440}
             className="object-contain object-bottom w-auto max-h-[360px] md:max-h-[460px]"

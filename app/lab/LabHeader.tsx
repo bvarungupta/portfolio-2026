@@ -44,7 +44,7 @@ export default function LabHeader() {
         className="text-2xl md:text-3xl font-light text-black"
         style={{ fontFamily: 'SatishSans, sans-serif', flexShrink: 0 }}
       >
-        <span style={{ fontFamily: 'SatishCapsSans, sans-serif', fontSize: '1.5em' }}>T</span><span style={{ marginLeft: '4px' }}>he</span>{' '}
+        <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>T</span><span style={{ marginLeft: '4px' }}>he</span>{' '}
         <span style={{ fontFamily: 'SatishSans, sans-serif' }}>Lab</span>
       </h1>
       <span ref={rightLineRef} style={{ flex: 1, height: '1px', background: '#d1d5db', display: 'block' }} />

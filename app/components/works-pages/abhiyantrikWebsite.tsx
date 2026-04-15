@@ -438,11 +438,11 @@ const AbhiyantrikWebsite = () => {
             </p>
           </div>
           <div className="flex flex-col gap-3 shrink-0">
-            <button onClick={() => handleCopy('email', 'satishdezn@gmail.com')} className="w-full flex items-center gap-3 px-5 py-3 border border-gray-900 text-gray-900 text-xs tracking-wide hover:bg-gray-900 hover:text-white transition-colors duration-200" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+            <button onClick={() => handleCopy('email', 'bvarungupta@gmail.com')} className="w-full flex items-center gap-3 px-5 py-3 border border-gray-900 text-gray-900 text-xs tracking-wide hover:bg-gray-900 hover:text-white transition-colors duration-200" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-              {copied === 'email' ? 'Copied!' : 'satishdezn@gmail.com'}
+              {copied === 'email' ? 'Copied!' : 'bvarungupta@gmail.com'}
             </button>
-            <a href="https://www.linkedin.com/in/satish-hebbal/" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+            <a href="https://linkedin.com/in/bvarungupta" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               LinkedIn
             </a>
@@ -451,8 +451,8 @@ const AbhiyantrikWebsite = () => {
 
         <div className="max-w-5xl mx-auto px-6 md:px-10 pb-10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-            <p className="text-gray-300 text-xs" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>&copy; {new Date().getFullYear()} Satish Hebbal. All rights reserved.</p>
-            <p className="text-gray-200 text-xs" style={{ fontFamily: 'Garamond, Georgia, serif' }}>Designed &amp; built by Satish</p>
+            <p className="text-gray-300 text-xs" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>&copy; {new Date().getFullYear()} Varun Gupta. All rights reserved.</p>
+            <p className="text-gray-200 text-xs" style={{ fontFamily: 'Garamond, Georgia, serif' }}>Designed &amp; built by Varun</p>
           </div>
         </div>
       </div>

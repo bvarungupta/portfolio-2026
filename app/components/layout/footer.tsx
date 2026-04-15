@@ -5,15 +5,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const links = [
-  { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/satish-hebbal/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/sat_dez' },
-  { label: 'GitHub',    href: 'https://github.com/satish-hebbal' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta' },
+  { label: 'Behance', href: 'https://behance.net/bvarungupta' },
+  { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta' },
 ]
 
 const navLinks = [
-  { label: 'Works',     href: '/#work' },
+  { label: 'Works', href: '/#work' },
   { label: 'Unplugged', href: '/#unplugged' },
-  { label: 'About',     href: '/about' },
+  { label: 'About', href: '/about' },
 ]
 
 export default function Footer() {
@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     <footer className={`mt-16 relative overflow-visible${isUnpluggedPage ? ' md:hidden' : ''}`}>
 
-<div className="max-w-5xl mx-auto px-6 md:px-10">
+      <div className="max-w-5xl mx-auto px-6 md:px-10">
 
         {/* Big name */}
         <div className="pt-4 pb-8 text-center relative flex items-center justify-center gap-0">
@@ -45,19 +45,19 @@ export default function Footer() {
           />
 
           <div className="flex flex-col items-center">
-          <h2
-            className="text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-black select-none"
-            aria-hidden="true"
-          >
-            <span style={{ fontFamily: 'SatishCapsSans, sans-serif', fontSize: '1.4em' }}>S</span>
-            <span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '6px' }}>atish</span>
-          </h2>
-          <p
-            className="mt-4 text-sm text-gray-400"
-            style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
-          >
-            Product Designer &amp; Developer
-          </p>
+            <h2
+              className="text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-black select-none"
+              aria-hidden="true"
+            >
+              <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.4em' }}>V</span>
+              <span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '6px' }}>arun</span>
+            </h2>
+            <p
+              className="mt-4 text-sm text-gray-400"
+              style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+            >
+              Product Designer
+            </p>
           </div>
 
           {/* Right branch — mirrored */}
@@ -93,7 +93,7 @@ export default function Footer() {
               className="text-xs text-gray-400"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
-              © 2026 Satish Hebbal
+              © 2026 Varun Gupta
             </span>
           </div>
 

@@ -3,7 +3,7 @@ import { Plus, PlusAt } from '../ui/Markers'
 const testimonials = [
   {
     id: 1,
-    quote: "Satish brought structure to our chaos. Before him, we were shipping screens without a real system. He helped us define our design language from scratch, and it gave the whole team clarity.",
+    quote: "Varun brought structure to our chaos. Before him, we were shipping screens without a real system. He helped us define our design language from scratch, and it gave the whole team clarity.",
     name: 'Founder, Early-stage SaaS',
     role: 'Placeholder · Replace with real',
   },
@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     id: 3,
-    quote: "He doesn't just hand off screens. He thinks about the whole experience. Working with Satish felt like having a design co-founder on the team.",
+    quote: "He doesn't just hand off screens. He thinks about the whole experience. Working with Varun felt like having a design co-founder on the team.",
     name: 'CEO, Consumer App',
     role: 'Placeholder · Replace with real',
   },

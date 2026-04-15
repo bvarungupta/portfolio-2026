@@ -54,8 +54,8 @@ export default function Home() {
               style={{ marginBottom: '70px' }}
             />
             <h1 className="text-4xl md:text-5xl tracking-tight text-black">
-              <span style={{ fontFamily: 'SatishCapsSans, sans-serif', fontSize: '1.5em' }}>S</span><span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '4px' }}>atish </span>
-              <span style={{ fontFamily: 'SatishCapsSans, sans-serif', fontSize: '1.5em' }}>H</span><span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '4px' }}>ebbal</span>
+              <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>V</span><span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '4px' }}>arun </span>
+              <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>G</span><span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '4px' }}>upta</span>
             </h1>
             <p
               className="text-sm md:text-base text-gray-400 leading-relaxed max-w-md"

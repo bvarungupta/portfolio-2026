@@ -98,7 +98,7 @@ export default function UnpluggedGallery() {
               ref={unpluggedEl}
               className="relative bg-white pr-3 text-2xl md:text-3xl font-light text-black shrink-0 whitespace-nowrap"
             >
-              <span style={{ fontFamily: 'SatishCapsSans, sans-serif', fontSize: '1.5em' }}>U</span><span style={{ fontFamily: 'SatishSans, sans-serif' }}>nplugged</span>
+              <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>U</span><span style={{ fontFamily: 'SatishSans, sans-serif' }}>nplugged</span>
             </h2>
           </div>
         </div>

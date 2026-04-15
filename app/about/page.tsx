@@ -27,7 +27,7 @@ export default function About() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('satishdezn@gmail.com');
+    navigator.clipboard.writeText('bvarungupta@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -78,7 +78,7 @@ export default function About() {
         <div style={{ position: "relative", display: "inline-block" }}>
           <Image
             src="/images/HomeImages/Satish-logo-kannada.svg"
-            alt="Satish in Kannada"
+            alt="Varun in Kannada"
             width={70}
             height={26}
             style={{
@@ -90,7 +90,7 @@ export default function About() {
           />
           <Image
             src="/images/HomeImages/satish-logo-english.svg"
-            alt="Satish"
+            alt="Varun"
             width={70}
             height={26}
             style={{
@@ -216,8 +216,8 @@ export default function About() {
             ))}
 
             <Image
-              src="/images/HomeImages/Satish-about.png"
-              alt="Satish"
+              src="/images/HomeImages/Varun-about.jpg"
+              alt="Varun"
               width={260}
               height={320}
               className="object-cover"
@@ -404,7 +404,7 @@ export default function About() {
           </p>
           <div className="inline-flex items-stretch gap-0">
             <a
-              href="mailto:satishdezn@gmail.com"
+              href="mailto:bvarungupta@gmail.com"
               className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
             >
@@ -417,7 +417,7 @@ export default function About() {
               className="flex items-center px-5 border border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
             >
-              satishdezn@gmail.com
+              bvarungupta@gmail.com
               <button
                 onClick={handleCopy}
                 className="ml-2 text-gray-300 hover:text-gray-600 transition-colors duration-200 flex-shrink-0 cursor-pointer"

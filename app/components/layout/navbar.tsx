@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollToPlugin)
 
 const navItems = [
   { name: "Work", href: "/work" },
-  { name: "Unplug", href: "/unplugged" },
+  { name: "Concepts", href: "/proposals" },
   { name: "Home", href: "/" },
   { name: "Lab", href: "/lab" },
   { name: "About", href: "/about" },
@@ -111,15 +111,15 @@ export default function Navbar() {
           }, 500)
         })
       }
-    } else if (item.name === "Unplug") {
+    } else if (item.name === "Concepts") {
       if (pathname === '/') {
-        // Already on home, scroll to unplugged
-        scrollToUnplugSection()
+        // Already on home, scroll to proposals
+        scrollToProposalsSection()
       } else {
-        // Navigate to home and scroll to unplugged
+        // Navigate to home and scroll to proposals
         navigateWithTransition('/', () => {
           setTimeout(() => {
-            scrollToUnplugSection()
+            scrollToProposalsSection()
           }, 500)
         })
       }
@@ -185,19 +185,19 @@ export default function Navbar() {
     }
   }
 
-  const scrollToUnplugSection = () => {
-    // Find unplugged section
-    const unpluggedSection = document.querySelector('[data-section="unplugged"]') ||
-                            // Try to find by text content containing "Unplug"
+  const scrollToProposalsSection = () => {
+    // Find proposals section
+    const proposalsSection = document.querySelector('[data-section="proposals"]') ||
+                            // Try to find by text content containing "Proposals"
                             Array.from(document.querySelectorAll('h2, h3')).find(el => 
-                              el.textContent?.toLowerCase().includes('unplugged')
+                              el.textContent?.toLowerCase().includes('proposals')
                             )?.closest('div')
 
-    if (unpluggedSection) {
+    if (proposalsSection) {
       gsap.to(window, {
         duration: 1.2,
         scrollTo: {
-          y: unpluggedSection,
+          y: proposalsSection,
           offsetY: 100
         },
         ease: "power2.inOut"
@@ -259,9 +259,9 @@ export default function Navbar() {
                 (item.name === "Work" && pathname.startsWith('/works/')) ||
                 (item.name === "Home" && pathname === '/')
                   ? "text-orange-500"
-                  : (item.name === "Unplug" && pathname.startsWith('/unplugged/'))
+                  : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
                     ? "text-orange-400"
-                    : pathname.startsWith('/unplugged/')
+                    : pathname.startsWith('/proposals/')
                       ? "text-white"
                       : "text-zinc-700"
               }`}
@@ -274,7 +274,7 @@ export default function Navbar() {
                   width={22}
                   height={22}
                   className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
-                  style={pathname.startsWith('/unplugged/') ? { filter: 'invert(1)' } : {}}
+                  style={pathname.startsWith('/proposals/') ? { filter: 'invert(1)' } : {}}
                 />
               ) : item.name}
             </button>
