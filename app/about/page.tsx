@@ -340,7 +340,7 @@ export default function About() {
                   { name: "LottieFiles", src: "/images/ToolsIcons/lottiefiles.svg" },
                   { name: "Rive", src: "/images/ToolsIcons/rive-icon.svg" },
                   { name: "Zeplin", src: "/images/ToolsIcons/zeplin-icon.webp" },
-                  { name: "Paper", src: "/images/ToolsIcons/paper-icon.png" },
+                  { name: "Paper", src: "/images/ToolsIcons/paper-icon.svg" },
                   { name: "Spline", src: "/images/ToolsIcons/spline-icon.webp" },
                 ].map((tool) => (
                   <div key={tool.name} className="flex items-center gap-3">
