@@ -228,8 +228,8 @@ export default function Navbar() {
       <nav
         ref={navRef}
         className={`flex items-center rounded-none py-1 relative transition-all duration-300 hover:shadow-lg pointer-events-auto w-full max-w-full md:w-auto justify-between md:justify-start ${isMounted
-            ? "gap-1 md:gap-6 px-3 md:px-6"
-            : "gap-1 px-3"
+          ? "gap-1 md:gap-6 px-3 md:px-6"
+          : "gap-1 px-3"
           }`}
         style={{
           background: 'rgba(255, 255, 255, 0.08)',
@@ -266,7 +266,7 @@ export default function Navbar() {
             >
               {item.name === "Home" ? (
                 <Image
-                  src="/images/common/sa26-filled.svg"
+                  src="/images/common/vg26.svg"
                   alt="Home"
                   width={22}
                   height={22}

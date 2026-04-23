@@ -3,7 +3,7 @@ import XPayProposal from '../../components/proposals/xpay';
 import ScrollToTop from '../../components/ui/ScrollToTop';
 
 export const metadata: Metadata = {
-  title: 'xPay — Varun Gupta',
+  title: "xPay Design Proposal | Varun Gupta",
   description: 'A product problem found in xPay, and what I\'d ship to fix it.',
 };
 

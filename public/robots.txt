@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://varungupta-eta.vercel.app/sitemap.xml

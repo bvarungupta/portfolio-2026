@@ -175,7 +175,7 @@ export default function SkinSage() {
           <h1 className="text-2xl md:text-4xl font-light tracking-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             SkinSage
           </h1>
-          <Image src="/images/common/sa26.svg" alt="SA" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-20" />
+          <Image src="/images/common/vg-outline.svg" alt="Product Design Work" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-20" />
           <Plus h="left" />
           <Plus h="right" />
         </div>

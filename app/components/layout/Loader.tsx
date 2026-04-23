@@ -74,8 +74,8 @@ export default function Loader() {
       style={{ zIndex: 99999 }}
     >
       <Image
-        src="/images/common/sa26.svg"
-        alt="SA"
+        src="/images/common/vg-outline.svg"
+        alt="Product Design Work"
         width={48}
         height={48}
         className="w-10 h-10 object-contain opacity-80 mb-5"

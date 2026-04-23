@@ -346,7 +346,7 @@ const SmartNation = () => {
           <h1 className="text-2xl md:text-4xl font-light tracking-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             Smart Nation
           </h1>
-          <Image src="/images/common/sa26.svg" alt="SA" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-20" />
+          <Image src="/images/common/vg-outline.svg" alt="Product Design Work" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-20" />
           <Plus h="left" />
           <Plus h="right" />
         </div>
@@ -1435,7 +1435,7 @@ const SmartNation = () => {
         <Plus h="right" />
         <div>
           <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Let's Work Together</p>
-          <Image src="/images/common/sa26.svg" alt="Varun" width={56} height={56} className="w-12 h-12 mb-4" />
+          <Image src="/images/common/vg-outline.svg" alt="Varun Gupta at work" width={56} height={56} className="w-12 h-12 mb-4" />
           <h3 className="text-3xl md:text-4xl font-light text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             Great products happen<br />when the right people meet.
           </h3>

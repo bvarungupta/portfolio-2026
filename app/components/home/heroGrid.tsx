@@ -17,8 +17,8 @@ export default function HeroGrid() {
       {/* ── Header ─────────────────────────────────────────── */}
       <div className="relative overflow-visible flex items-center justify-between px-6 md:px-10 py-4 border-b border-gray-200 bg-white rounded-t-lg">
         <Image
-          src="/images/common/sa26.svg"
-          alt="SA"
+          src="/images/common/vg-outline.svg"
+          alt="Product Design Work"
           width={40}
           height={40}
           className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-80"

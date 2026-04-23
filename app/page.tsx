@@ -23,6 +23,8 @@ export default function Home() {
         alt=""
         width={120}
         height={800}
+        loading="eager"
+        priority
         className="fixed top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, left: '-70px' }}
       />
@@ -46,8 +48,8 @@ export default function Home() {
           {/* Text isolated above the bloom layer so color blend doesn't affect it */}
           <div className="relative flex flex-col items-center gap-6 md:bg-white md:px-6 md:py-4" style={{ zIndex: 5 }}>
             <Image
-              src="/images/common/sa26.svg"
-              alt="SA26"
+              src="/images/common/vg-outline.svg"
+              alt="Varun Gupta Portfolio Logo"
               width={48}
               height={48}
               className="opacity-50"

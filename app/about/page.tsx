@@ -77,8 +77,8 @@ export default function About() {
         <div className="mb-6 mt-2 flex justify-center md:hidden">
           <div style={{ position: "relative", display: "inline-block" }}>
             <Image
-              src="/images/HomeImages/Satish-logo-kannada.svg"
-              alt="Varun in Kannada"
+              src="/images/HomeImages/varun-logo-english.svg"
+              alt="Varun Gupta written in English"
               width={70}
               height={26}
               style={{
@@ -89,8 +89,8 @@ export default function About() {
               }}
             />
             <Image
-              src="/images/HomeImages/satish-logo-english.svg"
-              alt="Varun"
+              src="/images/HomeImages/varun-logo-english.svg"
+              alt="Varun Gupta at work"
               width={70}
               height={26}
               style={{
@@ -217,7 +217,7 @@ export default function About() {
 
             <Image
               src="/images/HomeImages/Varun-about.jpg"
-              alt="Varun"
+              alt="Varun Gupta at work"
               width={260}
               height={320}
               className="object-cover"

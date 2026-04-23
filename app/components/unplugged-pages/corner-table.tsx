@@ -83,10 +83,10 @@ const CornerTable = () => {
       // Generate ruler numbers - ONLY TOP for desktop
       const generateRulerNumbers = () => {
         const topRuler = document.querySelector('.ruler-numbers-top');
-        
+
         if (topRuler) {
           topRuler.innerHTML = '';
-          
+
           // Generate top ruler numbers (every 100px) and half numbers (every 50px)
           for (let i = 1; i <= 500; i++) {
             // Main numbers
@@ -95,7 +95,7 @@ const CornerTable = () => {
             numberEl.textContent = i.toString();
             numberEl.style.left = (i * 100) + 'px';
             topRuler.appendChild(numberEl);
-            
+
             // Half numbers (1.5, 2.5, etc.)
             if (i < 500) {
               const halfEl = document.createElement('div');
@@ -107,7 +107,7 @@ const CornerTable = () => {
           }
         }
       };
-      
+
       generateRulerNumbers();
     }
   }, [isMobile]);
@@ -116,7 +116,7 @@ const CornerTable = () => {
   const MobileLayout = () => (
     <div className="min-h-screen bg-gradient-to-br from-emerald-800 to-emerald-900 px-4 py-6 relative">
       {/* Mobile Grid Background */}
-      <div 
+      <div
         className="fixed inset-0 opacity-20 pointer-events-none z-0"
         style={{
           backgroundImage: `
@@ -166,9 +166,9 @@ const CornerTable = () => {
           <h1 className="text-2xl font-light text-white" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             The Corner table
           </h1>
-          <Image 
-            src="/images/common/sa26-white.svg" 
-            alt="SA Logo" 
+          <Image
+            src="/images/common/vg-white.svg"
+            alt="SA Logo"
             width={32}
             height={32}
             className="w-8 h-8"
@@ -178,7 +178,7 @@ const CornerTable = () => {
 
       {/* Content with proper spacing from fixed header */}
       <div className="pt-20 space-y-8 z-10 relative">
-        
+
         {/* Section 1: Reason for this project */}
         <section className="space-y-4">
           <h2 className="text-3xl font-light text-white leading-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
@@ -188,8 +188,8 @@ const CornerTable = () => {
             My desk setup had become a nightmare of tangled wires, scattered extensions, and a woofer box sitting awkwardly on the floor. It looked messy and felt chaotic every time I sat down to work.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/problem.png" 
+            <Image
+              src="/images/Unplugged/table/problem.png"
               alt="Messy desk setup"
               width={375}
               height={300}
@@ -207,8 +207,8 @@ const CornerTable = () => {
             I sketched out a simple corner table design - one that could hide all the wires, give my woofer a proper home, and add some storage shelves for my daily essentials like phone, watch, and earphones.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/sketch.png" 
+            <Image
+              src="/images/Unplugged/table/sketch.png"
               alt="Corner table sketch"
               width={420}
               height={300}
@@ -226,8 +226,8 @@ const CornerTable = () => {
             I had some wood strips lying around for months, so this project cost me nothing but time. Measured twice, cut once - carefully cutting each piece to exact dimensions.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/cut.png" 
+            <Image
+              src="/images/Unplugged/table/cut.png"
               alt="Wood cutting process"
               width={420}
               height={300}
@@ -245,8 +245,8 @@ const CornerTable = () => {
             The satisfying part - watching separate pieces come together into something functional. A bit of wood glue and some strategic nailing did the trick.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/assemble.png" 
+            <Image
+              src="/images/Unplugged/table/assemble.png"
               alt="Assembly process"
               width={420}
               height={300}
@@ -264,8 +264,8 @@ const CornerTable = () => {
             Cut the shelves from an old plywood sheet I had stored away. Added rounded corners because details matter - it&apos;s these small touches that make something look intentional rather than thrown together.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/character.png" 
+            <Image
+              src="/images/Unplugged/table/character.png"
               alt="Adding character to shelves"
               width={420}
               height={300}
@@ -313,8 +313,8 @@ const CornerTable = () => {
             Set it up in the corner, tucked away all those messy wires, gave my woofer a proper spot, and suddenly my workspace felt organized again. Clean setup, clear mind.
           </p>
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/finish.png" 
+            <Image
+              src="/images/Unplugged/table/finish.png"
               alt="Final organized workspace"
               width={450}
               height={300}
@@ -326,8 +326,8 @@ const CornerTable = () => {
         {/* Section 8: Final Result */}
         <section className="space-y-4">
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/setup.png" 
+            <Image
+              src="/images/Unplugged/table/setup.png"
               alt="Complete setup"
               width={420}
               height={300}
@@ -342,8 +342,8 @@ const CornerTable = () => {
         {/* Section 9: Thanks */}
         <section className="text-center space-y-4 pb-8">
           <div className="w-full">
-            <Image 
-              src="/images/Unplugged/table/pose.png" 
+            <Image
+              src="/images/Unplugged/table/pose.png"
               alt="Proud moment with finished project"
               width={420}
               height={300}
@@ -730,14 +730,14 @@ const CornerTable = () => {
           }
         }
       `}</style>
-      
+
       <div className="cutting-mat-page">
         <div className="cutting-mat scrollbar-hide">
           {/* Only top ruler */}
           <div className="ruler-top">
             <div className="ruler-numbers-top"></div>
           </div>
-          
+
           <div className="content-area left-16">
             {/* Desktop Table Contents */}
             <>
@@ -784,8 +784,8 @@ const CornerTable = () => {
                     My desk setup had become a nightmare of tangled wires, scattered extensions, and a woofer box sitting awkwardly on the floor. It looked messy and felt chaotic every time I sat down to work.
                   </p>
 
-                  <Image 
-                    src="/images/Unplugged/table/problem.png" 
+                  <Image
+                    src="/images/Unplugged/table/problem.png"
                     alt="Messy desk setup"
                     width={375}
                     height={300}
@@ -797,17 +797,17 @@ const CornerTable = () => {
                 <div className="flex items-center ">
                   <div className="flex flex-col gap-12 w-[525px]">
                     <h2 className="text-6xl font-light text-white leading-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
-                      First of all <br/>the Design
+                      First of all <br />the Design
                     </h2>
-                    
+
                     <p className="text-2xl text-white/70 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                       I sketched out a simple corner table design - one that could hide all the wires, give my woofer a proper home, and add some storage shelves for my daily essentials like phone, watch, and earphones.
                     </p>
                     <span className="scroll-hint">scroll →</span>
                   </div>
 
-                  <Image 
-                    src="/images/Unplugged/table/sketch.png" 
+                  <Image
+                    src="/images/Unplugged/table/sketch.png"
                     alt="Corner table sketch"
                     width={420}
                     height={300}
@@ -819,16 +819,16 @@ const CornerTable = () => {
                 <div className="flex items-center">
                   <div className="w-[525px]">
                     <h2 className="text-6xl font-light text-white leading-tight mb-9" style={{ fontFamily: 'SatishSans, sans-serif' }}>
-                      Unplanned<br/> Arm Day💪
+                      Unplanned<br /> Arm Day💪
                     </h2>
-                    
-                    <p className="text-2xl text-white/70 leading-relaxed m-0" style={{ fontFamily: 'FunnelDisplay, sans-serif'}}>
+
+                    <p className="text-2xl text-white/70 leading-relaxed m-0" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                       I had some wood strips lying around for months, so this project cost me nothing but time. Measured twice, cut once - carefully cutting each piece to exact dimensions.
                     </p>
                   </div>
 
-                  <Image 
-                    src="/images/Unplugged/table/cut.png" 
+                  <Image
+                    src="/images/Unplugged/table/cut.png"
                     alt="Wood cutting process"
                     width={420}
                     height={300}
@@ -848,8 +848,8 @@ const CornerTable = () => {
                     </p>
                   </div>
 
-                  <Image 
-                    src="/images/Unplugged/table/assemble.png" 
+                  <Image
+                    src="/images/Unplugged/table/assemble.png"
                     alt="Assembly process"
                     width={420}
                     height={300}
@@ -863,14 +863,14 @@ const CornerTable = () => {
                     <h2 className="text-6xl font-light text-white leading-tight mb-9" style={{ fontFamily: 'SatishSans, sans-serif' }}>
                       Adding Character
                     </h2>
-                    
+
                     <p className="text-2xl text-white/70 leading-relaxed m-0" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                       Cut the shelves from an old plywood sheet I had stored away. Added rounded corners because details matter - it&apos;s these small touches that make something look intentional rather than thrown together.
                     </p>
                   </div>
 
-                  <Image 
-                    src="/images/Unplugged/table/character.png" 
+                  <Image
+                    src="/images/Unplugged/table/character.png"
                     alt="Adding character to shelves"
                     width={420}
                     height={300}
@@ -885,13 +885,13 @@ const CornerTable = () => {
                       <h2 className="text-6xl font-light text-white leading-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
                         The Finishing Touch
                       </h2>
-                      
+
                       <p className="text-2xl text-white/70 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                         A coat of dark brown wood stain brought out the natural grain and gave it that rich, finished look. Sometimes the simplest finishes work best.
                       </p>
                     </div>
-                    <Image 
-                      src="/images/Unplugged/table/roller.png" 
+                    <Image
+                      src="/images/Unplugged/table/roller.png"
                       alt="Paint roller"
                       width={300}
                       height={200}
@@ -899,8 +899,8 @@ const CornerTable = () => {
                     />
                   </div>
                   <div className='flex flex-col'>
-                    <Image 
-                      src="/images/Unplugged/table/paint.png" 
+                    <Image
+                      src="/images/Unplugged/table/paint.png"
                       alt="Finished corner table"
                       width={420}
                       height={300}
@@ -915,14 +915,14 @@ const CornerTable = () => {
                     <h2 className="text-7xl font-light text-white leading-tight mb-9" style={{ fontFamily: 'SatishSans, sans-serif' }}>
                       Problem Solved!
                     </h2>
-                    
+
                     <p className="text-3xl text-white/70 leading-relaxed m-0" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                       Set it up in the corner, tucked away all those messy wires, gave my woofer a proper spot, and suddenly my workspace felt organized again. Clean setup, clear mind.
                     </p>
                   </div>
 
-                  <Image 
-                    src="/images/Unplugged/table/finish.png" 
+                  <Image
+                    src="/images/Unplugged/table/finish.png"
                     alt="Final organized workspace"
                     width={450}
                     height={300}
@@ -932,8 +932,8 @@ const CornerTable = () => {
 
                 {/* Section 8: Final Result */}
                 <div className="flex flex-col">
-                   <Image 
-                    src="/images/Unplugged/table/setup.png" 
+                  <Image
+                    src="/images/Unplugged/table/setup.png"
                     alt="Proud moment with finished project"
                     width={420}
                     height={300}
@@ -948,8 +948,8 @@ const CornerTable = () => {
 
                 {/* Section 9: Thanks */}
                 <div className="flex items-center gap-42">
-                  <Image 
-                    src="/images/Unplugged/table/pose.png" 
+                  <Image
+                    src="/images/Unplugged/table/pose.png"
                     alt="Proud moment with finished project"
                     width={420}
                     height={300}

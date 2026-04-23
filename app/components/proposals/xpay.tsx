@@ -84,7 +84,7 @@ function ProposalNav() {
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = '#111'; }}
           onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = '#ddd'; }}
         >
-          <img src="/images/common/sa26-filled.svg" alt="" style={{ width: 14, height: 14, display: 'block', flexShrink: 0 }} />
+          <img src="/images/common/v26.svg" alt="" style={{ width: 14, height: 14, display: 'block', flexShrink: 0 }} />
           View my portfolio
         </a>
       </div>
