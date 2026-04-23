@@ -9,26 +9,26 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Config mirrors ABHAY / TEJAS in page.tsx
 const ABHAY = {
-  src:    '/images/HomeImages/abhay-v.svg',
-  width:  590,
-  left:   '-35%',
-  top:    '-2%',
+  src: '/images/HomeImages/angel-left.svg',
+  width: 590,
+  left: '-35%',
+  top: '-2%',
   rotate: 35,
 }
 
 const TEJAS = {
-  src:    '/images/HomeImages/tejas-v.svg',
-  width:  510,
-  right:  '-35%',
-  top:    '40%',
+  src: '/images/HomeImages/icarus.svg',
+  width: 510,
+  right: '-35%',
+  top: '40%',
   rotate: -15,
 }
 
 export default function ParallaxImages() {
   const abhayDesktop = useRef<HTMLDivElement>(null)
   const tejasDesktop = useRef<HTMLDivElement>(null)
-  const abhayMobile  = useRef<HTMLDivElement>(null)
-  const tejasMobile  = useRef<HTMLDivElement>(null)
+  const abhayMobile = useRef<HTMLDivElement>(null)
+  const tejasMobile = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -41,14 +41,14 @@ export default function ParallaxImages() {
 
       // Desktop: drift down + slide outward
       gsap.to(abhayDesktop.current, {
-        y: () =>  window.innerHeight * 0.35,
-        x: () => -window.innerWidth  * 0.25,
+        y: () => window.innerHeight * 0.35,
+        x: () => -window.innerWidth * 0.25,
         ease: 'none',
         scrollTrigger: st,
       })
       gsap.to(tejasDesktop.current, {
-        y: () =>  window.innerHeight * 0.35,
-        x: () =>  window.innerWidth  * 0.25,
+        y: () => window.innerHeight * 0.35,
+        x: () => window.innerWidth * 0.25,
         ease: 'none',
         scrollTrigger: st,
       })
@@ -56,20 +56,20 @@ export default function ParallaxImages() {
       // Mobile: slide off-screen to their respective sides on scroll
       const mobileScrollST = {
         trigger: document.body,
-        start:   'top top',
-        end:     '25% top',
-        scrub:   true,
+        start: 'top top',
+        end: '25% top',
+        scrub: true,
       }
       gsap.to(abhayMobile.current, {
-        x:       () => -window.innerWidth * 0.6,
-        opacity:  0,
-        ease:    'none',
+        x: () => -window.innerWidth * 0.6,
+        opacity: 0,
+        ease: 'none',
         scrollTrigger: mobileScrollST,
       })
       gsap.to(tejasMobile.current, {
-        x:       () => window.innerWidth * 0.6,
-        opacity:  0,
-        ease:    'none',
+        x: () => window.innerWidth * 0.6,
+        opacity: 0,
+        ease: 'none',
         scrollTrigger: mobileScrollST,
       })
     })
@@ -99,16 +99,16 @@ export default function ParallaxImages() {
       <div
         ref={abhayMobile}
         className="fixed block md:hidden pointer-events-none"
-        style={{ width: 300, left: -135, top: '12vh', transform: 'rotate(22deg)', zIndex: 10 }}
+        style={{ width: 240, left: -90, top: '10vh', transform: 'rotate(40deg)', zIndex: 10 }}
       >
-        <Image src={ABHAY.src} alt="Abhay" width={300} height={415} className="w-full h-auto object-contain block" />
+        <Image src={ABHAY.src} alt="Abhay" width={240} height={332} className="w-full h-auto object-contain block" />
       </div>
       <div
         ref={tejasMobile}
         className="fixed block md:hidden pointer-events-none"
-        style={{ width: 240, left: 'calc(100vw - 130px)', top: '22vh', transform: 'rotate(-18deg)', zIndex: 10 }}
+        style={{ width: 190, left: 'calc(100vw - 130px)', top: '55vh', transform: 'rotate(-90deg)', zIndex: 100 }}
       >
-        <Image src={TEJAS.src} alt="Tejas" width={240} height={340} className="w-full h-auto object-contain block" />
+        <Image src={TEJAS.src} alt="Tejas" width={190} height={270} className="w-full h-auto object-contain block" />
       </div>
     </>
   )

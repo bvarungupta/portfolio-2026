@@ -22,7 +22,7 @@ export default function Navbar() {
   const router = useRouter()
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
-  
+
   // Prevent hydration mismatch by waiting for client mount
   useEffect(() => {
     setIsMounted(true)
@@ -59,9 +59,9 @@ export default function Navbar() {
         </filter>
       </defs>
     `
-    
+
     document.body.appendChild(filterSvg)
-    
+
     // Animate navbar entrance
     if (navRef.current) {
       gsap.fromTo(navRef.current,
@@ -69,7 +69,7 @@ export default function Navbar() {
         { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.2 }
       )
     }
-    
+
     return () => {
       if (filterSvg && filterSvg.parentNode) {
         filterSvg.parentNode.removeChild(filterSvg)
@@ -79,7 +79,7 @@ export default function Navbar() {
 
   const handleNavigation = (item: typeof navItems[0], e: React.MouseEvent) => {
     e.preventDefault()
-    
+
     // Add click animation
     if (navRef.current) {
       gsap.to(navRef.current, {
@@ -168,10 +168,10 @@ export default function Navbar() {
   const scrollToWorkSection = () => {
     // Find work section and scroll to it
     const workSection = document.querySelector('[data-section="work"]') ||
-                       document.querySelector('.gallery-wrapper') ||
-                       Array.from(document.querySelectorAll('h2')).find(el =>
-                         el.textContent?.toLowerCase().includes('work')
-                       )?.parentElement
+      document.querySelector('.gallery-wrapper') ||
+      Array.from(document.querySelectorAll('h2')).find(el =>
+        el.textContent?.toLowerCase().includes('work')
+      )?.parentElement
 
     if (workSection) {
       gsap.to(window, {
@@ -188,10 +188,10 @@ export default function Navbar() {
   const scrollToProposalsSection = () => {
     // Find proposals section
     const proposalsSection = document.querySelector('[data-section="proposals"]') ||
-                            // Try to find by text content containing "Proposals"
-                            Array.from(document.querySelectorAll('h2, h3')).find(el => 
-                              el.textContent?.toLowerCase().includes('proposals')
-                            )?.closest('div')
+      // Try to find by text content containing "Proposals"
+      Array.from(document.querySelectorAll('h2, h3')).find(el =>
+        el.textContent?.toLowerCase().includes('proposals')
+      )?.closest('div')
 
     if (proposalsSection) {
       gsap.to(window, {
@@ -208,30 +208,29 @@ export default function Navbar() {
 
   // Page transition in effect
   useEffect(() => {
-    gsap.fromTo("main", 
-      { 
-        y: 50, 
-        opacity: 0 
+    gsap.fromTo("main",
+      {
+        y: 50,
+        opacity: 0
       },
-      { 
-        y: 0, 
-        opacity: 1, 
+      {
+        y: 0,
+        opacity: 1,
         duration: 0.6,
         ease: "power2.out",
         delay: 0.1
       }
     )
   }, [pathname])
-  
+
   return (
     <div className="fixed top-0 left-0 right-0 flex justify-center px-3 py-4 pointer-events-none" style={{ zIndex: 10005 }}>
       <nav
         ref={navRef}
-        className={`flex items-center rounded-none py-1 relative transition-all duration-300 hover:shadow-lg pointer-events-auto w-full max-w-full md:w-auto justify-between md:justify-start ${
-          isMounted
+        className={`flex items-center rounded-none py-1 relative transition-all duration-300 hover:shadow-lg pointer-events-auto w-full max-w-full md:w-auto justify-between md:justify-start ${isMounted
             ? "gap-1 md:gap-6 px-3 md:px-6"
             : "gap-1 px-3"
-        }`}
+          }`}
         style={{
           background: 'rgba(255, 255, 255, 0.08)',
           backdropFilter: 'url(#liquid-lens) blur(2px)',
@@ -252,19 +251,17 @@ export default function Navbar() {
           <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
             <button
               onClick={(e) => handleNavigation(item, e)}
-              className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${
-                isMounted ? "text-xs md:text-sm" : "text-sm"
-              } ${
-                (pathname === item.href) ||
-                (item.name === "Work" && pathname.startsWith('/works/')) ||
-                (item.name === "Home" && pathname === '/')
+              className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"
+                } ${(pathname === item.href) ||
+                  (item.name === "Work" && pathname.startsWith('/works/')) ||
+                  (item.name === "Home" && pathname === '/')
                   ? "text-orange-500"
                   : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
                     ? "text-orange-400"
                     : pathname.startsWith('/proposals/')
                       ? "text-white"
                       : "text-zinc-700"
-              }`}
+                }`}
               style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
             >
               {item.name === "Home" ? (
