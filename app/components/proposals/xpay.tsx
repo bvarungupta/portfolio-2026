@@ -220,21 +220,21 @@ function PhoneStatusBar({ dark = false }: { dark?: boolean }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-          <rect x="0" y="4" width="2" height="4" rx="0.5" fill={fg} opacity="0.5"/>
-          <rect x="3" y="2.5" width="2" height="5.5" rx="0.5" fill={fg} opacity="0.6"/>
-          <rect x="6" y="1" width="2" height="7" rx="0.5" fill={fg} opacity="0.7"/>
-          <rect x="9" y="0" width="2" height="8" rx="0.5" fill={fg} opacity="0.9"/>
+          <rect x="0" y="4" width="2" height="4" rx="0.5" fill={fg} opacity="0.5" />
+          <rect x="3" y="2.5" width="2" height="5.5" rx="0.5" fill={fg} opacity="0.6" />
+          <rect x="6" y="1" width="2" height="7" rx="0.5" fill={fg} opacity="0.7" />
+          <rect x="9" y="0" width="2" height="8" rx="0.5" fill={fg} opacity="0.9" />
         </svg>
         <svg width="14" height="10" viewBox="0 0 24 18" fill="none">
-          <path d="M12 4.5C14.8 4.5 17.3 5.6 19.2 7.4L21 5.6C18.7 3.4 15.5 2 12 2S5.3 3.4 3 5.6L4.8 7.4C6.7 5.6 9.2 4.5 12 4.5Z" fill={fg} opacity="0.5"/>
-          <path d="M12 8.5C13.9 8.5 15.6 9.3 16.8 10.6L18.6 8.8C16.9 7.1 14.6 6 12 6S7.1 7.1 5.4 8.8L7.2 10.6C8.4 9.3 10.1 8.5 12 8.5Z" fill={fg} opacity="0.7"/>
-          <path d="M12 12.5C13 12.5 13.9 12.9 14.5 13.6L16.3 11.8C15.2 10.7 13.7 10 12 10S8.8 10.7 7.7 11.8L9.5 13.6C10.1 12.9 11 12.5 12 12.5Z" fill={fg} opacity="0.9"/>
-          <circle cx="12" cy="16" r="1.5" fill={fg}/>
+          <path d="M12 4.5C14.8 4.5 17.3 5.6 19.2 7.4L21 5.6C18.7 3.4 15.5 2 12 2S5.3 3.4 3 5.6L4.8 7.4C6.7 5.6 9.2 4.5 12 4.5Z" fill={fg} opacity="0.5" />
+          <path d="M12 8.5C13.9 8.5 15.6 9.3 16.8 10.6L18.6 8.8C16.9 7.1 14.6 6 12 6S7.1 7.1 5.4 8.8L7.2 10.6C8.4 9.3 10.1 8.5 12 8.5Z" fill={fg} opacity="0.7" />
+          <path d="M12 12.5C13 12.5 13.9 12.9 14.5 13.6L16.3 11.8C15.2 10.7 13.7 10 12 10S8.8 10.7 7.7 11.8L9.5 13.6C10.1 12.9 11 12.5 12 12.5Z" fill={fg} opacity="0.9" />
+          <circle cx="12" cy="16" r="1.5" fill={fg} />
         </svg>
         <svg width="18" height="10" viewBox="0 0 22 11" fill="none">
-          <rect x="0.5" y="0.5" width="18" height="10" rx="2.5" stroke={fg} strokeOpacity="0.5" strokeWidth="1"/>
-          <rect x="2" y="2" width="14" height="7" rx="1.5" fill={fg}/>
-          <path d="M20 3.5V7.5C20.8 7.2 21.5 6.2 21.5 5.5C21.5 4.8 20.8 3.8 20 3.5Z" fill={fg} opacity="0.5"/>
+          <rect x="0.5" y="0.5" width="18" height="10" rx="2.5" stroke={fg} strokeOpacity="0.5" strokeWidth="1" />
+          <rect x="2" y="2" width="14" height="7" rx="1.5" fill={fg} />
+          <path d="M20 3.5V7.5C20.8 7.2 21.5 6.2 21.5 5.5C21.5 4.8 20.8 3.8 20 3.5Z" fill={fg} opacity="0.5" />
         </svg>
       </div>
     </div>
@@ -313,7 +313,7 @@ function EmailCopyButton() {
       {copied ? (
         <>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6l3 3 5-5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M2 6l3 3 5-5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Copied!
         </>
@@ -321,8 +321,8 @@ function EmailCopyButton() {
         <>
           bvarungupta@gmail.com
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <rect x="9" y="9" width="13" height="13" rx="2" stroke="#9ca3af" strokeWidth="1.8"/>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round"/>
+            <rect x="9" y="9" width="13" height="13" rx="2" stroke="#9ca3af" strokeWidth="1.8" />
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round" />
           </svg>
         </>
       )}
@@ -632,39 +632,39 @@ export default function XPayProposal() {
 
                 {/* Byline — Medium style */}
                 <div className="xpay-byline">
-              <img
-                src="/images/common/Satish0profile.png"
-                alt="Varun Gupta"
-                style={{
-                  outline: '0.5px solid rgb(173, 173, 173)',
-                  outlineOffset: 0,
-                  width: 36,
-                  height: 36,
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  flexShrink: 0,
-                }}
-              />
-              <div className="xpay-byline-meta">
-                <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#111', fontWeight: 500 }}>
-                  Varun Gupta
-                </span>
-                <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>·</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#9ca3af" style={{ width: 13, height: 13, flexShrink: 0 }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                  </svg>
-                  <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>Apr 13, 2026</span>
-                </span>
-                <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>·</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#9ca3af" style={{ width: 13, height: 13, flexShrink: 0 }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-                  </svg>
-                  <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>3 min read</span>
-                </span>
-              </div>
-            </div>{/* end byline */}
+                  <img
+                    src="/images/HomeImages/Varun-about.jpg"
+                    alt="Varun Gupta"
+                    style={{
+                      outline: '0.5px solid rgb(173, 173, 173)',
+                      outlineOffset: 0,
+                      width: 36,
+                      height: 36,
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      flexShrink: 0,
+                    }}
+                  />
+                  <div className="xpay-byline-meta">
+                    <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#111', fontWeight: 500 }}>
+                      Varun Gupta
+                    </span>
+                    <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>·</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#9ca3af" style={{ width: 13, height: 13, flexShrink: 0 }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                      </svg>
+                      <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>Apr 13, 2026</span>
+                    </span>
+                    <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>·</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#9ca3af" style={{ width: 13, height: 13, flexShrink: 0 }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                      </svg>
+                      <span style={{ fontFamily: 'FunnelDisplay, sans-serif', fontSize: 13, color: '#9ca3af' }}>3 min read</span>
+                    </span>
+                  </div>
+                </div>{/* end byline */}
               </div>{/* end left text */}
 
               {/* Right: coin image */}
@@ -882,7 +882,7 @@ export default function XPayProposal() {
               >
                 bvarungupta.com
                 <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
             </div>
