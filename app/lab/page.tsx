@@ -15,6 +15,11 @@ export default function Lab() {
         .color-wheel-spin {
           animation: spin-slow 12s linear infinite;
         }
+        @media (max-width: 767px) {
+          .visitor-lab-card {
+            --visitor-icon-right: -180px;
+          }
+        }
       `}</style>
 
       <LabHeader />
@@ -62,7 +67,7 @@ export default function Lab() {
         {/* Visitor Card Lab */}
         <Link
           href="/lab/visitor-card"
-          className="group relative border border-gray-200 px-6 py-8 hover:border-gray-900 transition-colors duration-200 overflow-hidden"
+          className="visitor-lab-card group relative border border-gray-200 px-6 py-8 hover:border-gray-900 transition-colors duration-200 overflow-hidden"
           style={{ background: '#ffffff', textDecoration: 'none', borderRadius: '0 16px 0 16px', boxShadow: 'inset 8px 0 24px -8px rgba(0,0,0,0.12)' }}
         >
           <div
@@ -81,7 +86,7 @@ export default function Lab() {
             style={{
               position: 'absolute',
               bottom: '-70px',
-              right: '-50px',
+              right: 'var(--visitor-icon-right, -50px)',
               width: '260px',
               height: '260px',
               objectFit: 'contain',
