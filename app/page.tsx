@@ -75,7 +75,7 @@ export default function Home() {
 
         {/* Work section */}
         <div data-section="work">
-          <WorkGallery />
+          <WorkGallery limit={3} showViewMore={true} />
         </div>
 
         {/* Visual Identity section */}

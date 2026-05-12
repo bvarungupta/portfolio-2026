@@ -413,40 +413,9 @@ export default function ColorGame() {
     <div style={{ height: '100vh', overflow: 'hidden', background: 'white', fontFamily: 'FunnelDisplay, sans-serif', position: 'relative' }}>
 
 
-      {/* Leaderboard button — fixed, centered, always above the card, never moves */}
+      {/* Leaderboard button removed by request */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 10 }}>
         <div style={{ width: '100%', maxWidth: '560px', display: 'flex', justifyContent: 'center', marginBottom: '200px', pointerEvents: 'none' }}>
-          <button
-            onClick={() => {
-                setBorderFlash(true)
-                setTimeout(() => setBorderFlash(false), 500)
-                if (showLeaderboard) setShowLeaderboard(false)
-                else fetchLeaderboard()
-              }}
-            style={{
-              pointerEvents: 'auto',
-              padding: '7px 18px', border: `1px solid ${borderFlash ? '#111' : '#e5e7eb'}`, background: 'white', width: '148px', justifyContent: 'center',
-              color: '#6b7280', fontSize: '11px', fontFamily: 'FunnelDisplay, sans-serif',
-              cursor: 'pointer', borderRadius: showLeaderboard ? '0 6px 0 6px' : '6px 0 6px 0', letterSpacing: '0.04em',
-              display: 'flex', alignItems: 'center', gap: '6px',
-              transition: 'border-color 0.35s ease, color 0.2s, border-radius 0.4s cubic-bezier(0.77, 0, 0.175, 1)',
-            }}
-          >
-            <span style={{ display: 'flex', alignItems: 'center', width: '16px', height: '16px', position: 'relative' }}>
-              <img
-                src="/images/HomeImages/eagle-head.svg"
-                alt=""
-                style={{ width: '16px', height: '16px', objectFit: 'contain', position: 'absolute', opacity: showLeaderboard ? 0 : 1, transform: showLeaderboard ? 'scale(0.6)' : 'scale(1)', transition: 'opacity 0.35s ease, transform 0.35s ease' }}
-              />
-              <svg
-                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                style={{ position: 'absolute', opacity: showLeaderboard ? 1 : 0, transform: showLeaderboard ? 'scale(1)' : 'scale(0.6)', transition: 'opacity 0.35s ease, transform 0.35s ease' }}
-              >
-                <path d="M19 12H5M12 5l-7 7 7 7" />
-              </svg>
-            </span>
-            {showLeaderboard ? 'Back to game' : 'Leaderboard'}
-          </button>
         </div>
         {/* Spacer to push button above card — matches card height roughly */}
         <div style={{ height: `${CARD_H}px`, width: '100%', maxWidth: '560px' }} />
@@ -649,35 +618,7 @@ export default function ColorGame() {
                 ))}
               </div>
 
-              {!submitted ? (
-                <div style={{ marginBottom: '16px' }}>
-                  <div style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '8px' }}>Add to leaderboard</div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <input
-                      type="text"
-                      placeholder="Your name"
-                      maxLength={32}
-                      value={playerName}
-                      onChange={(e) => setPlayerName(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && submitScore()}
-                      style={{
-                        flex: 1, padding: '10px 12px', background: 'rgba(255,255,255,0.07)',
-                        border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px',
-                        color: 'white', fontSize: '13px', fontFamily: 'FunnelDisplay, sans-serif', outline: 'none',
-                      }}
-                    />
-                    <button onClick={submitScore} disabled={submitting || !playerName.trim()} style={{
-                      padding: '10px 16px', borderRadius: '8px', border: 'none',
-                      background: playerName.trim() ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.15)',
-                      color: playerName.trim() ? '#111' : 'rgba(255,255,255,0.3)',
-                      fontSize: '12px', fontWeight: 700, cursor: playerName.trim() ? 'pointer' : 'default',
-                      fontFamily: 'FunnelDisplay, sans-serif', transition: 'all 0.2s',
-                    }}>
-                      {submitting ? '...' : 'Submit'}
-                    </button>
-                  </div>
-                </div>
-              ) : null}
+
 
               <button className="start-btn" onClick={startGame} style={{
                 width: '100%', padding: '12px', borderRadius: '9999px', border: 'none',

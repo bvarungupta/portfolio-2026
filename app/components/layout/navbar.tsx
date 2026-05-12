@@ -91,27 +91,7 @@ export default function Navbar() {
       })
     }
 
-    if (item.name === "Work") {
-      // Check if we're on a work page
-      if (pathname.startsWith('/works/')) {
-        // Navigate to home and scroll to work section
-        navigateWithTransition('/', () => {
-          setTimeout(() => {
-            scrollToWorkSection()
-          }, 500)
-        })
-      } else if (pathname === '/') {
-        // Already on home, just scroll to work section
-        scrollToWorkSection()
-      } else {
-        // Navigate to home and scroll to work
-        navigateWithTransition('/', () => {
-          setTimeout(() => {
-            scrollToWorkSection()
-          }, 500)
-        })
-      }
-    } else if (item.name === "Concepts") {
+    if (item.name === "Concepts") {
       if (pathname === '/') {
         // Already on home, scroll to proposals
         scrollToProposalsSection()

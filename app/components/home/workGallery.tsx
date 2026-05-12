@@ -64,7 +64,7 @@ const Plus = ({ h, v = 'bottom' }: { h: 'left' | 'right'; v?: 'top' | 'bottom' }
   >+</span>
 )
 
-export default function WorkGallery() {
+export default function WorkGallery({ limit, showViewMore }: { limit?: number; showViewMore?: boolean } = {}) {
   const headerRef  = useRef<HTMLDivElement>(null)
   const selectedEl = useRef<HTMLHeadingElement>(null)
   const worksEl    = useRef<HTMLHeadingElement>(null)
@@ -215,7 +215,7 @@ export default function WorkGallery() {
         />
 
       <div className="flex flex-col gap-10 md:gap-16">
-        {works.map((work) => (
+        {(limit ? works.slice(0, limit) : works).map((work) => (
           <div
             key={work.num}
             className="relative border border-gray-200 grid grid-cols-1 md:grid-cols-2"
@@ -290,6 +290,21 @@ export default function WorkGallery() {
           </div>
         ))}
       </div>
+
+      {showViewMore && (
+        <div className="flex justify-center mt-12 md:mt-20">
+          <Link
+            href="/work"
+            className="group px-6 py-3 border border-gray-900 text-sm text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 flex items-center gap-2"
+            style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
+          >
+            View more work
+            <svg className="transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor">
+              <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg>
+          </Link>
+        </div>
+      )}
 
       </div>{/* end relative wrapper */}
 
