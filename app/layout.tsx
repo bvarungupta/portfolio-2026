@@ -1,13 +1,10 @@
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import NavbarClient from "./components/layout/NavbarClient"
 import SmoothScroll from "./components/layout/SmoothScroll"
 import ScrollReset from "./components/layout/ScrollReset"
 import Footer from "./components/layout/footer"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -48,7 +45,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <SmoothScroll />
         <ScrollReset />
         <NavbarClient />

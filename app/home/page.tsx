@@ -1,0 +1,86 @@
+import Image from "next/image"
+import Loader from "../components/layout/Loader"
+import WorkGallery from "../components/home/workGallery"
+import MouseColorBloom from "../components/home/MouseColorBloom"
+import ParallaxImages from "../components/home/ParallaxImages"
+import EmailSection from "../components/home/EmailSection"
+import UnpluggedGallery from "../components/home/unpluggedGallery"
+import VisualIdentityGallery from "../components/home/visualIdentityGallery"
+import ProposalsGallery from "../components/home/proposalsGallery"
+import PageBranches from "../components/home/PageBranches"
+
+export default function HomePortfolio() {
+  return (
+    <div className="bg-white relative">
+      <Loader />
+      <PageBranches />
+
+      <Image
+        src="/images/HomeImages/piller-v.svg"
+        alt=""
+        width={120}
+        height={800}
+        loading="eager"
+        priority
+        className="fixed top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
+        style={{ zIndex: 0, opacity: 0.18, left: "-70px" }}
+      />
+      <Image
+        src="/images/HomeImages/piller-2-v.svg"
+        alt=""
+        width={120}
+        height={800}
+        className="fixed top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
+        style={{ zIndex: 0, opacity: 0.18, right: "-40px" }}
+      />
+
+      <div className="max-w-5xl mx-auto px-6 md:px-10">
+        <MouseColorBloom />
+        <div className="relative min-h-[calc(100vh-120px)] flex flex-col justify-center items-center text-center gap-6 overflow-hidden md:overflow-visible">
+          <ParallaxImages />
+
+          <div className="relative flex flex-col items-center gap-6 md:bg-white md:px-6 md:py-4" style={{ zIndex: 5 }}>
+            <Image
+              src="/images/common/vg-outline.svg"
+              alt="Varun Gupta Portfolio Logo"
+              width={48}
+              height={48}
+              className="opacity-50"
+              style={{ marginBottom: "70px" }}
+            />
+            <h1 className="text-4xl md:text-5xl tracking-tight text-black">
+              <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>V</span><span style={{ fontFamily: "SatishSans, sans-serif", marginLeft: "4px" }}>arun </span>
+              <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>G</span><span style={{ fontFamily: "SatishSans, sans-serif", marginLeft: "4px" }}>upta</span>
+            </h1>
+            <p
+              className="text-sm md:text-base text-gray-400 leading-relaxed max-w-md"
+              style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: "300" }}
+            >
+              I design what early-stage startups need to exist. Brand, product, and system. From first brief to live product.
+            </p>
+          </div>
+
+          <div className="absolute bottom-28 md:bottom-20 left-0 right-0 flex justify-center items-center" style={{ zIndex: 5 }}>
+            <EmailSection />
+          </div>
+        </div>
+
+        <div data-section="work">
+          <WorkGallery limit={3} showViewMore={true} />
+        </div>
+
+        <div data-section="visual-identity">
+          <VisualIdentityGallery />
+        </div>
+
+        <div data-section="proposals">
+          <ProposalsGallery />
+        </div>
+
+        <div data-section="unplugged" className="hidden">
+          <UnpluggedGallery />
+        </div>
+      </div>
+    </div>
+  )
+}

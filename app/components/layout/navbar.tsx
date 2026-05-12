@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollToPlugin)
 const navItems = [
   { name: "Work", href: "/work" },
   { name: "Concepts", href: "/proposals" },
-  { name: "Home", href: "/" },
+  { name: "Home", href: "/home" },
   { name: "Lab", href: "/lab" },
   { name: "About", href: "/about" },
 ]
@@ -92,12 +92,12 @@ export default function Navbar() {
     }
 
     if (item.name === "Concepts") {
-      if (pathname === '/') {
+      if (pathname === '/home') {
         // Already on home, scroll to proposals
         scrollToProposalsSection()
       } else {
         // Navigate to home and scroll to proposals
-        navigateWithTransition('/', () => {
+        navigateWithTransition('/home', () => {
           setTimeout(() => {
             scrollToProposalsSection()
           }, 500)
@@ -234,7 +234,7 @@ export default function Navbar() {
               className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"
                 } ${(pathname === item.href) ||
                   (item.name === "Work" && pathname.startsWith('/works/')) ||
-                  (item.name === "Home" && pathname === '/')
+                  (item.name === "Home" && pathname === '/home')
                   ? "text-orange-500"
                   : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
                     ? "text-orange-400"
@@ -250,7 +250,7 @@ export default function Navbar() {
                   alt="Home"
                   width={22}
                   height={22}
-                  className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
+                  className={`transition-opacity duration-300 ${pathname === '/home' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
                   style={pathname.startsWith('/proposals/') ? { filter: 'invert(1)' } : {}}
                 />
               ) : item.name}

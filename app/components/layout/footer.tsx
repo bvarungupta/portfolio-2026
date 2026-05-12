@@ -11,7 +11,7 @@ const links = [
 ]
 
 const navLinks = [
-  { label: 'Works', href: '/#work' },
+  { label: 'Works', href: '/home#work' },
   { label: 'About', href: '/about' },
 ]
 
@@ -20,6 +20,7 @@ export default function Footer() {
   const isUnpluggedPage = pathname?.startsWith('/unplugged/')
   const isProposalPage = pathname?.startsWith('/proposals')
 
+  if (pathname === '/') return null
   if (isProposalPage) return null
 
   return (
