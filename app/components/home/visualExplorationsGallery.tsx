@@ -8,11 +8,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const images = [
-  '/images/visual-explorations/Business Card Mockup.png',
-  '/images/visual-explorations/Free_Distinctive_Business_Card_M 1.jpg',
+  '/images/visual-explorations/card.png',
+  '/images/visual-explorations/card-business.jpg',
   '/images/visual-explorations/Heydu.jpeg',
   '/images/visual-explorations/MacBook_13.png',
-  '/images/visual-explorations/Street Poster.png',
+  '/images/visual-explorations/streer-poster.png',
   '/images/visual-explorations/about  2.png',
 ]
 
