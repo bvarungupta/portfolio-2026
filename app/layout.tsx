@@ -10,21 +10,40 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'https://varungupta-eta.vercel.app'
   ),
-  title: "Varun Gupta — Product Designer",
+  title: {
+    default: "Varun Gupta — Product Designer",
+    template: "%s | Varun Gupta",
+  },
   description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
-  keywords: ["Varun Gupta", "Product Designer", "UI UX Designer", "Hyderabad", "Startup Designer", "Brand Design", "SaaS Design", "Freelance Designer India"],
-  authors: [{ name: "Varun Gupta" }],
+  keywords: [
+    "Varun Gupta",
+    "Varun Gupta designer",
+    "Varun Gupta portfolio",
+    "Product Designer",
+    "UI UX Designer",
+    "UX Designer Hyderabad",
+    "Startup Designer India",
+    "Brand Design",
+    "SaaS Design",
+    "Freelance Designer India",
+    "Product Design Portfolio",
+    "bvarungupta",
+  ],
+  authors: [{ name: "Varun Gupta", url: "https://varungupta-eta.vercel.app" }],
+  creator: "Varun Gupta",
   openGraph: {
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
     url: "https://varungupta-eta.vercel.app",
+    siteName: "Varun Gupta Portfolio",
     type: "website",
-    images: ["/images/common/vg-outline.svg"],
+    locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
+    creator: "@bvarungupta",
   },
   alternates: {
     canonical: "https://varungupta-eta.vercel.app",
@@ -32,6 +51,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
   icons: {
     icon: '/images/common/vg-white.svg?v=2',
@@ -52,24 +78,45 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Varun Gupta",
-              "jobTitle": "Product Designer",
-              "url": "https://varungupta-eta.vercel.app",
-              "email": "bvarungupta@gmail.com",
-              "sameAs": [
-                "https://linkedin.com/in/bvarungupta",
-                "https://behance.net/bvarungupta",
-                "https://dribbble.com/bvarungupta"
-              ],
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Hyderabad",
-                "addressCountry": "IN"
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "ProfilePage",
+                "mainEntity": {
+                  "@type": "Person",
+                  "@id": "https://varungupta-eta.vercel.app/#varungupta",
+                  "name": "Varun Gupta",
+                  "alternateName": "bvarungupta",
+                  "jobTitle": "Product Designer",
+                  "description": "Product designer specialising in brand, product, and design systems for early-stage startups.",
+                  "url": "https://varungupta-eta.vercel.app",
+                  "email": "bvarungupta@gmail.com",
+                  "knowsAbout": ["Product Design", "UI/UX Design", "Brand Identity", "Design Systems", "SaaS"],
+                  "sameAs": [
+                    "https://linkedin.com/in/bvarungupta",
+                    "https://behance.net/bvarungupta",
+                    "https://dribbble.com/bvarungupta"
+                  ],
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Hyderabad",
+                    "addressRegion": "Telangana",
+                    "addressCountry": "IN"
+                  }
+                }
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "url": "https://varungupta-eta.vercel.app",
+                "name": "Varun Gupta Portfolio",
+                "description": "Portfolio of Varun Gupta, Product Designer based in Hyderabad.",
+                "author": {
+                  "@type": "Person",
+                  "name": "Varun Gupta"
+                }
               }
-            })
+            ])
           }}
         />
         <main>
