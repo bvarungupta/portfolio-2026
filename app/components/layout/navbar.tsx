@@ -106,8 +106,8 @@ export default function Navbar() {
     } else if (item.name === "About") {
       navigateWithTransition('/about')
     } else if (item.name === "Home") {
-      if (pathname !== '/') {
-        navigateWithTransition('/')
+      if (pathname !== '/home') {
+        navigateWithTransition('/home')
       } else {
         // Already on home, scroll to top
         scrollToTop()

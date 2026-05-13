@@ -6,6 +6,7 @@ import ParallaxImages from "../components/home/ParallaxImages"
 import EmailSection from "../components/home/EmailSection"
 import UnpluggedGallery from "../components/home/unpluggedGallery"
 import VisualIdentityGallery from "../components/home/visualIdentityGallery"
+import VisualExplorationsGallery from "../components/home/visualExplorationsGallery"
 import ProposalsGallery from "../components/home/proposalsGallery"
 import PageBranches from "../components/home/PageBranches"
 
@@ -71,6 +72,10 @@ export default function HomePortfolio() {
 
         <div data-section="visual-identity">
           <VisualIdentityGallery />
+        </div>
+
+        <div data-section="visual-explorations">
+          <VisualExplorationsGallery />
         </div>
 
         <div data-section="proposals">

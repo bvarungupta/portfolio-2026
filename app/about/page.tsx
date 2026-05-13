@@ -112,7 +112,8 @@ export default function About() {
               className="text-2xl md:text-3xl leading-snug text-gray-800 mb-6"
               style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
             >
-              I'm a designer who partners with startups and takes full ownership of the work.
+              I'm a Product Designer who takes full ownership of the work,
+              the thinking, the decisions, and the execution.
             </p>
             <p className="text-base text-gray-500 leading-relaxed">
               Not just the screens, but the thinking, the decisions, and the execution. I come in early, when things are undefined, and stay until they ship.
@@ -229,7 +230,22 @@ export default function About() {
         {/* ── Section 2: full-width description ───────────────── */}
         <div className="mb-20">
           <p className="text-base text-gray-500 leading-relaxed">
-            Across IoT interfaces, AI interfaces, SaaS products, learning management systems, event management tools, and health platforms, I've worked on some of the most diverse product challenges a designer can get. That range is deliberate. It keeps the thinking sharp, the approach adaptable, and the work honest.
+            I design digital products that are simple to use and hard to forget.
+
+            My work spans SaaS, FinTech, HealthTech, and EdTech, giving me
+            a range of experience that keeps my thinking sharp and my
+            approach adaptable. I've taken products from 0 → 1, working
+            across the full design lifecycle from ambiguous brief to
+            shipped product.
+
+            I care deeply about the details. I work closely with
+            cross-functional teams, translate complex problems into clear
+            design solutions, and stay involved from research all the way
+            through to launch.
+
+            Outside of product work, I explore visual design, motion, and
+            brand identity because good product designers understand
+            the full picture.
           </p>
         </div>
 
