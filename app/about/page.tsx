@@ -166,32 +166,32 @@ export default function About() {
             {/* Floating images — each near its related chip */}
             {[
               {
-                src: "/images/satish-image-hover-images/pen-tool.png",
+                src: "/images/varun-image-hover-images/pen-tool.png",
                 size: 34, top: "16px", left: "-36px", rotate: -14, delay: 0.04, duration: "0.6s",
                 animation: "pen-sway 1.6s ease-in-out infinite", cls: "himg-pen",
               },
               {
-                src: "/images/satish-image-hover-images/enter-button.png",
+                src: "/images/varun-image-hover-images/enter-button.png",
                 size: 32, top: "16px", right: "-36px", rotate: 8, delay: 0.03, duration: "0.42s",
                 animation: "key-click 2.2s ease-in-out infinite", cls: "himg-enter",
               },
               {
-                src: "/images/satish-image-hover-images/TAB-button.png",
+                src: "/images/varun-image-hover-images/TAB-button.png",
                 size: 30, top: "40px", right: "-38px", rotate: -6, delay: 0.06, duration: "0.5s",
                 animation: "key-click 2.2s ease-in-out 1.1s infinite", cls: "himg-tab",
               },
               {
-                src: "/images/satish-image-hover-images/football.png",
+                src: "/images/varun-image-hover-images/football.png",
                 size: 38, top: "44%", left: "-44px", rotate: 0, delay: 0.09, duration: "0.55s",
                 animation: "football-spin 3s linear infinite", cls: "himg-ball",
               },
               {
-                src: "/images/satish-image-hover-images/wood-saw.png",
+                src: "/images/varun-image-hover-images/wood-saw.png",
                 size: 36, top: "68%", right: "-42px", rotate: 0, delay: 0.07, duration: "0.58s",
                 animation: "saw-motion 0.38s ease-in-out infinite", cls: "himg-saw",
               },
               {
-                src: "/images/satish-image-hover-images/burshes.png",
+                src: "/images/varun-image-hover-images/burshes.png",
                 size: 36, bottom: "-28px", left: "-24px", rotate: 0, delay: 0.11, duration: "0.52s",
                 animation: "brush-tilt 1.1s ease-in-out infinite", cls: "himg-brush",
               },
@@ -342,76 +342,91 @@ export default function About() {
             Tools I use to design, build, and ship every day.
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
             {/* Design & Animations */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
-              <div className="flex flex-col gap-4">
+              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
                 {[
                   { name: "Figma", src: "/images/ToolsIcons/figma-icon.svg" },
                   { name: "Photoshop", src: "/images/ToolsIcons/adobe-photoshop-icon.svg" },
+                  { name: "Illustrator", src: "/images/ToolsIcons/illustrator.png" },
                   { name: "After Effects", src: "/images/ToolsIcons/adobe-after-effects-icon.svg" },
+                  { name: "Affinity Designer", src: "/images/ToolsIcons/affinity.svg" },
                   { name: "Blender", src: "/images/ToolsIcons/blender-icon.svg" },
                   { name: "LottieFiles", src: "/images/ToolsIcons/lottiefiles.svg" },
                   { name: "Rive", src: "/images/ToolsIcons/rive-icon.svg" },
                   { name: "Zeplin", src: "/images/ToolsIcons/zeplin-icon.webp" },
-                  { name: "Paper", src: "/images/ToolsIcons/paper-icon.svg" },
+                  { name: "Paper", src: "/images/ToolsIcons/paper.png" },
                   { name: "Spline", src: "/images/ToolsIcons/spline-icon.webp" },
+                  { name: "Jitter", src: "/images/ToolsIcons/jitter.png" },
                 ].map((tool) => (
-                  <div key={tool.name} className="flex items-center gap-3">
+                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
                       <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
                   </div>
                 ))}
-                <p className="text-xs text-gray-400 mt-1" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
-                  + dozens of online tools
-                </p>
+                <div className="flex flex-col items-center gap-2 text-center justify-center">
+                  <span className="text-[11px] text-gray-400" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>+ more</span>
+                </div>
               </div>
             </div>
 
-            {/* Development + AI combined on mobile */}
-            <div className="flex flex-col gap-10 md:contents">
-
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
-                <div className="flex flex-col gap-4">
-                  {[
-                    { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
-                    { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
-                  ].map((tool) => (
-                    <div key={tool.name} className="flex items-center gap-3">
-                      <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                        <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
-                      </div>
-                      <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+            {/* Development */}
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
+              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
+                {[
+                  { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
+                  { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
+                  { name: "Framer", src: "/images/ToolsIcons/framer-logo.svg" },
+                  { name: "Webflow", src: "/images/ToolsIcons/webflow.svg" },
+                  { name: "Wix", src: "/images/ToolsIcons/wix.png" },
+                  { name: "Wordpress", src: "/images/ToolsIcons/wordpress.png" },
+                  { name: "Shopify", src: "/images/ToolsIcons/shopify.svg" },
+                  { name: "Astro Build", src: "/images/ToolsIcons/astro.png" },
+                  { name: "Supabase", src: "/images/ToolsIcons/supabase.webp" },
+                  { name: "Next JS", src: "/images/ToolsIcons/next.png" },
+                ].map((tool) => (
+                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
+                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
+                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
                     </div>
-                  ))}
-                </div>
+                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* AI & Assistive */}
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>AI & Assistive Tools</p>
-                <div className="flex flex-col gap-4">
-                  {[
-                    { name: "Claude Code", src: "/images/ToolsIcons/claude-ai-icon.svg" },
-                    { name: "ChatGPT", src: "/images/ToolsIcons/chatgpt-icon.svg" },
-                    { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
-                  ].map((tool) => (
-                    <div key={tool.name} className="flex items-center gap-3">
-                      <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                        <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
-                      </div>
-                      <span className="text-sm text-gray-700" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+            {/* Productivity & Assistive Tools */}
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
+              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
+                {[
+                  { name: "Claude Code", src: "/images/ToolsIcons/claude-ai-icon.svg" },
+                  { name: "ChatGPT", src: "/images/ToolsIcons/chatgpt-icon.svg" },
+                  { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
+                  { name: "Notion", src: "/images/ToolsIcons/notion.png" },
+                  { name: "Miro", src: "/images/ToolsIcons/miro.png" },
+                  { name: "Maze", src: "/images/ToolsIcons/maze.svg" },
+                  { name: "Mobbin", src: "/images/ToolsIcons/mobbin.png" },
+                  { name: "Replit", src: "/images/ToolsIcons/replit.png" },
+                  { name: "Vercel", src: "/images/ToolsIcons/vercel.svg" },
+                  { name: "Arc", src: "/images/ToolsIcons/arc.png" },
+                  { name: "Linear", src: "/images/ToolsIcons/linear.webp" },
+                ].map((tool) => (
+                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
+                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
+                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
                     </div>
-                  ))}
-                </div>
+                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+                  </div>
+                ))}
               </div>
-
-            </div>{/* closes mobile wrapper */}
+            </div>
 
           </div>
         </div>
@@ -424,10 +439,10 @@ export default function About() {
           >
             If you're building something and need a designer who takes ownership end to end, let's talk.
           </p>
-          <div className="inline-flex items-stretch gap-0">
+          <div className="flex flex-col md:flex-row items-stretch w-full md:w-auto md:inline-flex">
             <a
               href="mailto:bvarungupta@gmail.com"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
             >
               say hello
@@ -436,12 +451,13 @@ export default function About() {
               </svg>
             </a>
             <div
-              className="flex items-center px-5 border border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
+              className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
+              onClick={handleCopy}
             >
-              bvarungupta@gmail.com
+              <span className="truncate">bvarungupta@gmail.com</span>
               <button
-                onClick={handleCopy}
+                onClick={(e) => { e.stopPropagation(); handleCopy(); }}
                 className="ml-2 text-gray-300 hover:text-gray-600 transition-colors duration-200 flex-shrink-0 cursor-pointer"
                 title="Copy email"
               >
