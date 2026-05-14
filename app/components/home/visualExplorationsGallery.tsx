@@ -8,12 +8,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const images = [
-  '/images/Visual-Explorations/card.png',
-  '/images/Visual-Explorations/card-business.jpg',
-  '/images/Visual-Explorations/Heydu.jpeg',
-  '/images/Visual-Explorations/MacBook_13.png',
-  '/images/Visual-Explorations/streer-poster.png',
-  '/images/Visual-Explorations/about  2.png',
+  '/images/visual-explorations/card.png',
+  '/images/visual-explorations/card-business.jpg',
+  '/images/visual-explorations/Heydu.jpeg',
+  '/images/visual-explorations/MacBook_13.png',
+  '/images/visual-explorations/streer-poster.png',
+  '/images/visual-explorations/about  2.png',
 ]
 
 // Duplicate images to create a seamless infinite loop
@@ -104,21 +104,15 @@ export default function VisualExplorationsGallery() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         @keyframes infinite-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
         }
-        
         .animate-infinite-scroll {
           animation: infinite-scroll 45s linear infinite;
         }
-
-        .hover\\:animation-pause:hover {
+        .animate-infinite-scroll:hover {
           animation-play-state: paused;
         }
       `}</style>
