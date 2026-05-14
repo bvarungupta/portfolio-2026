@@ -381,6 +381,7 @@ export default function About() {
               <div className="grid grid-cols-3 gap-x-3 gap-y-5">
                 {[
                   { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
+                  { name: "Anti Gravity", src: "/images/ToolsIcons/antigravity.svg" },
                   { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
                   { name: "Framer", src: "/images/ToolsIcons/framer-logo.svg" },
                   { name: "Webflow", src: "/images/ToolsIcons/webflow.svg" },
@@ -390,6 +391,7 @@ export default function About() {
                   { name: "Astro Build", src: "/images/ToolsIcons/astro.png" },
                   { name: "Supabase", src: "/images/ToolsIcons/supabase.webp" },
                   { name: "Next JS", src: "/images/ToolsIcons/next.png" },
+                  { name: "React", src: "/images/ToolsIcons/react.png" },
                 ].map((tool) => (
                   <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
@@ -417,6 +419,7 @@ export default function About() {
                   { name: "Vercel", src: "/images/ToolsIcons/vercel.svg" },
                   { name: "Arc", src: "/images/ToolsIcons/arc.png" },
                   { name: "Linear", src: "/images/ToolsIcons/linear.webp" },
+                  { name: "Hotjar", src: "/images/ToolsIcons/hotjar.png" },
                 ].map((tool) => (
                   <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
                     <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
