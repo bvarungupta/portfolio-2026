@@ -8,7 +8,7 @@ import Footer from "./components/layout/footer"
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://varungupta-eta.vercel.app'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://bvarungupta.vercel.app'
   ),
   title: {
     default: "Varun Gupta — Product Designer",
@@ -29,18 +29,18 @@ export const metadata: Metadata = {
     "Product Design Portfolio",
     "bvarungupta",
   ],
-  authors: [{ name: "Varun Gupta", url: "https://varungupta-eta.vercel.app" }],
+  authors: [{ name: "Varun Gupta", url: "https://bvarungupta.vercel.app" }],
   creator: "Varun Gupta",
   openGraph: {
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
-    url: "https://varungupta-eta.vercel.app",
+    url: "https://bvarungupta.vercel.app",
     siteName: "Varun Gupta Portfolio",
     type: "website",
     locale: "en_IN",
     images: [
       {
-        url: "/images/visual-explorations/card.png",
+        url: "/card.png",
         width: 1200,
         height: 630,
         alt: "Varun Gupta — Product Designer",
@@ -52,10 +52,10 @@ export const metadata: Metadata = {
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
     creator: "@bvarungupta",
-    images: ["/images/visual-explorations/card.png"],
+    images: ["/card.png"],
   },
   alternates: {
-    canonical: "https://varungupta-eta.vercel.app",
+    canonical: "https://bvarungupta.vercel.app",
   },
   robots: {
     index: true,
@@ -93,12 +93,12 @@ export default function RootLayout({
                 "@type": "ProfilePage",
                 "mainEntity": {
                   "@type": "Person",
-                  "@id": "https://varungupta-eta.vercel.app/#varungupta",
+                  "@id": "https://bvarungupta.vercel.app/#varungupta",
                   "name": "Varun Gupta",
                   "alternateName": "bvarungupta",
                   "jobTitle": "Product Designer",
                   "description": "Product designer specialising in brand, product, and design systems for early-stage startups.",
-                  "url": "https://varungupta-eta.vercel.app",
+                  "url": "https://bvarungupta.vercel.app",
                   "email": "bvarungupta@gmail.com",
                   "knowsAbout": ["Product Design", "UI/UX Design", "Brand Identity", "Design Systems", "SaaS"],
                   "sameAs": [
@@ -117,9 +117,9 @@ export default function RootLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "WebSite",
-                "url": "https://varungupta-eta.vercel.app",
+                "url": "https://bvarungupta.vercel.app",
                 "name": "Varun Gupta Portfolio",
-                "description": "Portfolio of Varun Gupta, Product Designer based in Hyderabad.",
+                "description": "Portfolio of Varun Gupta, Product Designer based in India.",
                 "author": {
                   "@type": "Person",
                   "name": "Varun Gupta"
