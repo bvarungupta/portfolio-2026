@@ -38,12 +38,21 @@ export const metadata: Metadata = {
     siteName: "Varun Gupta Portfolio",
     type: "website",
     locale: "en_IN",
+    images: [
+      {
+        url: "/images/visual-explorations/card.png",
+        width: 1200,
+        height: 630,
+        alt: "Varun Gupta — Product Designer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
     creator: "@bvarungupta",
+    images: ["/images/visual-explorations/card.png"],
   },
   alternates: {
     canonical: "https://varungupta-eta.vercel.app",
