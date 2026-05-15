@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "/card.png",
+        url: "/card.jpg",
         width: 1200,
         height: 630,
         alt: "Varun Gupta — Product Designer",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Varun Gupta — Product Designer",
     description: "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups. From first brief to live product.",
     creator: "@bvarungupta",
-    images: ["/card.png"],
+    images: ["/card.jpg"],
   },
   alternates: {
     canonical: "https://bvarungupta.vercel.app",
