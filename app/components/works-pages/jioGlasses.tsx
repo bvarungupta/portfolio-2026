@@ -488,7 +488,7 @@ export default function JioGlasses() {
 
         {/* ── KPI strip ───────────────────────────────────────────────── */}
         <div className="relative border-b border-gray-200">
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-3">
             {[
               { value: '450M+', label: 'Jio Subscribers', sub: 'The scale the design had to speak to' },
               { value: '12 Weeks', label: 'Turnaround', sub: 'From first session to V1 live' },
@@ -498,8 +498,7 @@ export default function JioGlasses() {
               return (
                 <div
                   key={s.value}
-                  className="relative overflow-hidden cursor-default"
-                  style={{ borderRight: i < 2 ? '1px solid #e5e7eb' : 'none' }}
+                  className="relative overflow-hidden cursor-default border-b border-gray-200 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"
                   onMouseEnter={() => setHoveredStat(s.value)}
                   onMouseLeave={() => setHoveredStat(null)}
                 >
@@ -511,9 +510,9 @@ export default function JioGlasses() {
                       transition: 'opacity 0.25s ease',
                     }}
                   />
-                  <div className="relative px-6 md:px-8 py-4 md:py-5">
+                  <div className="relative px-8 py-8 md:px-8 md:py-5">
                     <p
-                      className="text-2xl md:text-3xl font-light mb-0.5 transition-colors duration-200"
+                      className="text-4xl md:text-3xl font-light mb-1 transition-colors duration-200"
                       style={{ fontFamily: 'SatishSans, sans-serif', color: hovered ? ACCENT : '#111' }}
                     >
                       {s.value}
