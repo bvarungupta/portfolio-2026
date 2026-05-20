@@ -28,6 +28,12 @@ const allWorks = [
     image: '/images/WorkImages/skillradius/SR-thumnail.png',
     tags: ['LMS'],
   },
+  {
+    title: 'Jio Glasses',
+    href: '/works/jio',
+    image: '/images/WorkImages/jio/thumbnail.png',
+    tags: ['Product Design'],
+  },
 ]
 
 export default function MoreWorks({ current }: { current: string }) {

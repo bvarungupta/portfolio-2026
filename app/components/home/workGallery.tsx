@@ -45,6 +45,15 @@ const works = [
     year: '2025',
     available: true,
   },
+  {
+    num: '05',
+    title: 'Jio Glasses',
+    description: 'Coming soon.',
+    image: '/images/WorkImages/jio/thumbnail.png',
+    href: '/works/jio',
+    year: '2025',
+    available: true,
+  },
 ]
 
 // Corner plus marker

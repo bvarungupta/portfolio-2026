@@ -86,6 +86,22 @@ export default function VisualExplorationsGallery() {
 
       {/* ── Infinite Carousel ───────────────────────────────────── */}
       <div className="relative w-full overflow-hidden flex py-4">
+        {/* Left fade */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-24 md:w-40 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
+            zIndex: 10,
+          }}
+        />
+        {/* Right fade */}
+        <div
+          className="absolute right-0 top-0 bottom-0 w-24 md:w-40 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
+            zIndex: 10,
+          }}
+        />
         <div className="flex w-max animate-infinite-scroll hover:animation-pause">
           {carouselItems.map((src, idx) => (
             <div
