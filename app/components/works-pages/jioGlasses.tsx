@@ -409,7 +409,7 @@ export default function JioGlasses() {
           <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center overflow-hidden">
             <Image
               src="/images/WorkImages/jio/JioLogo.svg"
-              alt="Jio Tesseract logo"
+              alt="Reliance Tesseract logo"
               width={48}
               height={48}
               className="w-full h-full object-contain"
@@ -674,9 +674,8 @@ export default function JioGlasses() {
                     onClick={() => { setActiveSegment(idx); setActivePersona(0); }}
                     onMouseEnter={() => setHoveredSegment(idx)}
                     onMouseLeave={() => setHoveredSegment(null)}
-                    className={`relative overflow-hidden px-5 py-5 text-left cursor-pointer ${
-                      isActive ? 'bg-[#0066CC]' : 'bg-white'
-                    }`}
+                    className={`relative overflow-hidden px-5 py-5 text-left cursor-pointer ${isActive ? 'bg-[#0066CC]' : 'bg-white'
+                      }`}
                   >
                     {/* Radial glow for inactive hovered — same as stats card */}
                     {!isActive && (
@@ -690,22 +689,19 @@ export default function JioGlasses() {
                       />
                     )}
                     <div className="relative">
-                      <span className={`text-[9px] font-mono block mb-2 tracking-widest transition-colors duration-200 ${
-                        isActive ? 'text-blue-200' : isHovered ? 'text-[#0066CC]' : 'text-gray-400'
-                      }`}>
+                      <span className={`text-[9px] font-mono block mb-2 tracking-widest transition-colors duration-200 ${isActive ? 'text-blue-200' : isHovered ? 'text-[#0066CC]' : 'text-gray-400'
+                        }`}>
                         SEGMENT 0{idx + 1}
                       </span>
                       <p
-                        className={`text-sm font-medium leading-tight transition-colors duration-200 ${
-                          isActive ? 'text-white' : isHovered ? 'text-[#0066CC]' : 'text-gray-800'
-                        }`}
+                        className={`text-sm font-medium leading-tight transition-colors duration-200 ${isActive ? 'text-white' : isHovered ? 'text-[#0066CC]' : 'text-gray-800'
+                          }`}
                         style={{ fontFamily: 'SatishSans, sans-serif' }}
                       >
                         {seg.title}
                       </p>
-                      <p className={`text-[10px] mt-1 font-mono transition-colors duration-200 ${
-                        isActive ? 'text-blue-200' : isHovered ? 'text-[#0066CC]/60' : 'text-gray-400'
-                      }`}>
+                      <p className={`text-[10px] mt-1 font-mono transition-colors duration-200 ${isActive ? 'text-blue-200' : isHovered ? 'text-[#0066CC]/60' : 'text-gray-400'
+                        }`}>
                         {seg.personas.length} personas
                       </p>
                     </div>
@@ -723,36 +719,36 @@ export default function JioGlasses() {
                 <div className="border border-gray-200">
                   {/* Top bar — name + nav */}
                   <div className="flex items-start justify-between px-6 md:px-8 pt-6 md:pt-8 pb-5 md:pb-6 border-b border-gray-200 gap-4 md:gap-6">
-                      <div className="flex-1 min-w-0">
-                        <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest block mb-2">
-                          Persona 0{activePersona + 1} / 0{total} · {segments[activeSegment].title}
-                        </span>
-                        <h4 className="text-xl md:text-2xl font-light text-gray-900 mb-3" style={{ fontFamily: 'SatishSans, sans-serif' }}>
-                          {pers.name}
-                        </h4>
-                        {/* Sub-line as marquee — never wraps on mobile */}
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest block mb-2">
+                        Persona 0{activePersona + 1} / 0{total} · {segments[activeSegment].title}
+                      </span>
+                      <h4 className="text-xl md:text-2xl font-light text-gray-900 mb-3" style={{ fontFamily: 'SatishSans, sans-serif' }}>
+                        {pers.name}
+                      </h4>
+                      {/* Sub-line as marquee — never wraps on mobile */}
+                      <div
+                        className="overflow-hidden"
+                        style={{
+                          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 90%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 90%, transparent 100%)',
+                        }}
+                      >
                         <div
-                          className="overflow-hidden"
-                          style={{
-                            maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 90%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 90%, transparent 100%)',
-                          }}
+                          className="flex gap-2 w-max"
+                          style={{ animation: 'marquee 18s linear infinite' }}
                         >
-                          <div
-                            className="flex gap-2 w-max"
-                            style={{ animation: 'marquee 18s linear infinite' }}
-                          >
-                            {[...subTags, ...subTags].map((tag, ti) => (
-                              <span
-                                key={ti}
-                                className="inline-block px-2.5 py-1 text-[10px] font-mono text-[#0066CC] bg-[#0066CC]/[0.05] border border-[#0066CC]/20 leading-none whitespace-nowrap"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
+                          {[...subTags, ...subTags].map((tag, ti) => (
+                            <span
+                              key={ti}
+                              className="inline-block px-2.5 py-1 text-[10px] font-mono text-[#0066CC] bg-[#0066CC]/[0.05] border border-[#0066CC]/20 leading-none whitespace-nowrap"
+                            >
+                              {tag}
+                            </span>
+                          ))}
                         </div>
                       </div>
+                    </div>
                     {/* Prev / Next */}
                     <div className="flex items-center gap-2 flex-shrink-0 mt-1">
                       <button
@@ -769,7 +765,7 @@ export default function JioGlasses() {
                         }}
                         aria-label="Previous persona"
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6" /></svg>
                       </button>
                       <button
                         onClick={() => setActivePersona(p => Math.min(total - 1, p + 1))}
@@ -785,7 +781,7 @@ export default function JioGlasses() {
                         }}
                         aria-label="Next persona"
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6" /></svg>
                       </button>
                     </div>
                   </div>
@@ -1135,7 +1131,7 @@ export default function JioGlasses() {
                 The project was built entirely on JioType, Jio Tesseract&apos;s brand typeface. Every size, weight, and spacing decision was made to ensure the landing page felt cohesive with the wider Jio ecosystem while maintaining its own premium character. JioType brings a sense of familiarity to users already within the Jio world, while feeling refined enough to carry a hardware product at this level.
               </p>
             </div>
-            
+
             <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
               {/* Specimen */}
               <div className="shrink-0">
@@ -1144,16 +1140,16 @@ export default function JioGlasses() {
                 <p className="text-xs text-gray-400 leading-relaxed" style={{ fontFamily: 'JioType, sans-serif' }}>a b c d e f g h i j k l m n o p q r s t u v w x y z</p>
                 <p className="text-xs text-gray-400" style={{ fontFamily: 'JioType, sans-serif' }}>0 1 2 3 4 5 6 7 8 9</p>
               </div>
-              
+
               {/* Type scale */}
               <div className="flex-1 flex flex-col gap-3 w-full">
                 {[
-                  { label: 'Onboard Large',  size: '28px', weight: 'Bold',    sample: 'Jio Glasses' },
-                  { label: 'Onboard Medium', size: '16px', weight: 'Bold',    sample: 'Jio Glasses' },
-                  { label: 'Onboard Small',  size: '13px', weight: 'Regular', sample: 'Jio Glasses' },
-                  { label: 'Body Large',     size: '16px', weight: 'Regular', sample: 'Reliance Tesseract' },
-                  { label: 'Body Medium',    size: '14px', weight: 'Regular', sample: 'Reliance Tesseract' },
-                  { label: 'Body Small',     size: '12px', weight: 'Regular', sample: 'Reliance Tesseract' },
+                  { label: 'Onboard Large', size: '28px', weight: 'Bold', sample: 'Jio Glasses' },
+                  { label: 'Onboard Medium', size: '16px', weight: 'Bold', sample: 'Jio Glasses' },
+                  { label: 'Onboard Small', size: '13px', weight: 'Regular', sample: 'Jio Glasses' },
+                  { label: 'Body Large', size: '16px', weight: 'Regular', sample: 'Reliance Tesseract' },
+                  { label: 'Body Medium', size: '14px', weight: 'Regular', sample: 'Reliance Tesseract' },
+                  { label: 'Body Small', size: '12px', weight: 'Regular', sample: 'Reliance Tesseract' },
                 ].map((t) => (
                   <div key={t.label} className="flex items-baseline gap-4 border-b border-gray-100 pb-2">
                     <p className="text-[10px] text-gray-400 w-28 md:w-32 shrink-0" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{t.label}</p>
@@ -1269,7 +1265,7 @@ export default function JioGlasses() {
                 Illustrations played a key role in making an unfamiliar product category feel approachable. For a product most users had never seen before, the right illustration could do what copy alone couldn&apos;t — show someone their version of JioGlass before they ever held it.
               </p>
             </div>
-            
+
             <div className="w-full border border-gray-200 bg-gray-50/10 flex items-center justify-center overflow-hidden p-0 mb-14 h-[260px] sm:h-[360px] md:h-[480px] lg:h-[600px] relative">
               <Image
                 src="/images/WorkImages/jio/Illustration.png"
@@ -1363,7 +1359,7 @@ export default function JioGlasses() {
                 </div>
               ))}
             </div>
-            
+
             <Plus h="left" />
             <Plus h="right" />
           </div>
