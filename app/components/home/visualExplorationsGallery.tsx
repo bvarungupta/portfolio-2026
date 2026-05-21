@@ -13,7 +13,7 @@ const images = [
   '/images/visual-explorations/Heydu.jpeg',
   '/images/visual-explorations/MacBook_13.png',
   '/images/visual-explorations/streer-poster.png',
-  '/images/visual-explorations/about  2.png',
+  '/images/visual-explorations/about-2.png',
   '/images/visual-explorations/pixelmask.mp4',
 ]
 

@@ -1565,13 +1565,13 @@ export default function JioGlasses() {
               `}} />
               <div id="jio-moodboard-scroll" className="flex">
                 {[
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-1.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-2.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-3.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-4.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-5.png",
-                  "/images/WorkImages/jio/JIO%20%E2%80%A2%20Moodboard-6.png"
+                  "/images/WorkImages/jio/jio-moodboard.png",
+                  "/images/WorkImages/jio/jio-moodboard-1.png",
+                  "/images/WorkImages/jio/jio-moodboard-2.png",
+                  "/images/WorkImages/jio/jio-moodboard-3.png",
+                  "/images/WorkImages/jio/jio-moodboard-4.png",
+                  "/images/WorkImages/jio/jio-moodboard-5.png",
+                  "/images/WorkImages/jio/jio-moodboard-6.png"
                 ].map((src, i) => (
                   <div key={i} className="w-full flex-shrink-0 snap-start h-[260px] sm:h-[360px] md:h-[480px] lg:h-[600px] relative">
                     <Image
@@ -1867,7 +1867,7 @@ export default function JioGlasses() {
               </p>
             </div>
 
-            <div className="space-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               {[
                 {
                   name: 'Avatar',
@@ -1877,7 +1877,7 @@ export default function JioGlasses() {
                 {
                   name: 'Bottom Sheet',
                   desc: 'An overlay panel sliding from the bottom, offering context-specific actions or settings. Perfect for mobile navigation, minimizing screen clutter while keeping interactions within easy thumb reach.',
-                  file: 'Bottom Sheet.png'
+                  file: 'Bottom-Sheet.png'
                 },
                 {
                   name: 'Bottom Nav',
@@ -1920,31 +1920,32 @@ export default function JioGlasses() {
                   file: 'Toast.png'
                 }
               ].map((c, i) => (
-                <div key={i} className="flex flex-col border-t border-gray-200 pt-12 first:border-0 first:pt-0">
-                  <div className="max-w-3xl mb-6">
-                    <h4 className="text-sm font-medium text-gray-900 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{c.name}</h4>
-                    <p className="text-[12px] text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{c.desc}</p>
+                <div key={i} className="flex flex-col justify-between border border-gray-200 bg-white p-6 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:border-gray-300 hover:-translate-y-0.5 group">
+                  <div className="mb-4">
+                    <h4 className="text-sm font-medium text-gray-900 mb-1.5" style={{ fontFamily: 'SatishSans, sans-serif' }}>{c.name}</h4>
+                    <p className="text-[12px] text-gray-500 leading-relaxed min-h-[54px]" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{c.desc}</p>
                   </div>
                   <div 
-                    className="w-full border border-gray-200 bg-gray-50/10 flex items-center justify-center overflow-hidden p-8 h-[200px] sm:h-[300px] md:h-[400px] relative cursor-zoom-in group"
+                    className="w-full border border-gray-100 bg-[#F9FAFB] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] bg-gray-50/50 flex items-center justify-center overflow-hidden p-8 aspect-[4/3] relative cursor-zoom-in mt-auto rounded-sm"
                     onClick={() => setZoomedImage({ src: `/images/WorkImages/jio/components/${c.file}`, alt: c.name })}
                   >
                     <Image
                       src={`/images/WorkImages/jio/components/${c.file}`}
                       alt={c.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, 80vw"
-                      className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      style={{ filter: 'drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.04))' }}
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                     {/* Tooltip Overlay */}
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm border border-gray-200 px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none flex items-center gap-1.5 shadow-sm">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm border border-gray-200 px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none flex items-center gap-1 shadow-sm">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="11" cy="11" r="8"/>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                         <line x1="11" y1="8" x2="11" y2="14"/>
                         <line x1="8" y1="11" x2="14" y2="11"/>
                       </svg>
-                      <span className="text-[9px] uppercase tracking-widest text-gray-500 font-semibold" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click to zoom</span>
+                      <span className="text-[8px] uppercase tracking-widest text-gray-500 font-semibold" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click to zoom</span>
                     </div>
                   </div>
                 </div>

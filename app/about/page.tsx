@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import FavoritesShelf from "./FavoritesShelf";
+import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion";
 
 const companies: {
   src: string;
@@ -19,6 +21,136 @@ const companies: {
     { src: "/images/inAbout/Storuage.svg", name: "Storuage", year: "2025", shadow: "rgba(245, 158, 11, 0.28)", tags: [{ label: "IoT", rotate: -6, x: -28 }, { label: "Smart Kitchen", rotate: 5, x: 34 }] },
     { src: "/images/inAbout/Wagwan.svg", name: "Wagwan", year: "2025 - Present", shadow: "rgba(239, 68, 68, 0.25)", tags: [{ label: "Social", rotate: -7, x: -22 }, { label: "Events", rotate: 6, x: 24 }] },
   ];
+
+interface Tool {
+  name: string;
+  src: string;
+}
+
+const designTools: Tool[] = [
+  { name: "Figma", src: "/images/ToolsIcons/figma-icon.svg" },
+  { name: "Photoshop", src: "/images/ToolsIcons/adobe-photoshop-icon.svg" },
+  { name: "Illustrator", src: "/images/ToolsIcons/illustrator.png" },
+  { name: "After Effects", src: "/images/ToolsIcons/adobe-after-effects-icon.svg" },
+  { name: "Affinity Designer", src: "/images/ToolsIcons/affinity.svg" },
+  { name: "Blender", src: "/images/ToolsIcons/blender-icon.svg" },
+  { name: "LottieFiles", src: "/images/ToolsIcons/lottiefiles.svg" },
+  { name: "Rive", src: "/images/ToolsIcons/rive-icon.svg" },
+  { name: "Zeplin", src: "/images/ToolsIcons/zeplin-icon.webp" },
+  { name: "Paper", src: "/images/ToolsIcons/paper.png" },
+  { name: "Spline", src: "/images/ToolsIcons/spline-icon.webp" },
+  { name: "Jitter", src: "/images/ToolsIcons/jitter.png" },
+];
+
+const developmentTools: Tool[] = [
+  { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
+  { name: "Anti Gravity", src: "/images/ToolsIcons/antigravity.svg" },
+  { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
+  { name: "Framer", src: "/images/ToolsIcons/framer-logo.svg" },
+  { name: "Webflow", src: "/images/ToolsIcons/webflow.svg" },
+  { name: "Wix", src: "/images/ToolsIcons/wix.png" },
+  { name: "Wordpress", src: "/images/ToolsIcons/wordpress.png" },
+  { name: "Shopify", src: "/images/ToolsIcons/shopify.svg" },
+  { name: "Astro Build", src: "/images/ToolsIcons/astro.png" },
+  { name: "Supabase", src: "/images/ToolsIcons/supabase.webp" },
+  { name: "Next JS", src: "/images/ToolsIcons/next.png" },
+  { name: "React", src: "/images/ToolsIcons/react.png" },
+];
+
+const productivityTools: Tool[] = [
+  { name: "Claude Code", src: "/images/ToolsIcons/claude-ai-icon.svg" },
+  { name: "ChatGPT", src: "/images/ToolsIcons/chatgpt-icon.svg" },
+  { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
+  { name: "Notion", src: "/images/ToolsIcons/notion.png" },
+  { name: "Miro", src: "/images/ToolsIcons/miro.png" },
+  { name: "Maze", src: "/images/ToolsIcons/maze.svg" },
+  { name: "Mobbin", src: "/images/ToolsIcons/mobbin.png" },
+  { name: "Replit", src: "/images/ToolsIcons/replit.png" },
+  { name: "Vercel", src: "/images/ToolsIcons/vercel.svg" },
+  { name: "Arc", src: "/images/ToolsIcons/arc.png" },
+  { name: "Linear", src: "/images/ToolsIcons/linear.webp" },
+  { name: "Hotjar", src: "/images/ToolsIcons/hotjar.png" },
+];
+
+
+function FavStyleToolIcon({
+  tool,
+  index,
+}: {
+  tool: Tool;
+  index: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const rotation = ((index % 2 === 0 ? -1 : 1) * (1.5 + (index % 4) * 0.8)).toFixed(2);
+
+  return (
+    <div
+      className="flex flex-col items-center gap-2 text-center w-20 select-none cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        transform: hovered
+          ? `translate3d(0, -6px, 0) rotate(${parseFloat(rotation) * 0.3}deg)`
+          : `translate3d(0, 0, 0) rotate(${rotation}deg)`,
+        transformOrigin: "center 90%",
+        transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
+      <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center relative">
+        <div className="w-9 h-9 flex items-center justify-center relative overflow-visible">
+          <Image
+            src={tool.src}
+            alt={tool.name}
+            width={36}
+            height={36}
+            className="w-full h-full object-contain pointer-events-none"
+          />
+          {/* Sheen effect */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-md">
+            {/* First sheen sweep */}
+            <div
+              className="absolute inset-[-20%_-40%] pointer-events-none"
+              style={{
+                background: "linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.9) 50%, transparent 60%)",
+                transform: hovered ? "translateX(60%)" : "translateX(-60%)",
+                transition: hovered
+                  ? "transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)"
+                  : "transform 0ms",
+                mixBlendMode: "overlay",
+              }}
+            />
+            {/* Second sheen sweep (staggered) */}
+            <div
+              className="absolute inset-[-20%_-40%] pointer-events-none"
+              style={{
+                background: "linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%)",
+                transform: hovered ? "translateX(60%)" : "translateX(-60%)",
+                transition: hovered
+                  ? "transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)"
+                  : "transform 0ms",
+                transitionDelay: hovered ? "120ms" : "0ms",
+                mixBlendMode: "overlay",
+              }}
+            />
+          </div>
+          {/* Star Corner Badge (Top Right) */}
+          <span
+            className="absolute top-[-5px] right-[-5px] text-[10px] text-amber-500 pointer-events-none select-none"
+            style={{
+              textShadow: "0 1px 2px rgba(0,0,0,0.15)",
+              opacity: hovered ? 1 : 0,
+              transform: hovered ? "scale(1) rotate(0deg)" : "scale(0.6) rotate(-18deg)",
+              transition: "opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            ★
+          </span>
+        </div>
+      </div>
+      <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
+    </div>
+  );
+}
 
 export default function About() {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -333,43 +465,25 @@ export default function About() {
         {/* ── Toolkit ──────────────────────────────────────────── */}
         <div className="mb-20">
           <p
-            className="text-xl md:text-2xl text-gray-700 leading-snug mb-2"
+            className="text-xl md:text-2xl text-gray-700 leading-snug mb-2 text-center"
             style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
           >
             My Toolkit
           </p>
-          <p className="text-sm text-gray-400 mb-10" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+          <p className="text-sm text-gray-400 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
             Tools I use to design, build, and ship every day.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="flex flex-col gap-12">
 
             {/* Design & Animations */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
-              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
-                {[
-                  { name: "Figma", src: "/images/ToolsIcons/figma-icon.svg" },
-                  { name: "Photoshop", src: "/images/ToolsIcons/adobe-photoshop-icon.svg" },
-                  { name: "Illustrator", src: "/images/ToolsIcons/illustrator.png" },
-                  { name: "After Effects", src: "/images/ToolsIcons/adobe-after-effects-icon.svg" },
-                  { name: "Affinity Designer", src: "/images/ToolsIcons/affinity.svg" },
-                  { name: "Blender", src: "/images/ToolsIcons/blender-icon.svg" },
-                  { name: "LottieFiles", src: "/images/ToolsIcons/lottiefiles.svg" },
-                  { name: "Rive", src: "/images/ToolsIcons/rive-icon.svg" },
-                  { name: "Zeplin", src: "/images/ToolsIcons/zeplin-icon.webp" },
-                  { name: "Paper", src: "/images/ToolsIcons/paper.png" },
-                  { name: "Spline", src: "/images/ToolsIcons/spline-icon.webp" },
-                  { name: "Jitter", src: "/images/ToolsIcons/jitter.png" },
-                ].map((tool) => (
-                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
-                    </div>
-                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
-                  </div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
+              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+                {designTools.map((tool, index) => (
+                  <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
-                <div className="flex flex-col items-center gap-2 text-center justify-center">
+                <div className="flex flex-col items-center gap-2 text-center justify-center w-20 select-none">
                   <span className="text-[11px] text-gray-400" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>+ more</span>
                 </div>
               </div>
@@ -377,62 +491,29 @@ export default function About() {
 
             {/* Development */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
-              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
-                {[
-                  { name: "Cursor", src: "/images/ToolsIcons/cursor-ai-code-icon.svg" },
-                  { name: "Anti Gravity", src: "/images/ToolsIcons/antigravity.svg" },
-                  { name: "GitHub", src: "/images/ToolsIcons/github-icon.svg" },
-                  { name: "Framer", src: "/images/ToolsIcons/framer-logo.svg" },
-                  { name: "Webflow", src: "/images/ToolsIcons/webflow.svg" },
-                  { name: "Wix", src: "/images/ToolsIcons/wix.png" },
-                  { name: "Wordpress", src: "/images/ToolsIcons/wordpress.png" },
-                  { name: "Shopify", src: "/images/ToolsIcons/shopify.svg" },
-                  { name: "Astro Build", src: "/images/ToolsIcons/astro.png" },
-                  { name: "Supabase", src: "/images/ToolsIcons/supabase.webp" },
-                  { name: "Next JS", src: "/images/ToolsIcons/next.png" },
-                  { name: "React", src: "/images/ToolsIcons/react.png" },
-                ].map((tool) => (
-                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
-                    </div>
-                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
-                  </div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
+              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+                {developmentTools.map((tool, index) => (
+                  <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
               </div>
             </div>
 
             {/* Productivity & Assistive Tools */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
-              <div className="grid grid-cols-3 gap-x-3 gap-y-5">
-                {[
-                  { name: "Claude Code", src: "/images/ToolsIcons/claude-ai-icon.svg" },
-                  { name: "ChatGPT", src: "/images/ToolsIcons/chatgpt-icon.svg" },
-                  { name: "Google Gemini", src: "/images/ToolsIcons/google-gemini-icon.svg" },
-                  { name: "Notion", src: "/images/ToolsIcons/notion.png" },
-                  { name: "Miro", src: "/images/ToolsIcons/miro.png" },
-                  { name: "Maze", src: "/images/ToolsIcons/maze.svg" },
-                  { name: "Mobbin", src: "/images/ToolsIcons/mobbin.png" },
-                  { name: "Replit", src: "/images/ToolsIcons/replit.png" },
-                  { name: "Vercel", src: "/images/ToolsIcons/vercel.svg" },
-                  { name: "Arc", src: "/images/ToolsIcons/arc.png" },
-                  { name: "Linear", src: "/images/ToolsIcons/linear.webp" },
-                  { name: "Hotjar", src: "/images/ToolsIcons/hotjar.png" },
-                ].map((tool) => (
-                  <div key={tool.name} className="flex flex-col items-center gap-2 text-center">
-                    <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center">
-                      <Image src={tool.src} alt={tool.name} width={36} height={36} className="w-full h-full object-contain" />
-                    </div>
-                    <span className="text-[11px] text-gray-600 leading-tight" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>{tool.name}</span>
-                  </div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
+              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+                {productivityTools.map((tool, index) => (
+                  <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
               </div>
             </div>
 
           </div>
         </div>
+
+        {/* ── Favorites Shelf ──────────────────────────────────── */}
+        <FavoritesShelf />
 
         {/* ── Closing CTA ──────────────────────────────────────── */}
         <div className="text-center">
