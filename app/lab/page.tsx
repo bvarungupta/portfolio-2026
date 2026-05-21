@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import LabHeader from './LabHeader'
+import PixelTrail from '../components/ui/PixelTrail'
 
 export default function Lab() {
   return (
@@ -95,6 +96,44 @@ export default function Lab() {
           />
 
           <div className="absolute bottom-5 right-5" style={{ zIndex: 1, width: '30px', height: '30px', borderRadius: '50%', background: '#efefef', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.18), inset -1px -1px 3px rgba(255,255,255,0.9)' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </div>
+        </Link>
+
+        {/* Pixel Trail Lab */}
+        <Link
+          href="/lab/pixel-trail"
+          className="group relative border border-gray-200 px-6 py-8 hover:border-gray-900 transition-colors duration-200 overflow-hidden min-h-[180px] flex flex-col justify-between"
+          style={{ background: '#ffffff', textDecoration: 'none', borderRadius: '0 16px 0 16px', boxShadow: 'inset 8px 0 24px -8px rgba(0,0,0,0.12)' }}
+        >
+          {/* Live background interaction */}
+          <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-100 transition-opacity duration-300">
+            <PixelTrail
+              gridSize={16}
+              trailSize={0.16}
+              maxAge={300}
+              interpolate={2}
+              color="#111111"
+              gooeyEnabled={true}
+              gooStrength={3}
+            />
+          </div>
+
+          <div className="relative z-10 pointer-events-none">
+            <div
+              className="text-2xl font-light tracking-tight mb-3 text-black"
+              style={{ fontFamily: 'SatishSans, sans-serif', letterSpacing: '-0.01em' }}
+            >
+              Pixel Trail
+            </div>
+            <div className="text-xs mb-8" style={{ color: 'rgba(0,0,0,0.4)', letterSpacing: '0.02em', lineHeight: '1.5' }}>
+              Interactive shader-based pixel grid cursor effect.
+            </div>
+          </div>
+
+          <div className="absolute bottom-5 right-5 pointer-events-none" style={{ zIndex: 1, width: '30px', height: '30px', borderRadius: '50%', background: '#efefef', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.18), inset -1px -1px 3px rgba(255,255,255,0.9)' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>

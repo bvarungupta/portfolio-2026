@@ -523,35 +523,53 @@ export default function About() {
           >
             If you're building something and need a designer who takes ownership end to end, let's talk.
           </p>
-          <div className="flex flex-col md:flex-row items-stretch w-full md:w-auto md:inline-flex">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 w-full md:w-auto md:inline-flex">
+            <div className="flex flex-col md:flex-row items-stretch w-full md:w-auto">
+              <a
+                href="mailto:bvarungupta@gmail.com"
+                className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
+                style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
+              >
+                say hello
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+              <div
+                className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
+                style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
+                onClick={handleCopy}
+              >
+                <span className="truncate">bvarungupta@gmail.com</span>
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleCopy(); }}
+                  className="ml-2 text-gray-300 hover:text-gray-600 transition-colors duration-200 flex-shrink-0 cursor-pointer"
+                  title="Copy email"
+                >
+                  {copied ? (
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  ) : (
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+                  )}
+                </button>
+              </div>
+            </div>
+
             <a
-              href="mailto:bvarungupta@gmail.com"
-              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
+              href="https://cal.com/bvarungupta/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-200 w-full md:w-auto"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
             >
-              say hello
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              Let's Have a Chat
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
               </svg>
             </a>
-            <div
-              className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
-              style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
-              onClick={handleCopy}
-            >
-              <span className="truncate">bvarungupta@gmail.com</span>
-              <button
-                onClick={(e) => { e.stopPropagation(); handleCopy(); }}
-                className="ml-2 text-gray-300 hover:text-gray-600 transition-colors duration-200 flex-shrink-0 cursor-pointer"
-                title="Copy email"
-              >
-                {copied ? (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                ) : (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
-                )}
-              </button>
-            </div>
           </div>
         </div>
 

@@ -5,6 +5,11 @@ import NavbarClient from "./components/layout/NavbarClient"
 import SmoothScroll from "./components/layout/SmoothScroll"
 import ScrollReset from "./components/layout/ScrollReset"
 import Footer from "./components/layout/footer"
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { SmoothCursor } from "@/registry/magicui/smooth-cursor"
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -79,8 +84,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body suppressHydrationWarning>
+        <SmoothCursor />
         <SmoothScroll />
         <ScrollReset />
         <NavbarClient />
