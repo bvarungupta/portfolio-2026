@@ -305,9 +305,16 @@ export default function FavoritesShelf() {
           align-items: center;
         }
 
-        .favorites-lane-frame {
+        .favorites-lane-wrapper {
+          position: relative;
           flex: 1;
           min-width: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        .favorites-lane-frame {
+          width: 100%;
           display: flex;
           align-items: center;
         }
@@ -327,8 +334,10 @@ export default function FavoritesShelf() {
             overflow-x: auto;
             overflow-y: hidden;
             scrollbar-width: none;
-            scroll-snap-type: x mandatory;
+            scroll-snap-type: x proximity;
             -webkit-overflow-scrolling: touch;
+            mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
           }
           .favorites-lane-frame::-webkit-scrollbar {
             display: none;
@@ -601,8 +610,9 @@ export default function FavoritesShelf() {
           <span>←</span>
         </button>
 
-        <div className="favorites-lane-frame">
-          <div className="favorites-lane" data-lane={activeCategory.key}>
+        <div className="favorites-lane-wrapper">
+          <div className="favorites-lane-frame">
+            <div className="favorites-lane" data-lane={activeCategory.key}>
             <ul className="favorites-row" role="list">
               {activeCategory.favorites.map((fave, i) => {
                 const cardKey = `${activeCategory.key}-${i}`;
@@ -667,6 +677,7 @@ export default function FavoritesShelf() {
             </ul>
           </div>
         </div>
+      </div>
 
         <button
           type="button"
