@@ -272,10 +272,12 @@ export default function JioGlasses() {
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('jio-brief');
   const [hoveredStat, setHoveredStat] = useState<string | null>(null);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [hoveredProcessStep, setHoveredProcessStep] = useState<string | null>(null);
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
   const [empathySlide, setEmpathySlide] = useState(0);
   const [hoveredQuadrant, setHoveredQuadrant] = useState<string | null>(null);
+  const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const moodboardScrollRef = useRef<HTMLDivElement>(null);
   const [moodboardSlide, setMoodboardSlide] = useState(0);
@@ -308,6 +310,7 @@ export default function JioGlasses() {
     { id: 'jio-wireflow', label: 'Wireflow' },
     { id: 'jio-moodboard', label: 'Moodboard' },
     { id: 'jio-design-system', label: 'Design System' },
+    { id: 'jio-the-design', label: 'The Design' },
   ];
 
   useEffect(() => { setMounted(true); }, []);
@@ -420,7 +423,7 @@ export default function JioGlasses() {
             />
           </div>
           <h1 className="text-2xl md:text-4xl font-light tracking-tight" style={{ fontFamily: 'SatishSans, sans-serif' }}>
-            Jio Glasses
+            Jio Tesseract
           </h1>
           <Image src="/images/common/vg-outline.svg" alt="Product Design Work" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-20" />
           <Plus h="left" />
@@ -469,7 +472,7 @@ export default function JioGlasses() {
           <div className="w-full border-b border-gray-200">
             <Image
               src="/images/WorkImages/jio/thumbnail.png"
-              alt="Jio Glasses"
+              alt="Jio Tesseract"
               width={1600}
               height={900}
               className="w-full h-auto block"
@@ -487,6 +490,39 @@ export default function JioGlasses() {
               <br /><br />
               I joined the Jio Tesseract UX team as a designer on this project. We started from scratch — moodboards, photography direction, 3D render references, persona research across three user segments, empathy mapping, information architecture, wireflows, wireframes, and final visual design. Every section of the page had to earn its place. Every headline had to do real work.
             </p>
+            <a
+              href="https://www.figma.com/design/5aUxcV70YBMnXEkFuuoP38/Jio-Glasses-Master-UX?node-id=80-22346&t=EUx1LK3PivKu9ipa-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => setHoveredLink('process')}
+              onMouseLeave={() => setHoveredLink(null)}
+              className="inline-flex items-center gap-2 mt-4 text-[11px] px-3 py-1.5 border"
+              style={{
+                fontFamily: 'FunnelDisplay, sans-serif',
+                background: hoveredLink === 'process' ? '#0F3CC9' : 'transparent',
+                borderColor: hoveredLink === 'process' ? '#0F3CC9' : '#e5e7eb',
+                color: hoveredLink === 'process' ? 'white' : '#6b7280',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 object-contain">
+                <g clipPath="url(#clip0_jio_btn)">
+                  <rect width="120" height="120" rx="60" fill={hoveredLink === 'process' ? 'white' : '#000093'} style={{ transition: 'fill 0.2s ease' }} />
+                  <path 
+                    d="M87.9373 72.7941C83.5218 72.7941 80.4819 69.5523 80.4819 64.9252C80.4819 60.3655 83.5891 57.1237 87.9373 57.1237C92.2854 57.1237 95.3926 60.3655 95.3926 64.9926C95.3926 69.4753 92.2181 72.7941 87.9373 72.7941ZM88.0816 47.0327C76.7591 47.0327 69.2268 54.2186 69.2268 64.9156C69.2268 75.8916 76.4801 82.9332 87.8699 82.9332C99.1924 82.9332 106.648 75.8916 106.648 64.9829C106.648 54.2186 99.2694 47.0327 88.0816 47.0327ZM58.9047 31.3623C54.6239 31.3623 51.9304 33.7768 51.9304 37.5766C51.9304 41.4437 54.6913 43.8582 59.1067 43.8582C63.3875 43.8582 66.0811 41.4437 66.0811 37.5766C66.0811 33.7095 63.3202 31.3623 58.9047 31.3623ZM59.6647 47.379H58.2794C54.9029 47.379 52.344 48.9662 52.344 53.8049V75.9012C52.344 80.8072 54.8259 82.3271 58.4237 82.3271H59.7994C63.1855 82.3271 65.6001 80.6726 65.6001 75.9012V53.8049C65.6001 48.8316 63.2529 47.379 59.6647 47.379ZM41.5795 36.9609H39.5786C35.7787 36.9609 33.7105 39.1061 33.7105 43.3869V64.0306C33.7105 69.3503 31.9116 71.2165 27.7077 71.2165C24.3985 71.2165 21.705 69.7639 19.5598 67.1377C19.3481 66.8588 15 68.927 15 74.0446C15 79.5663 20.1754 82.9524 29.776 82.9524C41.4448 82.9524 47.5919 77.0844 47.5919 64.2422V43.3772C47.5919 39.0965 45.5236 36.9609 41.5795 36.9609Z" 
+                    fill={hoveredLink === 'process' ? '#0F3CC9' : 'white'} 
+                    style={{ transition: 'fill 0.2s ease' }} 
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_jio_btn">
+                    <rect width="120" height="120" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              View Full Process
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
           </div>
         </div>
 
@@ -1016,45 +1052,31 @@ export default function JioGlasses() {
                   Personas tell us who the user is. Empathy maps tell us what is actually going on inside their head. For each segment we mapped what users say out loud, what they privately think, what they feel emotionally, and what they actually do day to day. This gap between what people say and what they feel is where the most important design decisions live.
                 </p>
 
-                {/* Slide title */}
-                <div className="mb-6">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest">{current.segment} · {current.segmentLabel}</span>
-                    <span className="w-px h-3 bg-gray-300" />
-                    <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">{empathySlide + 1} / {TOTAL}</span>
-                  </div>
-                  <p className="text-xl md:text-2xl font-light text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>
-                    {current.name}
-                  </p>
+                {/* Slide title — segment + counter only */}
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest">{current.segment} · {current.segmentLabel}</span>
+                  <span className="w-px h-3 bg-gray-300" />
+                  <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">{empathySlide + 1} / {TOTAL}</span>
                 </div>
 
                 {/* Empathy Map Card */}
                 <div className="border border-gray-200 overflow-hidden mb-6">
 
-                  {/* Persona header — plain white */}
+                  {/* Persona header — name + age/profession */}
                   <div
-                    className="px-6 py-4 flex items-center gap-4"
+                    className="px-6 py-4"
                     style={{ background: 'white', borderBottom: '1px solid #E5E7EB' }}
                   >
-                    <div>
-                      <p className="text-xs font-medium text-gray-800" style={{ fontFamily: 'SatishSans, sans-serif' }}>{current.age} · {current.profession}</p>
-                    </div>
-                    <div className="ml-auto">
-                      <span
-                        className="text-[9px] uppercase tracking-widest px-2 py-0.5 font-mono"
-                        style={{ color: '#6B7280', background: '#F3F4F6', border: '1px solid #E5E7EB' }}
-                      >
-                        {current.segment}
-                      </span>
-                    </div>
+                    <p className="text-sm font-medium text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>{current.name}</p>
+                    <p className="text-[10px] text-gray-400 mt-0.5" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{current.age} · {current.profession}</p>
                   </div>
 
-                  {/* Quadrant Grid — 2×2 on desktop, single column on mobile */}
-                  <div className="relative grid grid-cols-1 md:grid-cols-2">
+                  {/* Quadrant Grid — always 2×2 */}
+                  <div className="relative grid grid-cols-2">
 
-                    {/* Center light bulb icon — desktop only */}
+                    {/* Center light bulb icon */}
                     <div
-                      className="hidden md:flex absolute z-20 pointer-events-none"
+                      className="flex absolute z-20 pointer-events-none"
                       style={{
                         top: '50%',
                         left: '50%',
@@ -1555,7 +1577,7 @@ export default function JioGlasses() {
                   <div key={i} className="w-full flex-shrink-0 snap-start h-[260px] sm:h-[360px] md:h-[480px] lg:h-[600px] relative">
                     <Image
                       src={src}
-                      alt={`Jio Glass Moodboard direction slide ${i + 1}`}
+                      alt={`Jio Tesseract Moodboard direction slide ${i + 1}`}
                       fill
                       sizes="(max-width: 768px) 100vw, 80vw"
                       className="object-cover"
@@ -1617,9 +1639,9 @@ export default function JioGlasses() {
               {/* Type scale */}
               <div className="flex-1 flex flex-col gap-3 w-full">
                 {[
-                  { label: 'Onboard Large', size: '28px', weight: 'Bold', sample: 'Jio Glasses' },
-                  { label: 'Onboard Medium', size: '16px', weight: 'Bold', sample: 'Jio Glasses' },
-                  { label: 'Onboard Small', size: '13px', weight: 'Regular', sample: 'Jio Glasses' },
+                  { label: 'Onboard Large', size: '28px', weight: 'Bold', sample: 'Jio Tesseract' },
+                  { label: 'Onboard Medium', size: '16px', weight: 'Bold', sample: 'Jio Tesseract' },
+                  { label: 'Onboard Small', size: '13px', weight: 'Regular', sample: 'Jio Tesseract' },
                   { label: 'Body Large', size: '16px', weight: 'Regular', sample: 'Reliance Tesseract' },
                   { label: 'Body Medium', size: '14px', weight: 'Regular', sample: 'Reliance Tesseract' },
                   { label: 'Body Small', size: '12px', weight: 'Regular', sample: 'Reliance Tesseract' },
@@ -1836,7 +1858,161 @@ export default function JioGlasses() {
             <Plus h="left" />
             <Plus h="right" />
           </div>
+
+          {/* Components */}
+          <div className="relative overflow-visible border-t border-gray-200 px-6 md:px-10 py-10 md:py-14">
+            <div className="max-w-3xl mb-12">
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Components</p>
+              <p className="text-sm text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                Every interactive pattern on the JioGlass landing page was drawn from a shared component library — ensuring visual consistency across states, breakpoints, and user segments.
+              </p>
+            </div>
+
+            <div className="space-y-16">
+              {[
+                {
+                  name: 'Avatar',
+                  desc: 'Used to display user profile pictures or initials in navigation and settings. Helps personalize the JioGlass experience and manage user accounts with clear visual indicators.',
+                  file: 'Avatar.png'
+                },
+                {
+                  name: 'Bottom Sheet',
+                  desc: 'An overlay panel sliding from the bottom, offering context-specific actions or settings. Perfect for mobile navigation, minimizing screen clutter while keeping interactions within easy thumb reach.',
+                  file: 'Bottom Sheet.png'
+                },
+                {
+                  name: 'Bottom Nav',
+                  desc: 'The primary tab bar for switching main views on mobile. Adheres to accessibility standards, providing clear icons and labels for smooth navigation across JioGlass features.',
+                  file: 'BottomNav.png'
+                },
+                {
+                  name: 'Checkbox',
+                  desc: 'A fundamental control for multi-select choices, such as preferences or configurations. Designed with interactive state feedbacks and distinct checkmarks to guarantee clarity.',
+                  file: 'Checkbox.png'
+                },
+                {
+                  name: 'FAB (Floating Action Button)',
+                  desc: 'Represents the primary positive action on a screen, like adding a new device or launching a demo. Floats above content to stay accessible while scrolling.',
+                  file: 'FAB.png'
+                },
+                {
+                  name: 'Heading',
+                  desc: 'Establishes standard text hierarchies across sections. Ensures consistent typography size, line heights, and margins to build a clean layout throughout the interface.',
+                  file: 'Heading.png'
+                },
+                {
+                  name: 'Selector',
+                  desc: 'An interactive choice card or segment switch for toggling settings or models. Built with explicit active state borders and icons to make user selections intuitive.',
+                  file: 'Selector.png'
+                },
+                {
+                  name: 'Slider',
+                  desc: 'A fluid slider component for fine-tuning numeric values like volume, brightness, or scale. Offers instant visual feedback with custom handle controls.',
+                  file: 'Slider.png'
+                },
+                {
+                  name: 'Stepper',
+                  desc: 'Used to increment or decrement quantities, like product items in the shopping cart. Designed with responsive buttons to prevent accidental double-clicks.',
+                  file: 'Stepper.png'
+                },
+                {
+                  name: 'Toast',
+                  desc: 'Temporary, non-disruptive feedback messages that slide in to notify users of status changes like item added, settings saved, or connectivity updates.',
+                  file: 'Toast.png'
+                }
+              ].map((c, i) => (
+                <div key={i} className="flex flex-col border-t border-gray-200 pt-12 first:border-0 first:pt-0">
+                  <div className="max-w-3xl mb-6">
+                    <h4 className="text-sm font-medium text-gray-900 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{c.name}</h4>
+                    <p className="text-[12px] text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{c.desc}</p>
+                  </div>
+                  <div 
+                    className="w-full border border-gray-200 bg-gray-50/10 flex items-center justify-center overflow-hidden p-8 h-[200px] sm:h-[300px] md:h-[400px] relative cursor-zoom-in group"
+                    onClick={() => setZoomedImage({ src: `/images/WorkImages/jio/components/${c.file}`, alt: c.name })}
+                  >
+                    <Image
+                      src={`/images/WorkImages/jio/components/${c.file}`}
+                      alt={c.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 80vw"
+                      className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    {/* Tooltip Overlay */}
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm border border-gray-200 px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none flex items-center gap-1.5 shadow-sm">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        <line x1="11" y1="8" x2="11" y2="14"/>
+                        <line x1="8" y1="11" x2="14" y2="11"/>
+                      </svg>
+                      <span className="text-[9px] uppercase tracking-widest text-gray-500 font-semibold" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click to zoom</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Plus h="left" />
+            <Plus h="right" />
+          </div>
         </div>
+
+        {/* ── The Design Section ───────────────────────────────────────── */}
+        <div id="jio-the-design" className="relative border-b border-gray-200">
+          <Plus h="left" v="top" />
+          <Plus h="right" v="top" />
+          <div className="px-6 md:px-10 py-8 md:py-12">
+            <div className="max-w-3xl">
+              <SectionLabel>The Design</SectionLabel>
+              <SectionHeading>A landing page built to make an unfamiliar product feel inevitable.</SectionHeading>
+              <p className="text-sm text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                Every screen was designed with one question in mind — does this move the user one step closer to believing JioGlass was made for them? Here is how it came together, screen by screen.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full border-t border-gray-200 overflow-hidden relative">
+            <video className="w-full h-auto block" autoPlay loop muted playsInline>
+              <source src="/images/WorkImages/jio/demo.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <Plus h="left" />
+          <Plus h="right" />
+        </div>
+
+        {/* Zoom Lightbox Modal */}
+        {mounted && zoomedImage && createPortal(
+          <div 
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+            onClick={() => setZoomedImage(null)}
+          >
+            <div className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors duration-200 p-2 cursor-pointer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </div>
+            
+            <div 
+              className="max-w-5xl w-full max-h-[85vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={zoomedImage.src}
+                alt={zoomedImage.alt}
+                className="max-w-full max-h-[85vh] object-contain select-none shadow-2xl rounded-lg"
+              />
+            </div>
+            
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center pointer-events-none">
+              <p className="text-white text-xs tracking-wider font-semibold uppercase mb-1" style={{ fontFamily: 'SatishSans, sans-serif' }}>{zoomedImage.alt}</p>
+              <p className="text-white/40 text-[9px] uppercase tracking-widest" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click anywhere to close</p>
+            </div>
+          </div>,
+          document.body
+        )}
 
       </div>
     </div>

@@ -49,11 +49,22 @@ function FlipCard({ src, index, total, phase, target, imgWidth, imgHeight }: Fli
                     className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gray-200"
                     style={{ backfaceVisibility: "hidden" }}
                 >
-                    <img
-                        src={src}
-                        alt={`hero-${index}`}
-                        className="h-full w-full object-cover"
-                    />
+                    {src.endsWith('.mp4') ? (
+                        <video
+                            src={src}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        <img
+                            src={src}
+                            alt={`hero-${index}`}
+                            className="h-full w-full object-cover"
+                        />
+                    )}
                     <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
                 </div>
                 <div
@@ -80,6 +91,7 @@ const baseImages = [
   '/images/visual-explorations/MacBook_13.png',
   '/images/visual-explorations/streer-poster.png',
   '/images/visual-explorations/about  2.png',
+  '/images/visual-explorations/pixelmask.mp4',
 ];
 
 const IMAGES = Array.from({ length: TOTAL_IMAGES }, (_, i) => baseImages[i % baseImages.length]);

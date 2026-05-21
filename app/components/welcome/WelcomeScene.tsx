@@ -531,16 +531,6 @@ function WelcomeHero() {
               Brand, product, and system design for early-stage startups.
             </p>
           </div>
-
-          <div className="flex flex-col items-center gap-4">
-            <Link
-              href="/home"
-              className="btn-springy inline-flex items-center justify-center border border-white/10 bg-white px-4 py-2 text-[14px] uppercase leading-none text-[#171717] shadow-[0_8px_24px_rgba(255,255,255,0.08)] whitespace-nowrap"
-              style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 400 }}
-            >
-              explore -&gt;
-            </Link>
-          </div>
         </div>
 
         <p className="w-full max-w-[430px] text-center text-base uppercase leading-snug text-white/45 sm:text-lg" style={{ fontFamily: "Garamond, Georgia, serif" }}>

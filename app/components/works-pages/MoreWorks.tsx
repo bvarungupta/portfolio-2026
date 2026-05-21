@@ -29,7 +29,7 @@ const allWorks = [
     tags: ['LMS'],
   },
   {
-    title: 'Jio Glasses',
+    title: 'Jio Tesseract',
     href: '/works/jio',
     image: '/images/WorkImages/jio/thumbnail.png',
     tags: ['Product Design'],
@@ -37,7 +37,7 @@ const allWorks = [
 ]
 
 export default function MoreWorks({ current }: { current: string }) {
-  const others = allWorks.filter((w) => w.href !== current)
+  const others = allWorks.filter((w) => w.href !== current).slice(0, 3)
 
   return (
     <div className="mt-16 max-w-5xl mx-auto">

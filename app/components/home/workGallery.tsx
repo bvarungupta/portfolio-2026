@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -17,42 +17,52 @@ const works = [
     href: '/works/smartNation',
     year: '2025',
     available: true,
+    featured: true,
+    accent: '#386BF6',
   },
   {
     num: '02',
+    title: 'Jio Tesseract',
+    description: "Designed the full landing page experience for India's first consumer MR glasses. End to end — from user research and moodboarding to final visual design and handoff.",
+    image: '/images/WorkImages/jio/thumbnail.png',
+    href: '/works/jio',
+    year: '2025',
+    available: true,
+    featured: true,
+    accent: '#0F3CC9',
+  },
+  {
+    num: '03',
     title: 'Blume Health',
     description: 'Designed V1 of a SaaS that puts solo physicians on 40+ patient platforms from one profile. $350+ MRR within weeks of launch. Shipped in 3 weeks.',
     image: '/images/WorkImages/blumeHealthImages/BM-thumnail.png',
     href: '/works/blumeHealth',
     year: '2025',
     available: true,
+    featured: true,
+    accent: '#1F9E6F',
   },
   {
-    num: '03',
+    num: '04',
     title: 'SkinSage',
     description: 'Designed the full product for a personalised skincare app: skin assessment, dermatologist consultation, and AI routine builder. 73% day-7 retention.',
     image: '/images/WorkImages/skinSageImages/SS-thumnail-1.png',
     href: '/works/skinSage',
     year: '2025',
     available: true,
+    featured: false,
+    accent: '#3098FF',
   },
   {
-    num: '04',
+    num: '05',
     title: 'SkillRadius',
     description: 'Designed the full product for a job-skill learning platform: courses, video lessons, notes, quizzes, and dashboard. Zero to V1, end to end.',
     image: '/images/WorkImages/skillradius/SR-thumnail.png',
     href: '/works/skillRadius',
     year: '2025',
     available: true,
-  },
-  {
-    num: '05',
-    title: 'Jio Glasses',
-    description: 'Coming soon.',
-    image: '/images/WorkImages/jio/thumbnail.png',
-    href: '/works/jio',
-    year: '2025',
-    available: true,
+    featured: false,
+    accent: '#4E6CFF',
   },
 ]
 
@@ -73,12 +83,13 @@ const Plus = ({ h, v = 'bottom' }: { h: 'left' | 'right'; v?: 'top' | 'bottom' }
   >+</span>
 )
 
-export default function WorkGallery({ limit, showViewMore }: { limit?: number; showViewMore?: boolean } = {}) {
+export default function WorkGallery({ limit, showViewMore, featuredOnly = false }: { limit?: number; showViewMore?: boolean; featuredOnly?: boolean } = {}) {
   const headerRef  = useRef<HTMLDivElement>(null)
   const selectedEl = useRef<HTMLHeadingElement>(null)
   const worksEl    = useRef<HTMLHeadingElement>(null)
   const lineEl     = useRef<HTMLDivElement>(null)
   const branchContainerRef = useRef<HTMLDivElement>(null)
+  const [hoveredCta, setHoveredCta] = useState<string | null>(null)
 
   // Parallax + tilt for all branches via data attributes
   useEffect(() => {
@@ -224,7 +235,10 @@ export default function WorkGallery({ limit, showViewMore }: { limit?: number; s
         />
 
       <div className="flex flex-col gap-10 md:gap-16">
-        {(limit ? works.slice(0, limit) : works).map((work) => (
+        {(() => {
+          const displayWorks = featuredOnly ? works.filter(w => w.featured) : works
+          return (limit ? displayWorks.slice(0, limit) : displayWorks)
+        })().map((work) => (
           <div
             key={work.num}
             className="relative border border-gray-200 grid grid-cols-1 md:grid-cols-2"
@@ -262,8 +276,15 @@ export default function WorkGallery({ limit, showViewMore }: { limit?: number; s
                 {work.available && work.href && (
                   <Link
                     href={work.href}
-                    className="px-4 py-2 border border-gray-900 text-xs text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 shrink-0 flex items-center gap-2"
-                    style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
+                    onMouseEnter={() => setHoveredCta(work.num)}
+                    onMouseLeave={() => setHoveredCta(null)}
+                    className="px-4 py-2 border text-xs shrink-0 flex items-center gap-2 transition-all duration-200"
+                    style={{
+                      fontFamily: 'FunnelDisplay, sans-serif',
+                      borderColor: hoveredCta === work.num ? work.accent : '#111827',
+                      background: hoveredCta === work.num ? work.accent : 'transparent',
+                      color: hoveredCta === work.num ? '#ffffff' : '#111827'
+                    }}
                   >
                     View Work
                     <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor">

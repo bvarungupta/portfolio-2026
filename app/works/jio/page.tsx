@@ -4,7 +4,7 @@ import MoreWorks from '../../components/works-pages/MoreWorks';
 import ScrollToTop from '../../components/ui/ScrollToTop';
 
 export const metadata: Metadata = {
-  title: "Jio Glasses — Product Design | Varun Gupta",
+  title: "Jio Tesseract — Product Design | Varun Gupta",
 };
 
 export default function JioGlassesPage() {

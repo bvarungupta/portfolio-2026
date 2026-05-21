@@ -1,14 +1,14 @@
 import Image from "next/image"
-import Loader from "../components/layout/Loader"
-import WorkGallery from "../components/home/workGallery"
-import MouseColorBloom from "../components/home/MouseColorBloom"
-import ParallaxImages from "../components/home/ParallaxImages"
-import EmailSection from "../components/home/EmailSection"
-import UnpluggedGallery from "../components/home/unpluggedGallery"
-import VisualIdentityGallery from "../components/home/visualIdentityGallery"
-import VisualExplorationsGallery from "../components/home/visualExplorationsGallery"
-import ProposalsGallery from "../components/home/proposalsGallery"
-import PageBranches from "../components/home/PageBranches"
+import Loader from "../layout/Loader"
+import WorkGallery from "./workGallery"
+import MouseColorBloom from "./MouseColorBloom"
+import ParallaxImages from "./ParallaxImages"
+import EmailSection from "./EmailSection"
+import UnpluggedGallery from "./unpluggedGallery"
+import VisualIdentityGallery from "./visualIdentityGallery"
+import VisualExplorationsGallery from "./visualExplorationsGallery"
+import ProposalsGallery from "./proposalsGallery"
+import PageBranches from "./PageBranches"
 
 export default function HomePortfolio() {
   return (
@@ -67,7 +67,7 @@ export default function HomePortfolio() {
         </div>
 
         <div data-section="work">
-          <WorkGallery limit={3} showViewMore={true} />
+          <WorkGallery featuredOnly={true} showViewMore={true} />
         </div>
 
         <div data-section="visual-identity">

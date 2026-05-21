@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { DISABLE_WELCOME } from '../../lib/welcomeConfig'
 
 const links = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta' },
@@ -11,7 +13,7 @@ const links = [
 ]
 
 const navLinks = [
-  { label: 'Works', href: '/home#work' },
+  { label: 'Works', href: '/#work' },
   { label: 'About', href: '/about' },
 ]
 
@@ -19,8 +21,28 @@ export default function Footer() {
   const pathname = usePathname()
   const isUnpluggedPage = pathname?.startsWith('/unplugged/')
   const isProposalPage = pathname?.startsWith('/proposals')
+  const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
 
-  if (pathname === '/') return null
+  useEffect(() => {
+    if (DISABLE_WELCOME) {
+      setWelcomeActive(false)
+      return
+    }
+
+    if (sessionStorage.getItem('welcome-shown') === 'true') {
+      setWelcomeActive(false)
+    }
+
+    const handleWelcomeFinished = () => {
+      setWelcomeActive(false)
+    }
+    window.addEventListener('welcome-finished', handleWelcomeFinished)
+    return () => {
+      window.removeEventListener('welcome-finished', handleWelcomeFinished)
+    }
+  }, [])
+
+  if (pathname === '/' && welcomeActive) return null
   if (isProposalPage) return null
 
   return (

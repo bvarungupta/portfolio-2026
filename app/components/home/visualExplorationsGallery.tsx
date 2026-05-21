@@ -14,6 +14,7 @@ const images = [
   '/images/visual-explorations/MacBook_13.png',
   '/images/visual-explorations/streer-poster.png',
   '/images/visual-explorations/about  2.png',
+  '/images/visual-explorations/pixelmask.mp4',
 ]
 
 // Duplicate images to create a seamless infinite loop
@@ -103,20 +104,34 @@ export default function VisualExplorationsGallery() {
           }}
         />
         <div className="flex w-max animate-infinite-scroll hover:animation-pause">
-          {carouselItems.map((src, idx) => (
-            <div
-              key={idx}
-              className="relative shrink-0 w-[80vw] sm:w-[50vw] md:w-[22vw] lg:w-[18vw] aspect-[4/3] overflow-hidden rounded-none bg-[#05070b] shadow-lg mr-4 md:mr-6"
-            >
-              <Image
-                src={src}
-                alt={`Visual Exploration ${idx + 1}`}
-                fill
-                sizes="(max-width: 640px) 80vw, (max-width: 768px) 50vw, (max-width: 1024px) 22vw, 18vw"
-                className="object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-          ))}
+          {carouselItems.map((src, idx) => {
+            const isVideo = src.endsWith('.mp4');
+            return (
+              <div
+                key={idx}
+                className="relative shrink-0 w-[80vw] sm:w-[50vw] md:w-[22vw] lg:w-[18vw] aspect-[4/3] overflow-hidden rounded-none bg-[#05070b] shadow-lg mr-4 md:mr-6"
+              >
+                {isVideo ? (
+                  <video
+                    src={src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                ) : (
+                  <Image
+                    src={src}
+                    alt={`Visual Exploration ${idx + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 80vw, (max-width: 768px) 50vw, (max-width: 1024px) 22vw, 18vw"
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
