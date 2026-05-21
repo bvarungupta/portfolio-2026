@@ -8,13 +8,11 @@ import UnpluggedGallery from "./unpluggedGallery"
 import VisualIdentityGallery from "./visualIdentityGallery"
 import VisualExplorationsGallery from "./visualExplorationsGallery"
 import ProposalsGallery from "./proposalsGallery"
-import PageBranches from "./PageBranches"
 
 export default function HomePortfolio() {
   return (
     <div className="bg-white relative">
       <Loader />
-      <PageBranches />
 
       <Image
         src="/images/HomeImages/piller-v.svg"
