@@ -274,6 +274,8 @@ export default function JioGlasses() {
   const [hoveredStat, setHoveredStat] = useState<string | null>(null);
   const [hoveredProcessStep, setHoveredProcessStep] = useState<string | null>(null);
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
+  const [empathySlide, setEmpathySlide] = useState(0);
+  const [hoveredQuadrant, setHoveredQuadrant] = useState<string | null>(null);
 
   const moodboardScrollRef = useRef<HTMLDivElement>(null);
   const [moodboardSlide, setMoodboardSlide] = useState(0);
@@ -301,7 +303,9 @@ export default function JioGlasses() {
     { id: 'jio-solution', label: 'The Solution' },
     { id: 'jio-objectives', label: 'Objectives' },
     { id: 'jio-user-research', label: 'User Research' },
+    { id: 'jio-empathy-map', label: 'Empathy Maps' },
     { id: 'jio-process', label: 'Process' },
+    { id: 'jio-wireflow', label: 'Wireflow' },
     { id: 'jio-moodboard', label: 'Moodboard' },
     { id: 'jio-design-system', label: 'Design System' },
   ];
@@ -868,6 +872,336 @@ export default function JioGlasses() {
           </div>
         </div>
 
+        {/* ── Empathy Map Section ─────────────────────────────────────── */}
+        {(() => {
+          const empathyPersonas = [
+            {
+              name: 'Aman Verma',
+              age: '30 years old',
+              profession: 'Product Manager',
+              segment: 'Segment 1',
+              segmentLabel: 'Young Professionals',
+              says: 'Switching between laptop, phone, and tablet feels mentally exhausting. Hates feeling watched while working on sensitive financial data. Wants something productive that does not add bulk to his bag.',
+              thinks: 'How do I keep my work private when I am on the move? Will the battery last a full flight? It would be amazing to have one tool that handles work and lets me unwind.',
+              feels: 'Frustrated by the lack of privacy and efficiency during travel. Confident about exploring cutting-edge tech that aligns with his ambitions. Tired of squinting at a tiny screen trying to decipher endless data.',
+              does: 'Uses high-end laptop and smartphone for work and entertainment. Invests time researching products before committing. Engages in forums focused on financial analysis tools. Always keeps himself busy with work or entertainment.',
+            },
+            {
+              name: 'Neha Sharma',
+              age: '28 years old',
+              profession: 'Marketing Manager',
+              segment: 'Segment 1',
+              segmentLabel: 'Young Professionals',
+              says: 'Loves staying on top of trends because that is what makes her campaigns stand out. Looking good and staying professional is non-negotiable. Wants presentations with a wow factor without spending hours on them.',
+              thinks: 'Am I doing enough to stay ahead in my career? Wishes she could manage work and personal life without feeling so drained. Needs to set a positive example for her team.',
+              feels: 'Frustrated by the overwhelming demands of her job and the steep learning curve of new tech. Feels the need to push creative boundaries and make her mark. Wants to stay polished and professional while staying connected and efficient.',
+              does: 'Regularly explores trendy items that fit her lifestyle. Watches reels to stay updated on makeup, music, and entertainment. Follows influencers and purchases items they promote. Constantly experiments with ways to elevate her presentation.',
+            },
+            {
+              name: 'Dhanush CP',
+              age: 'Teen',
+              profession: 'Casual Gamer',
+              segment: 'Segment 2',
+              segmentLabel: 'Casual Gamers',
+              says: 'Pokémon Go is fun but imagines a Pokémon actually coming to life. Loves hanging out and staying active. Wants to run while playing a video game and not stay in one place.',
+              thinks: 'How can he take gaming to the next level? Loves virtual worlds but does not want to miss real-world adventures. Wondering if his parents can afford a high-tech device that supports his gaming. The idea of digital elements blending into the real world feels mind-blowing.',
+              feels: 'Excited about blending virtual and real worlds through AR. Frustrated by the limitations of current gaming setups for outdoor use. Gets worried his interests might be too expensive. Passionate about gaming as a way to express himself and connect with others.',
+              does: 'Spends hours strategizing and leveling up characters. Explores outdoors with games like Pokémon Go. Plays multiplayer sessions with friends. Researches new games and gadgets constantly. Dreams of gaming gear that is lightweight, portable, and immersive.',
+            },
+            {
+              name: 'Mehak Singh',
+              age: 'Teen',
+              profession: 'Student',
+              segment: 'Segment 3',
+              segmentLabel: 'Gen Z / Students',
+              says: 'Loves learning about different cultures and historical sites. Wishes history and geography lessons were more exciting and real. Wants her school projects to stand out and impress everyone.',
+              thinks: 'It would be amazing to feel like she is actually visiting the places she reads about. Needs something that helps her connect better with study topics. There is so much more to history and geography than textbooks can show.',
+              feels: 'Excited about exploring new ways to learn beyond the classroom. Frustrated by the theoretical and dull nature of her current lessons. Curious about the world and how cultures differ. Hesitant about relying too much on technology.',
+              does: 'Spends hours learning and experimenting with new design tools. Takes on freelance projects to build her portfolio. Finds inspiration at art galleries and tries new creative techniques. Pushes herself to blend artistic skills with innovative technology.',
+            },
+            {
+              name: 'Nitesh Varma',
+              age: 'Adult',
+              profession: 'Interior Designer',
+              segment: 'Segment 4',
+              segmentLabel: 'Experience Seekers',
+              says: 'Wants designs that are both functional and stylish and truly stand out. Frustrated when he cannot visualise how a space will come together. Wishes he had more time to relax without feeling guilty about work.',
+              thinks: 'Will this design live up to expectations and client needs? How can he find more inspiration and break out of a creative rut? Needs tools that help, not complicate his process. Balancing work, creativity, and personal life feels almost impossible.',
+              feels: 'Overwhelmed by his busy schedule and creative blocks. Frustrated when he overthinks decisions or struggles to communicate ideas clearly. Inspired by bold, unique designs and the potential of technology like AR.',
+              does: 'Multitasks between interior design projects, lifestyle blogging, and personal life. Explores creative ways to balance functionality and aesthetics. Uses technology to streamline project management but hesitates to adopt new tools fully. Engages in online platforms to network and seek inspiration.',
+            },
+            {
+              name: 'Priya Manjunath',
+              age: 'Adult',
+              profession: 'Engineering Educator',
+              segment: 'Segment 5',
+              segmentLabel: 'Educators',
+              says: 'Wants students to really get tough concepts without it feeling like rocket science. Teaching is not just about textbooks, it is about making lessons come alive. Imagines how much easier AR would make explaining fluid mechanics.',
+              thinks: 'How can she make abstract engineering concepts easier to visualise? Will investing in AR actually help or just be another complicated tool? Needs to stay ahead because students deserve more than just lectures. Will the college back her if she pushes for this kind of tech adoption?',
+              feels: 'Frustrated when traditional methods fall flat and students struggle to keep up. Excited about the possibilities AR can bring to the classroom. Hopeful she can make a meaningful impact on how subjects are taught. Nervous about whether she will get the support she needs.',
+              does: 'Spends time researching and experimenting with new ways to make lessons interactive. Participates in hackathons and reads tech blogs to stay on top of trends. Creates hands-on learning experiences that go beyond the classroom. Guides students one-on-one to think critically and solve practical problems.',
+            },
+          ];
+
+          const TOTAL = empathyPersonas.length;
+          const current = empathyPersonas[empathySlide];
+
+          const quadrants = [
+            {
+              key: 'says',
+              label: 'Says',
+              icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              ),
+              bg: '#FDF5E6',
+              hoverBg: 'radial-gradient(ellipse 160% 120% at 50% 120%, rgba(251,191,36,0.18) 0%, transparent 70%)',
+              accentColor: '#D97706',
+              text: current.says,
+            },
+            {
+              key: 'thinks',
+              label: 'Thinks',
+              icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+              ),
+              bg: '#E5F1F7',
+              hoverBg: 'radial-gradient(ellipse 160% 120% at 50% 120%, rgba(59,130,246,0.15) 0%, transparent 70%)',
+              accentColor: '#2563EB',
+              text: current.thinks,
+            },
+            {
+              key: 'feels',
+              label: 'Feels',
+              icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              ),
+              bg: '#F5F3FF',
+              hoverBg: 'radial-gradient(ellipse 160% 120% at 50% 120%, rgba(139,92,246,0.15) 0%, transparent 70%)',
+              accentColor: '#7C3AED',
+              text: current.feels,
+            },
+            {
+              key: 'does',
+              label: 'Does',
+              icon: (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 11 12 14 22 4"/>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+              ),
+              bg: '#E8FAF7',
+              hoverBg: 'radial-gradient(ellipse 160% 120% at 50% 120%, rgba(99,102,241,0.15) 0%, transparent 70%)',
+              accentColor: '#4F46E5',
+              text: current.does,
+            },
+          ];
+
+          return (
+            <div id="jio-empathy-map" className="relative border-b border-gray-200">
+              <Plus h="left" v="top" />
+              <Plus h="right" v="top" />
+              <div className="px-6 md:px-10 py-10 md:py-16">
+
+                {/* Header */}
+                <SectionLabel>Empathy Map</SectionLabel>
+                <SectionHeading>What users say, think, feel, and do</SectionHeading>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-10" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  Personas tell us who the user is. Empathy maps tell us what is actually going on inside their head. For each segment we mapped what users say out loud, what they privately think, what they feel emotionally, and what they actually do day to day. This gap between what people say and what they feel is where the most important design decisions live.
+                </p>
+
+                {/* Slide title */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest">{current.segment} · {current.segmentLabel}</span>
+                    <span className="w-px h-3 bg-gray-300" />
+                    <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">{empathySlide + 1} / {TOTAL}</span>
+                  </div>
+                  <p className="text-xl md:text-2xl font-light text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>
+                    {current.name}
+                  </p>
+                </div>
+
+                {/* Empathy Map Card */}
+                <div className="border border-gray-200 overflow-hidden mb-6">
+
+                  {/* Persona header — plain white */}
+                  <div
+                    className="px-6 py-4 flex items-center gap-4"
+                    style={{ background: 'white', borderBottom: '1px solid #E5E7EB' }}
+                  >
+                    <div>
+                      <p className="text-xs font-medium text-gray-800" style={{ fontFamily: 'SatishSans, sans-serif' }}>{current.age} · {current.profession}</p>
+                    </div>
+                    <div className="ml-auto">
+                      <span
+                        className="text-[9px] uppercase tracking-widest px-2 py-0.5 font-mono"
+                        style={{ color: '#6B7280', background: '#F3F4F6', border: '1px solid #E5E7EB' }}
+                      >
+                        {current.segment}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Quadrant Grid — 2×2 on desktop, single column on mobile */}
+                  <div className="relative grid grid-cols-1 md:grid-cols-2">
+
+                    {/* Center light bulb icon — desktop only */}
+                    <div
+                      className="hidden md:flex absolute z-20 pointer-events-none"
+                      style={{
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '36px',
+                        height: '36px',
+                        background: 'white',
+                        border: '1.5px solid #E5E7EB',
+                        borderRadius: '50%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/>
+                      </svg>
+                    </div>
+
+                    {quadrants.map((q, qi) => {
+                      const isHov = hoveredQuadrant === `${empathySlide}-${q.key}`;
+                      // Desktop: right border on left column (says/feels), bottom border on top row (says/thinks)
+                      // Mobile: just a bottom border between each item except the last
+                      const desktopBorderRight = q.key === 'says' || q.key === 'feels';
+                      const desktopBorderBottom = q.key === 'says' || q.key === 'thinks';
+                      const isLast = qi === quadrants.length - 1;
+                      return (
+                        <div
+                          key={q.key}
+                          className="relative overflow-hidden p-5 md:p-6 cursor-default transition-all duration-200"
+                          style={{
+                            background: q.bg,
+                            borderRight: desktopBorderRight ? '1px solid #E5E7EB' : 'none',
+                            borderBottom: desktopBorderBottom
+                              ? '1px solid #E5E7EB'
+                              : !isLast ? '1px solid #E5E7EB' : 'none',
+                            minHeight: '140px',
+                          }}
+                          onMouseEnter={() => setHoveredQuadrant(`${empathySlide}-${q.key}`)}
+                          onMouseLeave={() => setHoveredQuadrant(null)}
+                        >
+                          {/* Hover glow overlay */}
+                          <div
+                            className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+                            style={{
+                              background: q.hoverBg,
+                              opacity: isHov ? 1 : 0,
+                            }}
+                          />
+                          <div className="relative">
+                            <div className="flex items-center gap-2 mb-3">
+                              <span style={{ color: isHov ? q.accentColor : '#9CA3AF', transition: 'color 0.2s ease' }}>
+                                {q.icon}
+                              </span>
+                              <p
+                                className="text-[10px] uppercase tracking-widest font-semibold transition-colors duration-200"
+                                style={{
+                                  fontFamily: 'FunnelDisplay, sans-serif',
+                                  color: isHov ? q.accentColor : '#6B7280',
+                                }}
+                              >
+                                {q.label}
+                              </p>
+                            </div>
+                            <p
+                              className="text-xs leading-relaxed"
+                              style={{ fontFamily: 'FunnelDisplay, sans-serif', color: '#374151' }}
+                            >
+                              {q.text}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Slider navigation — left/right arrows below map */}
+                <div className="flex items-center justify-between">
+                  {/* Dot indicators */}
+                  <div className="flex items-center gap-2">
+                    {empathyPersonas.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setEmpathySlide(i)}
+                        aria-label={`Go to persona ${i + 1}`}
+                        className="transition-all duration-300"
+                        style={{
+                          width: i === empathySlide ? '16px' : '6px',
+                          height: '6px',
+                          borderRadius: '9999px',
+                          background: i === empathySlide ? ACCENT : '#D1D5DB',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: 0,
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Arrow buttons */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setEmpathySlide(s => Math.max(0, s - 1))}
+                      disabled={empathySlide === 0}
+                      className="w-9 h-9 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                      style={{
+                        borderRadius: '4px',
+                        background: empathySlide === 0 ? 'white' : ACCENT,
+                        color: empathySlide === 0 ? '#D1D5DB' : 'white',
+                        border: `1.5px solid ${empathySlide === 0 ? '#E5E7EB' : ACCENT}`,
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button
+                      onClick={() => setEmpathySlide(s => Math.min(TOTAL - 1, s + 1))}
+                      disabled={empathySlide === TOTAL - 1}
+                      className="w-9 h-9 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                      style={{
+                        borderRadius: '4px',
+                        background: empathySlide === TOTAL - 1 ? 'white' : ACCENT,
+                        color: empathySlide === TOTAL - 1 ? '#D1D5DB' : 'white',
+                        border: `1.5px solid ${empathySlide === TOTAL - 1 ? '#E5E7EB' : ACCENT}`,
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Key Insight block */}
+                <div
+                  className="mt-10 p-6 border border-gray-200"
+                  style={{ background: '#F9FAFB' }}
+                >
+                  <p className="text-[9px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Key Insight</p>
+                  <p className="text-sm text-gray-600 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                    Across all segments one pattern kept surfacing. The hesitation was never really about price or complexity. It was about familiarity. Users across every segment were asking the same underlying question in different ways: is this actually for someone like me? That single insight became the strategic anchor for how the landing page was structured, what each section needed to say, and which objections had to be addressed before the user ever reached the buy button.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ── Process Section ─────────────────────────────────────────── */}
 
         <div id="jio-process" className="relative border-b border-gray-200">
@@ -979,6 +1313,146 @@ export default function JioGlasses() {
               })}
             </div>
           </div>
+        </div>
+
+        {/* ── Wireflow Section ────────────────────────────────────────── */}
+        <div id="jio-wireflow" className="relative border-b border-gray-200">
+          <Plus h="left" v="top" />
+          <Plus h="right" v="top" />
+          <div className="px-6 md:px-10 py-8 md:py-12">
+
+            {/* Heading */}
+            <SectionLabel>Wireflow</SectionLabel>
+            <SectionHeading>Mapping every path before designing any screen.</SectionHeading>
+            <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-10" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+              With research locked and personas mapped, the next step was understanding how a user actually moves through the JioGlass experience. Before designing any individual screen, we needed to map every possible path from the landing page to purchase and beyond. The wireflow made sure no journey was left unaccounted for and every section of the page had a clear purpose in the overall flow.
+            </p>
+
+            {/* Sub-sections */}
+            <div className="space-y-10 border-t border-gray-200 pt-10">
+
+              {/* Landing Page as Hub */}
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>The Landing Page as the Hub</p>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  Everything starts at the JioGlass Landing Page. From here users can explore immersive features, real-life scenarios, interactive demos, specs, support, and purchase options. Five primary paths branch out from this single entry point — News, Search, Product Description, FAQs, and Experience in Store. Each path serves a different type of user with a different level of intent.
+                </p>
+
+                {/* Five paths grid */}
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-gray-200 border border-gray-200 mt-6">
+                  {[
+                    {
+                      title: 'News',
+                      desc: 'Product innovations, new features, and partnerships. For users who want to stay informed before committing.',
+                    },
+                    {
+                      title: 'Search',
+                      desc: 'A universal search bar to explore all JioGlass content — blogs, news, FAQs, and technical details.',
+                    },
+                    {
+                      title: 'Product Description',
+                      desc: 'Features, use cases, specs, and benefits. The core conversion page for users ready to evaluate seriously.',
+                    },
+                    {
+                      title: 'FAQs',
+                      desc: 'Compatibility, repairs, Jio integration, and usage tips. For users with specific concerns before purchasing.',
+                    },
+                    {
+                      title: 'Experience in Store',
+                      desc: 'In-store demo locations where users can try JioGlass firsthand. For users who need to hold the product before they buy.',
+                    },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white px-5 py-6">
+                      <span className="text-[9px] font-mono text-[#0066CC] block mb-2 tracking-widest">0{i + 1}</span>
+                      <p className="text-sm font-medium text-gray-800 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{item.title}</p>
+                      <p className="text-[11px] text-gray-400 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Purchase Path */}
+              <div className="border-t border-gray-200 pt-10">
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>The Purchase Path</p>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-6" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  From the Product Description Page the user moves into the buying flow. Two paths open up — Cart for users ready to purchase, and Accounts/Profile Page for users managing their relationship with the product over time.
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-6" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  The Cart leads to a seamless Checkout — reviewing items, selecting payment options, applying discounts, confirming shipping details, and completing the purchase. The Accounts/Profile Page branches into five destinations covering everything a user needs before and after purchase.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-gray-200 border border-gray-200">
+                  {[
+                    { title: 'Order History', desc: 'A log of all past purchases with details on items, dates, and statuses.' },
+                    { title: 'Wishlist', desc: 'Save desired products or accessories for future purchase.' },
+                    { title: 'Saved Addresses', desc: 'Manage delivery addresses for seamless order placement.' },
+                    { title: 'Track Order', desc: 'Real-time tracking with estimated delivery timelines and updates.' },
+                    { title: 'Support', desc: 'A helpdesk for all queries including FAQs, live chat, and troubleshooting guides.' },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white px-5 py-6">
+                      <span className="text-[9px] font-mono text-[#0066CC] block mb-2 tracking-widest">0{i + 1}</span>
+                      <p className="text-sm font-medium text-gray-800 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{item.title}</p>
+                      <p className="text-[11px] text-gray-400 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Post-Purchase */}
+              <div className="border-t border-gray-200 pt-10">
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Post-Purchase Layer</p>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-6" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  From Support, three final pages complete the ecosystem — Terms and Conditions, Privacy Policy, and Shipping and Return. These pages exist to build trust and handle the practical concerns that surface after a user has committed to a purchase.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+                  {[
+                    { title: 'Terms and Conditions', desc: 'Legal framework governing product use, warranties, and liabilities.' },
+                    { title: 'Privacy Policy', desc: 'How user data is collected, stored, and protected across the JioGlass ecosystem.' },
+                    { title: 'Shipping and Return', desc: 'Delivery timelines, return windows, and refund procedures to reduce post-purchase friction.' },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white px-5 py-6">
+                      <span className="text-[9px] font-mono text-[#0066CC] block mb-2 tracking-widest">0{i + 1}</span>
+                      <p className="text-sm font-medium text-gray-800 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{item.title}</p>
+                      <p className="text-[11px] text-gray-400 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key Insight */}
+              <div className="border-t border-gray-200 pt-10">
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>What the Wireflow Revealed</p>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-2xl" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                  Mapping the full flow made one thing immediately clear — the landing page was not just a marketing surface. It was the single most important screen in the entire ecosystem. Every other page depends on it doing its job. If a user leaves the landing page without being convinced, none of the downstream pages ever get seen. That insight reinforced every structural decision we made in the sections that followed.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Full-bleed Wireflow diagram */}
+          <div className="border-t border-gray-200 relative">
+            {/* Mobile scroll hint */}
+            <div className="flex items-center gap-1.5 px-6 py-2 md:hidden border-b border-gray-100">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <span className="text-[9px] uppercase tracking-widest text-gray-400" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Scroll to explore</span>
+            </div>
+            <div className="overflow-x-auto">
+              <div className="min-w-[960px] md:min-w-0">
+                <Image
+                  src="/images/WorkImages/jio/Wireflow.svg"
+                  alt="JioGlass Wireflow diagram"
+                  width={2400}
+                  height={1200}
+                  className="w-full h-auto block"
+                />
+              </div>
+            </div>
+          </div>
+
+          <Plus h="left" />
+          <Plus h="right" />
         </div>
 
         {/* ── Moodboard Section ───────────────────────────────────────── */}
