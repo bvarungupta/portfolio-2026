@@ -755,9 +755,9 @@ export default function JioGlasses() {
               const total = segments[activeSegment].personas.length;
               const subTags = pers.sub.split(/\s*[·•]\s*/).map(s => s.trim()).filter(Boolean);
               return (
-                <div className="border border-gray-200">
+                <div className="border-none md:border md:border-gray-200">
                   {/* Top bar — name + nav */}
-                  <div className="flex items-start justify-between px-6 md:px-8 pt-6 md:pt-8 pb-5 md:pb-6 border-b border-gray-200 gap-4 md:gap-6">
+                  <div className="flex items-start justify-between px-0 md:px-8 pt-6 md:pt-8 pb-5 md:pb-6 border-b border-gray-200 gap-4 md:gap-6">
                     <div className="flex-1 min-w-0">
                       <span className="text-[9px] font-mono text-[#0066CC] uppercase tracking-widest block mb-2">
                         Persona 0{activePersona + 1} / 0{total} · {segments[activeSegment].title}
@@ -828,43 +828,43 @@ export default function JioGlasses() {
                   {/* Content — single column stacked sections */}
                   <div className="divide-y divide-gray-100">
                     {/* About */}
-                    <div className="px-8 py-7">
+                    <div className="px-0 md:px-8 py-7">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">About</p>
                       <p className="text-sm text-gray-600 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                         {pers.about}
                       </p>
                     </div>
                     {/* Trigger */}
-                    <div className="px-8 py-7 bg-[#0066CC]/[0.02]">
+                    <div className="px-0 md:px-8 py-7 bg-transparent md:bg-[#0066CC]/[0.02]">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">✦ Trigger Situation</p>
                       <p className="text-sm text-gray-700 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
                         {pers.situation}
                       </p>
                     </div>
                     {/* Goals */}
-                    <div className="px-8 py-7">
+                    <div className="px-0 md:px-8 py-7">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">Goals</p>
                       <p className="text-sm text-gray-600 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{pers.goals}</p>
                     </div>
                     {/* Frustrations */}
-                    <div className="px-8 py-7">
+                    <div className="px-0 md:px-8 py-7">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">Frustrations</p>
                       <p className="text-sm text-gray-600 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{pers.frustrations}</p>
                     </div>
                     {/* Why Buy */}
-                    <div className="px-8 py-7">
+                    <div className="px-0 md:px-8 py-7">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">Why Buy</p>
                       <p className="text-sm text-gray-600 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{pers.reasons}</p>
                     </div>
                     {/* Apprehensions */}
-                    <div className="px-8 py-7">
+                    <div className="px-0 md:px-8 py-7">
                       <p className="text-xs font-mono text-[#0066CC] uppercase tracking-widest mb-3">Apprehensions</p>
                       <p className="text-sm text-gray-600 leading-loose" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{pers.apprehensions}</p>
                     </div>
                   </div>
 
                   {/* Brands footer */}
-                  <div className="px-8 py-6 border-t border-gray-200 bg-gray-50/30 flex flex-wrap items-center gap-3">
+                  <div className="px-0 md:px-8 py-6 border-t border-gray-200 bg-transparent md:bg-gray-50/30 flex flex-wrap items-center gap-3">
                     <p className="text-[9px] font-mono text-gray-400 uppercase tracking-widest mr-2">Platforms</p>
                     {pers.brands.map((brand, bIdx) => {
                       const IconComp = brandIconMap[brand];
@@ -882,7 +882,7 @@ export default function JioGlasses() {
                   </div>
 
                   {/* Slide dots */}
-                  <div className="flex items-center gap-2 px-8 py-4 border-t border-gray-200">
+                  <div className="flex items-center gap-2 px-0 md:px-8 py-4 border-t border-gray-200">
                     {segments[activeSegment].personas.map((_, i) => (
                       <button
                         key={i}
@@ -1060,7 +1060,7 @@ export default function JioGlasses() {
                 </div>
 
                 {/* Empathy Map Card */}
-                <div className="border border-gray-200 overflow-hidden mb-6">
+                <div className="-mx-6 md:mx-0 border-none md:border md:border-gray-200 overflow-hidden mb-6">
 
                   {/* Persona header — name + age/profession */}
                   <div
@@ -1071,12 +1071,12 @@ export default function JioGlasses() {
                     <p className="text-[10px] text-gray-400 mt-0.5" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{current.age} · {current.profession}</p>
                   </div>
 
-                  {/* Quadrant Grid — always 2×2 */}
-                  <div className="relative grid grid-cols-2">
+                  {/* Quadrant Grid — always 2×2 on desktop, stacked on mobile */}
+                  <div className="relative grid grid-cols-1 md:grid-cols-2">
 
                     {/* Center light bulb icon */}
                     <div
-                      className="flex absolute z-20 pointer-events-none"
+                      className="hidden md:flex absolute z-20 pointer-events-none"
                       style={{
                         top: '50%',
                         left: '50%',
@@ -1098,21 +1098,22 @@ export default function JioGlasses() {
 
                     {quadrants.map((q, qi) => {
                       const isHov = hoveredQuadrant === `${empathySlide}-${q.key}`;
-                      // Desktop: right border on left column (says/feels), bottom border on top row (says/thinks)
-                      // Mobile: just a bottom border between each item except the last
-                      const desktopBorderRight = q.key === 'says' || q.key === 'feels';
-                      const desktopBorderBottom = q.key === 'says' || q.key === 'thinks';
-                      const isLast = qi === quadrants.length - 1;
+                      let borderClass = "";
+                      if (q.key === 'says') {
+                        borderClass = "border-b md:border-r border-gray-200";
+                      } else if (q.key === 'thinks') {
+                        borderClass = "border-b border-gray-200";
+                      } else if (q.key === 'feels') {
+                        borderClass = "border-b md:border-b-0 md:border-r border-gray-200";
+                      } else if (q.key === 'does') {
+                        borderClass = "border-none";
+                      }
                       return (
                         <div
                           key={q.key}
-                          className="relative overflow-hidden p-5 md:p-6 cursor-default transition-all duration-200"
+                          className={`relative overflow-hidden p-5 md:p-6 cursor-default transition-all duration-200 ${borderClass}`}
                           style={{
                             background: q.bg,
-                            borderRight: desktopBorderRight ? '1px solid #E5E7EB' : 'none',
-                            borderBottom: desktopBorderBottom
-                              ? '1px solid #E5E7EB'
-                              : !isLast ? '1px solid #E5E7EB' : 'none',
                             minHeight: '140px',
                           }}
                           onMouseEnter={() => setHoveredQuadrant(`${empathySlide}-${q.key}`)}
@@ -1267,12 +1268,10 @@ export default function JioGlasses() {
                     desc: 'Final designs were documented and handed off with component annotations, interaction notes, and Jio design system references to ensure a clean transition to development.'
                   }
                 ].map((phase, i) => (
-                  <div key={i} className="flex gap-6 items-start">
-                    <span className="text-sm font-mono text-[#0066CC] shrink-0 mt-0.5" style={{ minWidth: '2rem' }}>0{i + 1}.</span>
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-900 mb-1" style={{ fontFamily: 'SatishSans, sans-serif' }}>{phase.title}</h4>
-                      <p className="text-[12px] text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{phase.desc}</p>
-                    </div>
+                  <div key={i} className="flex flex-col items-start">
+                    <span className="text-[11px] font-mono text-[#0066CC] mb-1.5">0{i + 1}</span>
+                    <h4 className="text-sm font-medium text-gray-900 mb-1" style={{ fontFamily: 'SatishSans, sans-serif' }}>{phase.title}</h4>
+                    <p className="text-[12px] text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{phase.desc}</p>
                   </div>
                 ))}
               </div>
