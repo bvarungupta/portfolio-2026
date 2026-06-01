@@ -61,7 +61,7 @@ export default function MoreWorks({ current }: { current: string }) {
                 alt={work.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className={`object-cover ${work.title === 'Jio Tesseract' ? 'object-left' : 'object-center'} transition-transform duration-500 group-hover:scale-105`}
               />
             </div>
 

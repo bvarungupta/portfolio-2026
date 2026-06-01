@@ -508,10 +508,10 @@ export default function JioGlasses() {
               <svg width="16" height="16" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 object-contain">
                 <g clipPath="url(#clip0_jio_btn)">
                   <rect width="120" height="120" rx="60" fill={hoveredLink === 'process' ? 'white' : '#000093'} style={{ transition: 'fill 0.2s ease' }} />
-                  <path 
-                    d="M87.9373 72.7941C83.5218 72.7941 80.4819 69.5523 80.4819 64.9252C80.4819 60.3655 83.5891 57.1237 87.9373 57.1237C92.2854 57.1237 95.3926 60.3655 95.3926 64.9926C95.3926 69.4753 92.2181 72.7941 87.9373 72.7941ZM88.0816 47.0327C76.7591 47.0327 69.2268 54.2186 69.2268 64.9156C69.2268 75.8916 76.4801 82.9332 87.8699 82.9332C99.1924 82.9332 106.648 75.8916 106.648 64.9829C106.648 54.2186 99.2694 47.0327 88.0816 47.0327ZM58.9047 31.3623C54.6239 31.3623 51.9304 33.7768 51.9304 37.5766C51.9304 41.4437 54.6913 43.8582 59.1067 43.8582C63.3875 43.8582 66.0811 41.4437 66.0811 37.5766C66.0811 33.7095 63.3202 31.3623 58.9047 31.3623ZM59.6647 47.379H58.2794C54.9029 47.379 52.344 48.9662 52.344 53.8049V75.9012C52.344 80.8072 54.8259 82.3271 58.4237 82.3271H59.7994C63.1855 82.3271 65.6001 80.6726 65.6001 75.9012V53.8049C65.6001 48.8316 63.2529 47.379 59.6647 47.379ZM41.5795 36.9609H39.5786C35.7787 36.9609 33.7105 39.1061 33.7105 43.3869V64.0306C33.7105 69.3503 31.9116 71.2165 27.7077 71.2165C24.3985 71.2165 21.705 69.7639 19.5598 67.1377C19.3481 66.8588 15 68.927 15 74.0446C15 79.5663 20.1754 82.9524 29.776 82.9524C41.4448 82.9524 47.5919 77.0844 47.5919 64.2422V43.3772C47.5919 39.0965 45.5236 36.9609 41.5795 36.9609Z" 
-                    fill={hoveredLink === 'process' ? '#0F3CC9' : 'white'} 
-                    style={{ transition: 'fill 0.2s ease' }} 
+                  <path
+                    d="M87.9373 72.7941C83.5218 72.7941 80.4819 69.5523 80.4819 64.9252C80.4819 60.3655 83.5891 57.1237 87.9373 57.1237C92.2854 57.1237 95.3926 60.3655 95.3926 64.9926C95.3926 69.4753 92.2181 72.7941 87.9373 72.7941ZM88.0816 47.0327C76.7591 47.0327 69.2268 54.2186 69.2268 64.9156C69.2268 75.8916 76.4801 82.9332 87.8699 82.9332C99.1924 82.9332 106.648 75.8916 106.648 64.9829C106.648 54.2186 99.2694 47.0327 88.0816 47.0327ZM58.9047 31.3623C54.6239 31.3623 51.9304 33.7768 51.9304 37.5766C51.9304 41.4437 54.6913 43.8582 59.1067 43.8582C63.3875 43.8582 66.0811 41.4437 66.0811 37.5766C66.0811 33.7095 63.3202 31.3623 58.9047 31.3623ZM59.6647 47.379H58.2794C54.9029 47.379 52.344 48.9662 52.344 53.8049V75.9012C52.344 80.8072 54.8259 82.3271 58.4237 82.3271H59.7994C63.1855 82.3271 65.6001 80.6726 65.6001 75.9012V53.8049C65.6001 48.8316 63.2529 47.379 59.6647 47.379ZM41.5795 36.9609H39.5786C35.7787 36.9609 33.7105 39.1061 33.7105 43.3869V64.0306C33.7105 69.3503 31.9116 71.2165 27.7077 71.2165C24.3985 71.2165 21.705 69.7639 19.5598 67.1377C19.3481 66.8588 15 68.927 15 74.0446C15 79.5663 20.1754 82.9524 29.776 82.9524C41.4448 82.9524 47.5919 77.0844 47.5919 64.2422V43.3772C47.5919 39.0965 45.5236 36.9609 41.5795 36.9609Z"
+                    fill={hoveredLink === 'process' ? '#0F3CC9' : 'white'}
+                    style={{ transition: 'fill 0.2s ease' }}
                   />
                 </g>
                 <defs>
@@ -521,7 +521,7 @@ export default function JioGlasses() {
                 </defs>
               </svg>
               View Full Process
-              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
             </a>
           </div>
         </div>
@@ -988,7 +988,7 @@ export default function JioGlasses() {
               label: 'Says',
               icon: (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
               ),
               bg: '#FDF5E6',
@@ -1001,8 +1001,8 @@ export default function JioGlasses() {
               label: 'Thinks',
               icon: (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="3"/>
-                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
                 </svg>
               ),
               bg: '#E5F1F7',
@@ -1015,7 +1015,7 @@ export default function JioGlasses() {
               label: 'Feels',
               icon: (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
               ),
               bg: '#F5F3FF',
@@ -1028,8 +1028,8 @@ export default function JioGlasses() {
               label: 'Does',
               icon: (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 11 12 14 22 4"/>
-                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  <polyline points="9 11 12 14 22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                 </svg>
               ),
               bg: '#E8FAF7',
@@ -1092,7 +1092,7 @@ export default function JioGlasses() {
                       }}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/>
+                        <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z" />
                       </svg>
                     </div>
 
@@ -1191,7 +1191,7 @@ export default function JioGlasses() {
                         border: `1.5px solid ${empathySlide === 0 ? '#E5E7EB' : ACCENT}`,
                       }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6" /></svg>
                     </button>
                     <button
                       onClick={() => setEmpathySlide(s => Math.min(TOTAL - 1, s + 1))}
@@ -1204,7 +1204,7 @@ export default function JioGlasses() {
                         border: `1.5px solid ${empathySlide === TOTAL - 1 ? '#E5E7EB' : ACCENT}`,
                       }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                     </button>
                   </div>
                 </div>
@@ -1455,7 +1455,7 @@ export default function JioGlasses() {
             {/* Mobile scroll hint */}
             <div className="flex items-center gap-1.5 px-6 py-2 md:hidden border-b border-gray-100">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
               <span className="text-[9px] uppercase tracking-widest text-gray-400" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Scroll to explore</span>
             </div>
@@ -1867,83 +1867,105 @@ export default function JioGlasses() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="space-y-16">
               {[
                 {
                   name: 'Avatar',
                   desc: 'Used to display user profile pictures or initials in navigation and settings. Helps personalize the JioGlass experience and manage user accounts with clear visual indicators.',
-                  file: 'Avatar.png'
+                  file: 'Avatar.png',
+                  width: 6666,
+                  height: 14409
                 },
                 {
                   name: 'Bottom Sheet',
                   desc: 'An overlay panel sliding from the bottom, offering context-specific actions or settings. Perfect for mobile navigation, minimizing screen clutter while keeping interactions within easy thumb reach.',
-                  file: 'Bottom-Sheet.png'
-                },
-                {
-                  name: 'Bottom Nav',
-                  desc: 'The primary tab bar for switching main views on mobile. Adheres to accessibility standards, providing clear icons and labels for smooth navigation across JioGlass features.',
-                  file: 'BottomNav.png'
+                  file: 'Bottom-Sheet.png',
+                  width: 4167,
+                  height: 4320
                 },
                 {
                   name: 'Checkbox',
                   desc: 'A fundamental control for multi-select choices, such as preferences or configurations. Designed with interactive state feedbacks and distinct checkmarks to guarantee clarity.',
-                  file: 'Checkbox.png'
+                  file: 'Checkbox.png',
+                  width: 5895,
+                  height: 3324
                 },
                 {
                   name: 'FAB (Floating Action Button)',
                   desc: 'Represents the primary positive action on a screen, like adding a new device or launching a demo. Floats above content to stay accessible while scrolling.',
-                  file: 'FAB.png'
+                  file: 'FAB.png',
+                  width: 4986,
+                  height: 2229
                 },
                 {
                   name: 'Heading',
                   desc: 'Establishes standard text hierarchies across sections. Ensures consistent typography size, line heights, and margins to build a clean layout throughout the interface.',
-                  file: 'Heading.png'
+                  file: 'Heading.png',
+                  width: 6666,
+                  height: 6660
                 },
                 {
                   name: 'Selector',
                   desc: 'An interactive choice card or segment switch for toggling settings or models. Built with explicit active state borders and icons to make user selections intuitive.',
-                  file: 'Selector.png'
+                  file: 'Selector.png',
+                  width: 9765,
+                  height: 4731
                 },
                 {
                   name: 'Slider',
                   desc: 'A fluid slider component for fine-tuning numeric values like volume, brightness, or scale. Offers instant visual feedback with custom handle controls.',
-                  file: 'Slider.png'
+                  file: 'Slider.svg',
+                  width: 2713,
+                  height: 2384
                 },
                 {
                   name: 'Stepper',
                   desc: 'Used to increment or decrement quantities, like product items in the shopping cart. Designed with responsive buttons to prevent accidental double-clicks.',
-                  file: 'Stepper.png'
+                  file: 'Stepper.png',
+                  width: 3366,
+                  height: 2832
                 },
                 {
                   name: 'Toast',
                   desc: 'Temporary, non-disruptive feedback messages that slide in to notify users of status changes like item added, settings saved, or connectivity updates.',
-                  file: 'Toast.png'
+                  file: 'Toast.png',
+                  width: 6666,
+                  height: 7338
+                },
+                {
+                  name: 'Bottom Nav',
+                  desc: 'The primary tab bar for switching main views on mobile. Adheres to accessibility standards, providing clear icons and labels for smooth navigation across JioGlass features.',
+                  file: 'BottomNav.svg',
+                  width: 1802,
+                  height: 914
                 }
               ].map((c, i) => (
-                <div key={i} className="flex flex-col justify-between border border-gray-200 bg-white p-6 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:border-gray-300 hover:-translate-y-0.5 group">
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium text-gray-900 mb-1.5" style={{ fontFamily: 'SatishSans, sans-serif' }}>{c.name}</h4>
-                    <p className="text-[12px] text-gray-500 leading-relaxed min-h-[54px]" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>{c.desc}</p>
+                <div key={i} className="border-t border-gray-200/60 pt-12 first:border-t-0 first:pt-0">
+                  <div className="max-w-3xl mb-8">
+                    <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-2" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Component {i + 1}</p>
+                    <h4 className="text-sm font-medium text-gray-900 mb-2" style={{ fontFamily: 'SatishSans, sans-serif' }}>{c.name}</h4>
+                    <p className="text-[12px] text-gray-500 leading-relaxed" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+                      {c.desc}
+                    </p>
                   </div>
-                  <div 
-                    className="w-full border border-gray-100 bg-[#F9FAFB] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] bg-gray-50/50 flex items-center justify-center overflow-hidden p-8 aspect-[4/3] relative cursor-zoom-in mt-auto rounded-sm"
+
+                  <div className="w-full relative cursor-zoom-in group mt-6 flex justify-center bg-white"
                     onClick={() => setZoomedImage({ src: `/images/WorkImages/jio/components/${c.file}`, alt: c.name })}
                   >
                     <Image
                       src={`/images/WorkImages/jio/components/${c.file}`}
                       alt={c.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      style={{ filter: 'drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.04))' }}
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      width={c.width}
+                      height={c.height}
+                      className="max-h-[600px] w-auto block object-contain transition-transform duration-300 group-hover:scale-[1.01]"
                     />
                     {/* Tooltip Overlay */}
                     <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm border border-gray-200 px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none flex items-center gap-1 shadow-sm">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        <line x1="11" y1="8" x2="11" y2="14"/>
-                        <line x1="8" y1="11" x2="14" y2="11"/>
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        <line x1="11" y1="8" x2="11" y2="14" />
+                        <line x1="8" y1="11" x2="14" y2="11" />
                       </svg>
                       <span className="text-[8px] uppercase tracking-widest text-gray-500 font-semibold" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click to zoom</span>
                     </div>
@@ -1983,18 +2005,18 @@ export default function JioGlasses() {
 
         {/* Zoom Lightbox Modal */}
         {mounted && zoomedImage && createPortal(
-          <div 
+          <div
             className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
             onClick={() => setZoomedImage(null)}
           >
             <div className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors duration-200 p-2 cursor-pointer">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </div>
-            
-            <div 
+
+            <div
               className="max-w-5xl w-full max-h-[85vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
@@ -2005,7 +2027,7 @@ export default function JioGlasses() {
                 className="max-w-full max-h-[85vh] object-contain select-none shadow-2xl rounded-lg"
               />
             </div>
-            
+
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center pointer-events-none">
               <p className="text-white text-xs tracking-wider font-semibold uppercase mb-1" style={{ fontFamily: 'SatishSans, sans-serif' }}>{zoomedImage.alt}</p>
               <p className="text-white/40 text-[9px] uppercase tracking-widest" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Click anywhere to close</p>

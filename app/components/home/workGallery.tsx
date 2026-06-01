@@ -303,7 +303,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
                   alt={work.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className={`object-cover${work.available ? '' : ' blur-sm brightness-75'}`}
+                  className={`object-cover ${work.title === 'Jio Tesseract' ? 'object-left' : 'object-center'}${work.available ? '' : ' blur-sm brightness-75'}`}
                 />
               )}
               {!work.available && (
