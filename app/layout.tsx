@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import NavbarClient from "./components/layout/NavbarClient"
 import SmoothScroll from "./components/layout/SmoothScroll"
@@ -137,6 +138,7 @@ export default function RootLayout({
           {children}
           <PageBranches />
           <Analytics />
+          <SpeedInsights />
         </main>
         <Footer />
       </body>
