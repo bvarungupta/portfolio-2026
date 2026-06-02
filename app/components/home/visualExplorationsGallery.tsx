@@ -265,7 +265,7 @@ export default function VisualExplorationsGallery() {
   const [showOverlay, setShowOverlay] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  const openOverlayTimeoutRef = useRef<number | null>(null)
+  const openOverlayRafRef = useRef<number | null>(null)
   const closeOverlayTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -352,23 +352,25 @@ export default function VisualExplorationsGallery() {
 
   const handleImageClick = useCallback(
     (projectName: string, imageUrl: string, textureIndex: number) => {
-      if (openOverlayTimeoutRef.current != null) window.clearTimeout(openOverlayTimeoutRef.current)
-      if (closeOverlayTimeoutRef.current != null) window.clearTimeout(closeOverlayTimeoutRef.current)
+      if (openOverlayRafRef.current != null) cancelAnimationFrame(openOverlayRafRef.current)
+      if (closeOverlayTimeoutRef.current != null) clearTimeout(closeOverlayTimeoutRef.current)
       setSelectedProject({ name: projectName, imageUrl, index: textureIndex })
-      // rAF ensures the element mounts at opacity:0 first, then the .visible class triggers the CSS transition
-      openOverlayTimeoutRef.current = window.requestAnimationFrame(() => {
+      // rAF ensures the element mounts at opacity:0 first, then .visible triggers the CSS transition
+      openOverlayRafRef.current = requestAnimationFrame(() => {
         setShowOverlay(true)
-      }) as unknown as number
+        openOverlayRafRef.current = null
+      })
     },
     []
   )
 
   const handleCloseProject = useCallback(() => {
     setShowOverlay(false)
-    if (closeOverlayTimeoutRef.current != null) window.clearTimeout(closeOverlayTimeoutRef.current)
+    if (closeOverlayTimeoutRef.current != null) clearTimeout(closeOverlayTimeoutRef.current)
     closeOverlayTimeoutRef.current = window.setTimeout(() => {
       setSelectedProject(null)
-    }, 520) as unknown as number
+      closeOverlayTimeoutRef.current = null
+    }, 520)
   }, [])
 
   useEffect(() => {
@@ -380,10 +382,40 @@ export default function VisualExplorationsGallery() {
     }
   }, [hoveredImageUrl, previousImageUrl])
 
+  // Native non-passive touchmove so we can call preventDefault and prevent page scroll
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0]
+      el.setAttribute('data-touch-y', String(t.clientY))
+      el.setAttribute('data-touch-x', String(t.clientX))
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      const t = e.touches[0]
+      const prevY = parseFloat(el.getAttribute('data-touch-y') || '0')
+      const prevX = parseFloat(el.getAttribute('data-touch-x') || '0')
+      tubeScrollTarget.current -= (t.clientY - prevY) * 0.04
+      tubeSpinVelocity.current -= (t.clientX - prevX) * 0.06
+      el.setAttribute('data-touch-y', String(t.clientY))
+      el.setAttribute('data-touch-x', String(t.clientX))
+    }
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+    }
+  }, [])
+
   useEffect(() => {
     return () => {
-      if (openOverlayTimeoutRef.current != null) window.clearTimeout(openOverlayTimeoutRef.current)
-      if (closeOverlayTimeoutRef.current != null) window.clearTimeout(closeOverlayTimeoutRef.current)
+      if (openOverlayRafRef.current != null) cancelAnimationFrame(openOverlayRafRef.current)
+      if (closeOverlayTimeoutRef.current != null) clearTimeout(closeOverlayTimeoutRef.current)
     }
   }, [])
 
@@ -419,23 +451,6 @@ export default function VisualExplorationsGallery() {
         ref={containerRef}
         onPointerMove={onPointerMove}
         onWheel={onWheel}
-        onTouchStart={(e) => {
-          const t = e.touches[0]
-          containerRef.current?.setAttribute('data-touch-y', String(t.clientY))
-          containerRef.current?.setAttribute('data-touch-x', String(t.clientX))
-        }}
-        onTouchMove={(e) => {
-          e.preventDefault()
-          const t = e.touches[0]
-          const prevY = parseFloat(containerRef.current?.getAttribute('data-touch-y') || '0')
-          const prevX = parseFloat(containerRef.current?.getAttribute('data-touch-x') || '0')
-          const deltaY = t.clientY - prevY
-          const deltaX = t.clientX - prevX
-          tubeScrollTarget.current -= deltaY * 0.04
-          tubeSpinVelocity.current -= deltaX * 0.06
-          containerRef.current?.setAttribute('data-touch-y', String(t.clientY))
-          containerRef.current?.setAttribute('data-touch-x', String(t.clientX))
-        }}
       >
         {isLoading && <LocalLoader />}
 
