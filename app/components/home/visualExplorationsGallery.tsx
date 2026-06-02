@@ -658,5 +658,7 @@ export default function VisualExplorationsGallery() {
   )
 }
 
-// Preload assets for performance
-useGLTF.preload("/models/rubens.glb")
+// Preload assets for performance (only in browser — not during SSR)
+if (typeof window !== 'undefined') {
+  useGLTF.preload("/models/rubens.glb")
+}
