@@ -72,12 +72,12 @@ export default function HomePortfolio() {
           <VisualIdentityGallery />
         </div>
 
-        <div data-section="visual-explorations">
-          <VisualExplorationsGallery />
-        </div>
-
         <div data-section="proposals">
           <ProposalsGallery />
+        </div>
+
+        <div data-section="visual-explorations">
+          <VisualExplorationsGallery />
         </div>
 
         <div data-section="unplugged" className="hidden">
