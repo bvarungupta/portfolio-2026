@@ -7,6 +7,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, useGLTF, useTexture } from '@react-three/drei'
 import { DoubleSide, Mesh, MeshPhysicalMaterial, Object3D, Texture } from 'three'
 import Image from 'next/image'
+import { createPortal } from 'react-dom'
 import { VisualExplorationsSound } from './visualExplorationsSound'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -217,7 +218,7 @@ function ImageTube({
                 rotation={[0, ry, 0]}
                 onPointerOver={() => handleHover(projectNames[texIndex], texIndex)}
                 onPointerOut={() => handleHover(null, null)}
-                onClick={() => onImageClick(projectNames[texIndex], imageUrls[texIndex], texIndex)}
+                onPointerDown={() => onImageClick(projectNames[texIndex], imageUrls[texIndex], texIndex)}
               >
                 <planeGeometry args={[width, tileH]} />
                 <meshBasicMaterial map={texture} toneMapped={false} side={DoubleSide} />
@@ -264,7 +265,13 @@ export default function VisualExplorationsGallery() {
   } | null>(null)
   const [showOverlay, setShowOverlay] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null)
 
+  const hoveredItemRef = useRef<{
+    name: string;
+    imageUrl: string;
+    index: number;
+  } | null>(null)
   const openOverlayRafRef = useRef<number | null>(null)
   const closeOverlayTimeoutRef = useRef<number | null>(null)
 
@@ -273,6 +280,10 @@ export default function VisualExplorationsGallery() {
       setIsLoading(false)
     }, 1200)
     return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    setPortalRoot(document.body)
   }, [])
 
   // Header Scroll Animation
@@ -341,6 +352,16 @@ export default function VisualExplorationsGallery() {
 
   const handleImageHover = useCallback(
     (projectName: string | null, _texture: Texture | null, imageUrl: string | null) => {
+      if (projectName && imageUrl) {
+        hoveredItemRef.current = {
+          name: projectName,
+          imageUrl,
+          index: imageUrls.indexOf(imageUrl),
+        }
+      } else {
+        hoveredItemRef.current = null
+      }
+
       setHoveredProject(projectName)
       if (imageUrl !== hoveredImageUrl) {
         setPreviousImageUrl(hoveredImageUrl)
@@ -362,6 +383,18 @@ export default function VisualExplorationsGallery() {
       })
     },
     []
+  )
+
+  const handleContainerPointerDown = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (event.button !== 0) return
+
+      const hoveredItem = hoveredItemRef.current
+      if (!hoveredItem) return
+
+      handleImageClick(hoveredItem.name, hoveredItem.imageUrl, hoveredItem.index)
+    },
+    [handleImageClick]
   )
 
   const handleCloseProject = useCallback(() => {
@@ -450,6 +483,7 @@ export default function VisualExplorationsGallery() {
         }}
         ref={containerRef}
         onPointerMove={onPointerMove}
+        onPointerDown={handleContainerPointerDown}
         onWheel={onWheel}
       >
         {isLoading && <LocalLoader />}
@@ -504,7 +538,7 @@ export default function VisualExplorationsGallery() {
       </div>
 
       {/* Click Project Single view detail modal */}
-      {selectedProject && (
+      {portalRoot && selectedProject && createPortal(
         <div className={`project-single-view ${showOverlay ? 'visible' : ''}`}>
           <button
             className="close-button text-xs font-mono"
@@ -532,7 +566,8 @@ export default function VisualExplorationsGallery() {
               Creative design exploration showcasing brand, interface layout, and aesthetic structure.
             </p>
           </div>
-        </div>
+        </div>,
+        portalRoot
       )}
 
       {/* CSS Styles Localized to Component */}
