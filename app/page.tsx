@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import WelcomeScene from "./components/welcome/WelcomeScene"
 import HomePortfolio from "./components/home/HomePortfolio"
+import Loader from "./components/layout/Loader"
 import { DISABLE_WELCOME } from "./lib/welcomeConfig"
 
 export default function PortfolioPage() {
@@ -55,9 +56,12 @@ export default function PortfolioPage() {
 
       {/* Portfolio Content */}
       {stage === 'portfolio' && (
-        <div className="animate-crossfade-in">
-          <HomePortfolio />
-        </div>
+        <>
+          <Loader />
+          <div className="animate-crossfade-in">
+            <HomePortfolio />
+          </div>
+        </>
       )}
     </div>
   )

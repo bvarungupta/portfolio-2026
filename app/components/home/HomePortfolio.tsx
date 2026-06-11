@@ -1,18 +1,20 @@
 import Image from "next/image"
-import Loader from "../layout/Loader"
 import WorkGallery from "./workGallery"
 import MouseColorBloom from "./MouseColorBloom"
 import ParallaxImages from "./ParallaxImages"
 import EmailSection from "./EmailSection"
 import UnpluggedGallery from "./unpluggedGallery"
 import VisualIdentityGallery from "./visualIdentityGallery"
-import VisualExplorationsGallery from "./visualExplorationsGallery"
 import ProposalsGallery from "./proposalsGallery"
+import dynamic from "next/dynamic"
+
+const VisualExplorationsGallery = dynamic(() => import("./visualExplorationsGallery"), {
+  ssr: false,
+})
 
 export default function HomePortfolio() {
   return (
     <div className="bg-white relative">
-      <Loader />
 
       <Image
         src="/images/HomeImages/piller-v.svg"

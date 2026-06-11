@@ -1,6 +1,12 @@
+"use client"
+
 import Link from 'next/link'
 import LabHeader from './LabHeader'
-import PixelTrail from '../components/ui/PixelTrail'
+import dynamic from 'next/dynamic'
+
+const PixelTrail = dynamic(() => import('../components/ui/PixelTrail'), {
+  ssr: false,
+})
 
 export default function Lab() {
   return (
