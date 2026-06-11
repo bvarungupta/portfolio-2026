@@ -7,31 +7,31 @@ const allWorks = [
   {
     title: 'Smart Nation',
     href: '/works/smartNation',
-    image: '/images/WorkImages/smartNationImages/SN-thumb.png',
+    image: '/images/WorkImages/smartNationImages/SN-thumb.webp',
     tags: ['IoT', 'App UI', 'Brand Identity'],
   },
   {
     title: 'Blume Health',
     href: '/works/blumeHealth',
-    image: '/images/WorkImages/blumeHealthImages/BM-thumnail.png',
+    image: '/images/WorkImages/blumeHealthImages/BM-thumnail.webp',
     tags: ['SaaS'],
   },
   {
     title: 'SkinSage',
     href: '/works/skinSage',
-    image: '/images/WorkImages/skinSageImages/SS-thumnail-1.png',
+    image: '/images/WorkImages/skinSageImages/SS-thumnail-1.webp',
     tags: ['AI', 'Consultation'],
   },
   {
     title: 'SkillRadius',
     href: '/works/skillRadius',
-    image: '/images/WorkImages/skillradius/SR-thumnail.png',
+    image: '/images/WorkImages/skillradius/SR-thumnail.webp',
     tags: ['LMS'],
   },
   {
     title: 'Jio Tesseract',
     href: '/works/jio',
-    image: '/images/WorkImages/jio/thumbnail.png',
+    image: '/images/WorkImages/jio/thumbnail.webp',
     tags: ['Product Design'],
   },
 ]

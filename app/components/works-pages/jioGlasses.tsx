@@ -471,7 +471,7 @@ export default function JioGlasses() {
           {/* Cover image */}
           <div className="w-full border-b border-gray-200">
             <Image
-              src="/images/WorkImages/jio/thumbnail.png"
+              src="/images/WorkImages/jio/thumbnail.webp"
               alt="Jio Tesseract"
               width={1600}
               height={900}

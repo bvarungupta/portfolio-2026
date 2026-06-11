@@ -4,13 +4,7 @@ import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 
 // top = px from page top. edgeOffset = how far behind the screen edge to push it.
-const BRANCHES_HOME = [
-  // Left side — starts after hero, spaced ~1100px apart
-  { side: 'left',  top: 1800, height: 370, rot: -25, speed: 0.08, tiltDir: -1, opacity: 0.09, flip: true,  edgeOffset: 105 },
-  { side: 'left',  top: 3800, height: 360, rot: -22, speed: 0.07, tiltDir: -1, opacity: 0.08, flip: true,  edgeOffset: 100 },
-  { side: 'right', top: 2700, height: 365, rot: -24, speed: 0.07, tiltDir:  1, opacity: 0.08, flip: false, edgeOffset: 110 },
-  { side: 'right', top: 4700, height: 355, rot: -20, speed: 0.06, tiltDir:  1, opacity: 0.08, flip: false, edgeOffset: 100 },
-]
+const BRANCHES_HOME: any[] = []
 
 const BRANCHES_ABOUT = [
   // Spaced to fit exactly on About page (~2900px height) starting at the top
@@ -21,13 +15,7 @@ const BRANCHES_ABOUT = [
   { side: 'left',  top: 2600, height: 360, rot: -22, speed: 0.07, tiltDir: -1, opacity: 0.08, flip: true,  edgeOffset: 100 },
 ]
 
-const BRANCHES_WORK = [
-  // Spaced for Work listing page starting at the top
-  { side: 'left',  top: 200,  height: 370, rot: -25, speed: 0.08, tiltDir: -1, opacity: 0.09, flip: true,  edgeOffset: 105 },
-  { side: 'right', top: 800,  height: 365, rot: -24, speed: 0.07, tiltDir:  1, opacity: 0.08, flip: false, edgeOffset: 110 },
-  { side: 'left',  top: 1400, height: 360, rot: -22, speed: 0.07, tiltDir: -1, opacity: 0.08, flip: true,  edgeOffset: 100 },
-  { side: 'right', top: 2000, height: 355, rot: -20, speed: 0.06, tiltDir:  1, opacity: 0.08, flip: false, edgeOffset: 100 },
-]
+const BRANCHES_WORK: any[] = []
 
 const BRANCHES_LAB = [
   // Spaced for Lab directory pages starting at the top

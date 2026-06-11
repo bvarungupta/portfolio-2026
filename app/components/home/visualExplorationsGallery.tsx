@@ -14,18 +14,18 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Assets definition (12 images total)
 const imageUrls = [
-  '/images/visual-explorations/card.png',
-  '/images/visual-explorations/card-business.jpg',
-  '/images/visual-explorations/Heydu.jpeg',
-  '/images/visual-explorations/MacBook_13.png',
-  '/images/visual-explorations/streer-poster.png',
-  '/images/visual-explorations/about-2.png',
-  '/images/visual-explorations/Ai-healthcare-hero.png',
-  '/images/visual-explorations/App-health.png',
-  '/images/visual-explorations/Health-app.jpg',
-  '/images/visual-explorations/MIT-Hero.png',
-  '/images/visual-explorations/mobile -app.png',
-  '/images/visual-explorations/saas-hero.png',
+  '/images/visual-explorations/card.webp',
+  '/images/visual-explorations/card-business.webp',
+  '/images/visual-explorations/Heydu.webp',
+  '/images/visual-explorations/MacBook_13.webp',
+  '/images/visual-explorations/streer-poster.webp',
+  '/images/visual-explorations/about-2.webp',
+  '/images/visual-explorations/Ai-healthcare-hero.webp',
+  '/images/visual-explorations/App-health.webp',
+  '/images/visual-explorations/Health-app.webp',
+  '/images/visual-explorations/MIT-Hero.webp',
+  '/images/visual-explorations/mobile -app.webp',
+  '/images/visual-explorations/saas-hero.webp',
 ]
 
 const projectNames = [
