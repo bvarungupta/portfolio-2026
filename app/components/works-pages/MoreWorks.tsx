@@ -5,6 +5,18 @@ import Image from 'next/image'
 
 const allWorks = [
   {
+    title: 'Jio Tesseract',
+    href: '/works/jio',
+    image: '/images/WorkImages/jio/thumbnail.webp',
+    tags: ['Product Design'],
+  },
+  {
+    title: 'Sol',
+    href: '/works/sol',
+    image: '/images/WorkImages/Sol/thumb_short.png',
+    tags: ['Health & Fitness', 'iOS App', 'Premium Tracker'],
+  },
+  {
     title: 'Smart Nation',
     href: '/works/smartNation',
     image: '/images/WorkImages/smartNationImages/SN-thumb.webp',
@@ -27,12 +39,6 @@ const allWorks = [
     href: '/works/skillRadius',
     image: '/images/WorkImages/skillradius/SR-thumnail.webp',
     tags: ['LMS'],
-  },
-  {
-    title: 'Jio Tesseract',
-    href: '/works/jio',
-    image: '/images/WorkImages/jio/thumbnail.webp',
-    tags: ['Product Design'],
   },
 ]
 

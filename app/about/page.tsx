@@ -265,7 +265,6 @@ export default function About() {
               { label: "Developer", top: "28px", right: "5px", rotate: 5, delay: 0.07, duration: "0.45s" },
               { label: "Vibe Coder", top: "48px", right: "8px", rotate: -4, delay: 0.09, duration: "0.5s" },
               { label: "Attacking Midfielder", top: "48%", left: "-8px", rotate: -6, delay: 0.12, duration: "0.6s" },
-              { label: "Carpenter", top: "70%", right: "-6px", rotate: -7, delay: 0.05, duration: "0.5s" },
               { label: "Craftsman", top: "79%", right: "-2px", rotate: 5, delay: 0.06, duration: "0.52s" },
               { label: "Artist", bottom: "-20px", left: "15px", rotate: -5, delay: 0.1, duration: "0.48s" },
             ].map((chip, i) => (
@@ -316,11 +315,6 @@ export default function About() {
                 src: "/images/varun-image-hover-images/football.png",
                 size: 38, top: "44%", left: "-44px", rotate: 0, delay: 0.09, duration: "0.55s",
                 animation: "football-spin 3s linear infinite", cls: "himg-ball",
-              },
-              {
-                src: "/images/varun-image-hover-images/wood-saw.png",
-                size: 36, top: "68%", right: "-42px", rotate: 0, delay: 0.07, duration: "0.58s",
-                animation: "saw-motion 0.38s ease-in-out infinite", cls: "himg-saw",
               },
               {
                 src: "/images/varun-image-hover-images/burshes.png",

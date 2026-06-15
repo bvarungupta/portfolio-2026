@@ -3,7 +3,6 @@ import WorkGallery from "./workGallery"
 import MouseColorBloom from "./MouseColorBloom"
 import ParallaxImages from "./ParallaxImages"
 import EmailSection from "./EmailSection"
-import UnpluggedGallery from "./unpluggedGallery"
 import VisualIdentityGallery from "./visualIdentityGallery"
 import ProposalsGallery from "./proposalsGallery"
 import dynamic from "next/dynamic"
@@ -82,9 +81,6 @@ export default function HomePortfolio() {
           <VisualExplorationsGallery />
         </div>
 
-        <div data-section="unplugged" className="hidden">
-          <UnpluggedGallery />
-        </div>
       </div>
     </div>
   )
