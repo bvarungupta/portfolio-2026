@@ -539,15 +539,18 @@ export default function VisualExplorationsGallery() {
 
       {/* Click Project Single view detail modal */}
       {portalRoot && selectedProject && createPortal(
-        <div className={`project-single-view ${showOverlay ? 'visible' : ''}`}>
-          <button
-            className="close-button text-xs font-mono"
-            onClick={(e) => { e.stopPropagation(); handleCloseProject() }}
-            aria-label="Close"
-          >
-            ✕ CLOSE
-          </button>
-          <div className="project-content">
+        <div 
+          className={`project-single-view ${showOverlay ? 'visible' : ''}`}
+          onClick={handleCloseProject}
+        >
+          <div className="project-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="close-button text-xs font-mono"
+              onClick={(e) => { e.stopPropagation(); handleCloseProject() }}
+              aria-label="Close"
+            >
+              ✕ CLOSE
+            </button>
             <Image
               src={selectedProject.imageUrl}
               alt={selectedProject.name}
@@ -627,18 +630,15 @@ export default function VisualExplorationsGallery() {
         }
 
         .close-button {
-          position: fixed;
-          top: 20px;
-          right: 20px;
+          display: inline-block;
+          margin-bottom: 20px;
           padding: 8px 16px;
           background: rgba(0, 0, 0, 0.06);
           border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 99px;
           color: black;
           cursor: pointer;
-          pointer-events: auto;
           transition: all 0.25s ease;
-          z-index: 10000;
           letter-spacing: 0.1em;
           font-size: 11px;
         }
@@ -657,7 +657,7 @@ export default function VisualExplorationsGallery() {
           width: 90%;
           max-width: 520px;
           padding: 24px;
-          padding-top: 64px;
+          padding-top: 24px;
           color: black;
           text-align: center;
         }
@@ -675,14 +675,9 @@ export default function VisualExplorationsGallery() {
         }
 
         @media (max-width: 768px) {
-          .close-button {
-            top: 16px;
-            right: 16px;
-            padding: 8px 14px;
-          }
           .project-content {
             width: 92%;
-            padding-top: 72px;
+            padding-top: 24px;
           }
           .project-image {
             max-height: 45vh;
