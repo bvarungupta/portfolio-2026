@@ -544,21 +544,23 @@ export default function VisualExplorationsGallery() {
           onClick={handleCloseProject}
         >
           <div className="project-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="close-button text-xs font-mono"
-              onClick={(e) => { e.stopPropagation(); handleCloseProject() }}
-              aria-label="Close"
-            >
-              ✕ CLOSE
-            </button>
-            <Image
-              src={selectedProject.imageUrl}
-              alt={selectedProject.name}
-              width={1200}
-              height={800}
-              sizes="(max-width: 768px) 85vw, 600px"
-              className="project-image object-contain rounded-xl"
-            />
+            <div className="relative w-full">
+              <Image
+                src={selectedProject.imageUrl}
+                alt={selectedProject.name}
+                width={1200}
+                height={800}
+                sizes="(max-width: 768px) 85vw, 600px"
+                className="project-image object-contain rounded-xl w-full"
+              />
+              <button
+                className="close-button text-xs font-mono"
+                onClick={(e) => { e.stopPropagation(); handleCloseProject() }}
+                aria-label="Close"
+              >
+                ✕ CLOSE
+              </button>
+            </div>
             <h4
               className="text-2xl md:text-3xl font-light tracking-wide text-black mt-6"
               style={{ fontFamily: 'SatishSans, sans-serif', textTransform: 'none', letterSpacing: '0.02em' }}
@@ -613,7 +615,7 @@ export default function VisualExplorationsGallery() {
           width: 100vw;
           height: 100vh;
           background-color: #ffffff;
-          z-index: 9999;
+          z-index: 20000;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -630,23 +632,33 @@ export default function VisualExplorationsGallery() {
         }
 
         .close-button {
-          display: inline-block;
-          margin-bottom: 20px;
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
           padding: 8px 16px;
-          background: rgba(0, 0, 0, 0.06);
-          border: 1px solid rgba(0, 0, 0, 0.12);
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(0, 0, 0, 0.08);
           border-radius: 99px;
           color: black;
           cursor: pointer;
           transition: all 0.25s ease;
           letter-spacing: 0.1em;
           font-size: 11px;
+          font-weight: 500;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          z-index: 10;
         }
 
         .close-button:hover {
-          background: rgba(0, 0, 0, 0.1);
-          border-color: rgba(0, 0, 0, 0.18);
+          background: rgba(255, 255, 255, 1);
+          border-color: rgba(0, 0, 0, 0.15);
           transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
 
         .close-button:active {
@@ -681,6 +693,12 @@ export default function VisualExplorationsGallery() {
           }
           .project-image {
             max-height: 45vh;
+          }
+          .close-button {
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            font-size: 10px;
           }
         }
       `}</style>
