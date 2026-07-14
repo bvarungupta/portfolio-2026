@@ -20,6 +20,7 @@ const navItems = [
   { name: "Concepts", href: "/proposals" },
   { name: "Home", href: "/" },
   { name: "Lab", href: "/lab" },
+  { name: "Vault", href: "/vault" },
   { name: "About", href: "/about" },
 ]
 

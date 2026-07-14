@@ -19,7 +19,7 @@ const navLinks = [
 
 export default function Footer() {
   const pathname = usePathname()
-  const isProposalPage = pathname?.startsWith('/proposals')
+  const isProposalPage = pathname?.startsWith('/proposals') || pathname === '/vault'
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
 
   useEffect(() => {
