@@ -29,7 +29,7 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
 
-  const isDarkPage = pathname === "/about" || pathname === "/lab/specimen" || pathname?.startsWith("/proposals/")
+  const isDarkPage = pathname === "/lab/specimen" || pathname?.startsWith("/proposals/")
 
   // Prevent hydration mismatch by waiting for client mount
   useEffect(() => {
@@ -255,7 +255,7 @@ export default function Navbar() {
                   : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
                     ? "text-orange-400"
                     : isDarkPage
-                      ? "text-zinc-300"
+                      ? "text-white"
                       : "text-zinc-700"
                 }`}
               style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
@@ -272,7 +272,7 @@ export default function Navbar() {
               ) : item.name}
             </button>
             {index < navItems.length - 1 && (
-              <span className={`${isDarkPage ? "text-zinc-700" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
+              <span className={`${isDarkPage ? "text-zinc-500" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
             )}
           </div>
         ))}
