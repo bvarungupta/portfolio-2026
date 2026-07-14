@@ -9,6 +9,12 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 // Register GSAP plugins
 gsap.registerPlugin(ScrollToPlugin)
 
+declare global {
+  interface Window {
+    playSpiralIn?: () => Promise<void>;
+  }
+}
+
 const navItems = [
   { name: "Work", href: "/work" },
   { name: "Concepts", href: "/proposals" },
@@ -22,6 +28,8 @@ export default function Navbar() {
   const router = useRouter()
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
+
+  const isDarkPage = pathname === "/about" || pathname === "/lab/specimen" || pathname?.startsWith("/proposals/")
 
   // Prevent hydration mismatch by waiting for client mount
   useEffect(() => {
@@ -121,6 +129,14 @@ export default function Navbar() {
   }
 
   const navigateWithTransition = (href: string, callback?: () => void) => {
+    if (href === "/about" && window.playSpiralIn) {
+      window.playSpiralIn().then(() => {
+        router.push(href)
+        if (callback) callback()
+      })
+      return
+    }
+
     // Page transition out
     gsap.to("main", {
       y: 50,
@@ -212,9 +228,9 @@ export default function Navbar() {
           : "gap-1 px-3"
           }`}
         style={{
-          background: 'rgba(255, 255, 255, 0.08)',
+          background: isDarkPage ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.08)',
           backdropFilter: 'url(#liquid-lens) blur(2px)',
-          border: '2px solid rgb(212, 212, 216)',
+          border: isDarkPage ? '2px solid rgba(255, 255, 255, 0.15)' : '2px solid rgb(212, 212, 216)',
           boxShadow: `
             inset 0 1px 0 rgba(255, 255, 255, 0.2),
             inset 0 -1px 0 rgba(255, 255, 255, 0.1),
@@ -223,10 +239,10 @@ export default function Navbar() {
         }}
       >
         {/* Corner squares - half outside */}
-        <div className="absolute -top-1 -left-1 w-2 h-2 bg-zinc-300" />
-        <div className="absolute -top-1 -right-1 w-2 h-2 bg-zinc-300" />
-        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-zinc-300" />
-        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-zinc-300" />
+        <div className={`absolute -top-1 -left-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
+        <div className={`absolute -top-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
+        <div className={`absolute -bottom-1 -left-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
+        <div className={`absolute -bottom-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
         {navItems.map((item, index) => (
           <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
             <button
@@ -238,8 +254,8 @@ export default function Navbar() {
                   ? "text-orange-500"
                   : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
                     ? "text-orange-400"
-                    : pathname.startsWith('/proposals/')
-                      ? "text-white"
+                    : isDarkPage
+                      ? "text-zinc-300"
                       : "text-zinc-700"
                 }`}
               style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
@@ -251,12 +267,12 @@ export default function Navbar() {
                   width={22}
                   height={22}
                   className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
-                  style={pathname.startsWith('/proposals/') ? { filter: 'invert(1)' } : {}}
+                  style={isDarkPage ? { filter: 'invert(1)' } : {}}
                 />
               ) : item.name}
             </button>
             {index < navItems.length - 1 && (
-              <span className={`text-zinc-300 ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
+              <span className={`${isDarkPage ? "text-zinc-700" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
             )}
           </div>
         ))}

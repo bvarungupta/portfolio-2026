@@ -74,7 +74,7 @@ export default function Footer() {
               <span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '6px' }}>arun</span>
             </h2>
             <p
-              className="mt-4 text-sm text-gray-400"
+              className="mt-4 text-sm text-gray-600"
               style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
             >
               Product Designer
@@ -111,7 +111,7 @@ export default function Footer() {
               className="opacity-40"
             />
             <span
-              className="text-xs text-gray-400"
+              className="text-xs text-gray-600"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               © 2026 Varun Gupta
@@ -124,7 +124,7 @@ export default function Footer() {
               <Link
                 key={l.label}
                 href={l.href}
-                className="text-xs text-gray-400 hover:text-black transition-colors duration-200"
+                className="text-xs text-gray-600 hover:text-black transition-colors duration-200"
                 style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
               >
                 {l.label}
@@ -140,7 +140,7 @@ export default function Footer() {
                 href={l.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-black transition-colors duration-200"
+                className="text-xs text-gray-600 hover:text-black transition-colors duration-200"
                 style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
               >
                 {l.label}

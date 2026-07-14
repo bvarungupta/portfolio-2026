@@ -24,7 +24,7 @@ export default function Footer() {
 
         <div>
           <p
-            className="text-[10px] uppercase tracking-widest text-gray-400 mb-3"
+            className="text-[10px] uppercase tracking-widest text-gray-600 mb-3"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Let&apos;s Work Together
@@ -43,7 +43,7 @@ export default function Footer() {
             Great products happen<br />when the right people meet.
           </h3>
           <p
-            className="text-sm text-gray-400 mt-3 max-w-md"
+            className="text-sm text-gray-600 mt-3 max-w-md"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             If you&apos;re building something and need a designer who goes all in, let&apos;s talk.
@@ -66,7 +66,7 @@ export default function Footer() {
             href="https://linkedin.com/in/bvarungupta"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200"
+            className="w-full flex items-center gap-3 px-5 py-3 border border-gray-300 text-gray-700 text-xs tracking-wide hover:border-gray-400 hover:text-gray-900 transition-colors duration-200"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -83,7 +83,7 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-6 md:px-10 pb-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
           <p
-            className="text-gray-300 text-xs"
+            className="text-gray-600 text-xs"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             &copy; {new Date().getFullYear()} Varun Gupta. All rights reserved.

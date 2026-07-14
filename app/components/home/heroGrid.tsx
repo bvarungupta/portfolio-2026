@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Plus, PlusAt } from '../ui/Markers'
+import DissolveText from './DissolveText'
 
 export default function HeroGrid() {
   const [copied, setCopied] = useState<'email' | 'phone' | null>(null)
@@ -27,10 +28,10 @@ export default function HeroGrid() {
           className="text-2xl md:text-4xl font-light tracking-tight"
           style={{ fontFamily: 'Garamond, Georgia, serif' }}
         >
-          Varun Gupta
+          <DissolveText>Varun Gupta</DissolveText>
         </h1>
         <span
-          className="text-[10px] uppercase tracking-widest text-gray-400"
+          className="text-[10px] uppercase tracking-widest text-gray-600"
           style={{ fontFamily: 'Poppins, sans-serif' }}
         >
           Portfolio 2026
@@ -51,7 +52,7 @@ export default function HeroGrid() {
             className={`flex items-center gap-2 px-6 md:px-8 py-3 ${i > 0 ? 'border-l border-gray-200' : ''}`}
           >
             <span
-              className="text-[9px] uppercase tracking-widest text-gray-400 shrink-0"
+              className="text-[9px] uppercase tracking-widest text-gray-600 shrink-0"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               {item.label}
@@ -67,7 +68,7 @@ export default function HeroGrid() {
         {/* Skills marquee */}
         <div className="flex items-center gap-2 w-full md:w-auto pl-6 md:pl-8 pr-6 py-3 border-t md:border-t-0 md:border-l border-gray-200 overflow-hidden min-w-0 md:flex-1">
           <span
-            className="text-[9px] uppercase tracking-widest text-gray-400 shrink-0"
+            className="text-[9px] uppercase tracking-widest text-gray-600 shrink-0"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Skills
@@ -88,7 +89,7 @@ export default function HeroGrid() {
               ].map((tag, i) => (
                 <span
                   key={i}
-                  className="text-[9px] px-2 py-0.5 border border-gray-200 text-gray-500 whitespace-nowrap"
+                  className="text-[9px] px-2 py-0.5 border border-gray-300 text-gray-600 whitespace-nowrap"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   {tag}
@@ -106,7 +107,7 @@ export default function HeroGrid() {
         {/* Left: text */}
         <div className="px-6 md:px-10 py-10 md:py-16 md:border-r border-gray-200 flex flex-col justify-center">
           <p
-            className="text-[11px] uppercase tracking-widest text-gray-400 mb-4"
+            className="text-[11px] uppercase tracking-widest text-gray-600 mb-4"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             About
@@ -118,7 +119,7 @@ export default function HeroGrid() {
             Designing products that work,<br />feel right, and last.
           </h2>
           <p
-            className="text-sm text-gray-500 leading-relaxed mb-8"
+            className="text-sm text-gray-600 leading-relaxed mb-8"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             I partner with zero-to-one teams to build products that feel right from day one.

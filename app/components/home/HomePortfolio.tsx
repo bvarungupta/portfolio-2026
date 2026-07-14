@@ -53,7 +53,7 @@ export default function HomePortfolio() {
               <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>G</span><span style={{ fontFamily: "SatishSans, sans-serif", marginLeft: "4px" }}>upta</span>
             </h1>
             <p
-              className="text-sm md:text-base text-gray-400 leading-relaxed max-w-md"
+              className="text-sm md:text-base text-gray-600 leading-relaxed max-w-md"
               style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: "300" }}
             >
               I design what early-stage startups need to exist. Brand, product, and system. From first brief to live product.

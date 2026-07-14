@@ -270,7 +270,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
                   {work.title}
                 </h3>
                 <p
-                  className="text-sm text-gray-400 leading-relaxed max-w-sm"
+                  className="text-sm text-gray-600 leading-relaxed max-w-sm"
                   style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
                 >
                   {work.description}
@@ -279,7 +279,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
 
               <div className="mt-8 flex items-end justify-between">
                 <span
-                  className="text-xs text-gray-400"
+                  className="text-xs text-gray-600"
                   style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
                 >
                   {work.year}
@@ -294,7 +294,9 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
                       fontFamily: 'FunnelDisplay, sans-serif',
                       borderColor: hoveredCta === work.num ? work.accent : '#111827',
                       background: hoveredCta === work.num ? work.accent : 'transparent',
-                      color: hoveredCta === work.num ? '#ffffff' : '#111827'
+                      color: hoveredCta === work.num 
+                        ? (['#FF9F0A', '#386BF6', '#1F9E6F', '#3098FF', '#4E6CFF'].includes(work.accent) ? '#111827' : '#ffffff') 
+                        : '#111827'
                     }}
                   >
                     View Work
@@ -320,7 +322,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
               {!work.available && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span
-                    className="text-gray-400 text-xs tracking-widest uppercase"
+                    className="text-gray-600 text-xs tracking-widest uppercase"
                     style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
                   >
                     Posting soon

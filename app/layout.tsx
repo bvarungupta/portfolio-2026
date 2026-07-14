@@ -6,6 +6,7 @@ import NavbarClient from "./components/layout/NavbarClient"
 import SmoothScroll from "./components/layout/SmoothScroll"
 import ScrollReset from "./components/layout/ScrollReset"
 import Footer from "./components/layout/footer"
+import SpiralTransitionOverlay from "./components/layout/SpiralTransitionOverlay"
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import PageBranches from "./components/home/PageBranches"
@@ -90,6 +91,7 @@ export default function RootLayout({
         <SmoothScroll />
         <ScrollReset />
         <NavbarClient />
+        <SpiralTransitionOverlay />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

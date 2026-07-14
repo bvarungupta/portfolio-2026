@@ -1434,12 +1434,12 @@ const SmartNation = () => {
         <Plus h="left" />
         <Plus h="right" />
         <div>
-          <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Let's Work Together</p>
+          <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-3" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>Let's Work Together</p>
           <Image src="/images/common/vg-outline.svg" alt="Varun Gupta at work" width={56} height={56} className="w-12 h-12 mb-4" />
           <h3 className="text-3xl md:text-4xl font-light text-gray-900 leading-snug" style={{ fontFamily: 'SatishSans, sans-serif' }}>
             Great products happen<br />when the right people meet.
           </h3>
-          <p className="text-sm text-gray-400 mt-3 max-w-md" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
+          <p className="text-sm text-gray-600 mt-3 max-w-md" style={{ fontFamily: 'FunnelDisplay, sans-serif' }}>
             If you're building something and need a designer who goes all in, let's talk.
           </p>
         </div>
@@ -1456,7 +1456,7 @@ const SmartNation = () => {
             href="https://linkedin.com/in/bvarungupta"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-500 text-xs tracking-wide hover:border-gray-400 hover:text-gray-700 transition-colors duration-200"
+            className="w-full flex items-center gap-3 px-5 py-3 border border-gray-200 text-gray-600 text-xs tracking-wide hover:border-gray-400 hover:text-gray-900 transition-colors duration-200"
             style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
