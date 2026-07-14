@@ -122,7 +122,7 @@ export default function Footer() {
           </div>
 
           {/* Nav links */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             {navLinks.map((l) => {
               const isHovered = hoveredLink === l.label;
               return (
@@ -133,9 +133,9 @@ export default function Footer() {
                       position: 'absolute',
                       bottom: '24px',
                       left: '50%',
-                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.0 : 0.1})`,
+                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
                       opacity: isHovered ? 1 : 0,
-                      transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
                       pointerEvents: 'none',
                       zIndex: 20,
                     }}
@@ -169,7 +169,7 @@ export default function Footer() {
           </nav>
 
           {/* Social links */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             {links.map((l) => {
               const isHovered = hoveredLink === l.label;
               return (
@@ -180,9 +180,9 @@ export default function Footer() {
                       position: 'absolute',
                       bottom: '24px',
                       left: '50%',
-                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.0 : 0.1})`,
+                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
                       opacity: isHovered ? 1 : 0,
-                      transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
                       pointerEvents: 'none',
                       zIndex: 20,
                     }}

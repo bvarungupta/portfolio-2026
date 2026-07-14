@@ -580,7 +580,7 @@ export default function About() {
             {/* Design & Animations */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
-              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {designTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
@@ -593,7 +593,7 @@ export default function About() {
             {/* Development */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
-              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {developmentTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
@@ -603,7 +603,7 @@ export default function About() {
             {/* Productivity & Assistive Tools */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
-              <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
+              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {productivityTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
