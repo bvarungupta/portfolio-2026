@@ -22,6 +22,15 @@ const companies: {
     { src: "/images/inAbout/Wagwan.svg", name: "Wagwan", year: "2025 - Present", shadow: "rgba(239, 68, 68, 0.25)", tags: [{ label: "Social", rotate: -7, x: -22 }, { label: "Events", rotate: 6, x: 24 }] },
   ];
 
+const socialPlatforms = [
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5', description: 'Where I pretend to be professional.' },
+  { label: 'Behance', href: 'https://behance.net/bvarungupta', icon: '/images/HomeImages/behance.svg', color: '#0057ff', description: 'Where I over-explain every design decision.' },
+  { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta', icon: '/images/HomeImages/dribbble.svg', color: '#ea4c89', description: 'Pretty pixels with no context.' },
+  { label: 'Figma', href: 'https://figma.com/@bvarungupta', icon: '/images/ToolsIcons/figma-icon.svg', color: '#f24e1e', description: 'Where I go to feel productive and lose 3 hours.' },
+  { label: 'Medium', href: 'https://medium.com/@bvarungupta', icon: '/images/HomeImages/medium.svg', color: '#000000', description: 'Thoughts I had at 2am that felt important.' },
+  { label: 'Instagram', href: 'https://www.instagram.com/itsvaruuuun?igsh=MXQ4aGx5ZjNwbnF0cA==', icon: '/images/HomeImages/instagram.svg', color: '#e1306c', description: 'Where the algorithm decides my personality' },
+];
+
 interface Tool {
   name: string;
   src: string;
@@ -157,6 +166,7 @@ export default function About() {
   const [imageHovered, setImageHovered] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
 
   const handleCopy = () => {
     navigator.clipboard.writeText('bvarungupta@gmail.com');
@@ -247,7 +257,7 @@ export default function About() {
               I'm a Product Designer who takes full ownership of the work,
               the thinking, the decisions, and the execution.
             </p>
-            <p className="text-base text-gray-500 leading-relaxed">
+            <p className="text-base text-gray-600 leading-relaxed">
               Not just the screens, but the thinking, the decisions, and the execution. I come in early, when things are undefined, and stay until they ship.
             </p>
           </div>
@@ -355,7 +365,7 @@ export default function About() {
 
         {/* ── Section 2: full-width description ───────────────── */}
         <div className="mb-20">
-          <p className="text-base text-gray-500 leading-relaxed">
+          <p className="text-base text-gray-600 leading-relaxed">
             I design digital products that are simple to use and hard to forget.
 
             My work spans SaaS, FinTech, HealthTech, and EdTech, giving me
@@ -456,6 +466,103 @@ export default function About() {
           </div>
         )}
 
+        {/* ── Section: Elsewhere / Connect ────────────────────── */}
+        <div className="mb-20">
+          <p
+            className="text-xl md:text-2xl text-gray-700 leading-snug mb-2 text-center"
+            style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
+          >
+            Also Here
+          </p>
+          <p className="text-sm text-gray-500 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+            Same person, different tabs.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center gap-x-6 gap-y-12 md:gap-x-12 md:gap-y-16 max-w-3xl mx-auto">
+            {socialPlatforms.map((platform, index) => {
+              const isHovered = hoveredSocial === platform.label;
+              const rotation = ((index % 2 === 0 ? -1 : 1) * (5 + (index % 4) * 2)).toFixed(2);
+              return (
+                <a
+                  key={platform.label}
+                  href={platform.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setHoveredSocial(platform.label)}
+                  onMouseLeave={() => setHoveredSocial(null)}
+                  className="flex flex-col items-center text-center cursor-pointer select-none w-full max-w-[150px] md:max-w-[170px]"
+                  style={{
+                    transform: isHovered ? 'translate3d(0, -6px, 0)' : 'translate3d(0, 0, 0)',
+                    transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
+                >
+                  {/* Tilted brand SVG icon container with sheen sweep */}
+                  <div className="w-12 h-12 mb-3 flex items-center justify-center relative overflow-visible">
+                    <div 
+                      className="w-12 h-12 flex items-center justify-center relative overflow-hidden"
+                      style={{
+                        transform: isHovered
+                          ? `rotate(${parseFloat(rotation) * 0.3}deg)`
+                          : `rotate(${rotation}deg)`,
+                        transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+                      }}
+                    >
+                      <img
+                        src={platform.icon}
+                        alt={platform.label}
+                        style={{
+                          width: '28px',
+                          height: '28px',
+                          display: 'block',
+                          objectFit: 'contain',
+                        }}
+                      />
+                      
+                      {/* Sheen sweep overlay on hover (exactly like My Toolkit icons) */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {/* First sheen sweep */}
+                        <div
+                          className="absolute inset-[-20%_-40%] pointer-events-none"
+                          style={{
+                            background: "linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.9) 50%, transparent 60%)",
+                            transform: isHovered ? "translateX(60%)" : "translateX(-60%)",
+                            transition: isHovered
+                              ? "transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)"
+                              : "transform 0ms",
+                            mixBlendMode: "overlay",
+                          }}
+                        />
+                        {/* Second sheen sweep (staggered) */}
+                        <div
+                          className="absolute inset-[-20%_-40%] pointer-events-none"
+                          style={{
+                            background: "linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%)",
+                            transform: isHovered ? "translateX(60%)" : "translateX(-60%)",
+                            transition: isHovered
+                              ? "transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)"
+                              : "transform 0ms",
+                            transitionDelay: isHovered ? "120ms" : "0ms",
+                            mixBlendMode: "overlay",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p 
+                    className="text-xs text-zinc-600 font-light leading-relaxed max-w-[200px] transition-colors duration-300"
+                    style={{
+                      fontFamily: "FunnelDisplay, sans-serif",
+                      color: isHovered ? platform.color : '#52525b',
+                    }}
+                  >
+                    {platform.description}
+                  </p>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
         {/* ── Toolkit ──────────────────────────────────────────── */}
         <div className="mb-20">
           <p
@@ -464,7 +571,7 @@ export default function About() {
           >
             My Toolkit
           </p>
-          <p className="text-sm text-gray-400 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+          <p className="text-sm text-gray-500 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
             Tools I use to design, build, and ship every day.
           </p>
 
@@ -472,20 +579,20 @@ export default function About() {
 
             {/* Design & Animations */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
               <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
                 {designTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
                 <div className="flex flex-col items-center gap-2 text-center justify-center w-20 select-none">
-                  <span className="text-[11px] text-gray-400" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>+ more</span>
+                  <span className="text-[11px] text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>+ more</span>
                 </div>
               </div>
             </div>
 
             {/* Development */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
               <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
                 {developmentTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
@@ -495,7 +602,7 @@ export default function About() {
 
             {/* Productivity & Assistive Tools */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
               <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-5">
                 {productivityTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
@@ -521,7 +628,7 @@ export default function About() {
             <div className="flex flex-col md:flex-row items-stretch w-full md:w-auto">
               <a
                 href="mailto:bvarungupta@gmail.com"
-                className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-200"
+                className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-700 hover:border-gray-400 hover:text-gray-950 transition-all duration-200"
                 style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
               >
                 say hello
@@ -530,14 +637,14 @@ export default function About() {
                 </svg>
               </a>
               <div
-                className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-400 select-all cursor-pointer"
+                className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-700 select-all cursor-pointer bg-zinc-50/20"
                 style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
                 onClick={handleCopy}
               >
-                <span className="truncate">bvarungupta@gmail.com</span>
+                <span className="truncate">{/* bvarungupta */}bvarungupta@gmail.com</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); handleCopy(); }}
-                  className="ml-2 text-gray-300 hover:text-gray-600 transition-colors duration-200 flex-shrink-0 cursor-pointer"
+                  className="ml-2 text-gray-500 hover:text-gray-800 transition-colors duration-200 flex-shrink-0 cursor-pointer"
                   title="Copy email"
                 >
                   {copied ? (
@@ -553,7 +660,7 @@ export default function About() {
               href="https://cal.com/bvarungupta/15min"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-500 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-200 w-full md:w-auto"
+              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-sm text-gray-700 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-200 w-full md:w-auto"
               style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.05em" }}
             >
               Let's Have a Chat

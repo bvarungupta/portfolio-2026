@@ -364,6 +364,7 @@ function SceneController({
 
     const onTouchStart = (e: TouchEvent) => {
       e.preventDefault();
+      s.isDragging = true;
       s.lastTouches = Array.from(e.touches) as Touch[];
       s.lastTouchDist = getTouchDistance(s.lastTouches);
       setCursor("grabbing");
@@ -373,17 +374,19 @@ function SceneController({
       e.preventDefault();
       const touches = Array.from(e.touches) as Touch[];
 
-      if (touches.length === 1 && s.lastTouches.length >= 1) {
-        const [touch] = touches;
-        const [last] = s.lastTouches;
+      if (touches.length === 1) {
+        const touch = touches[0];
+        // Find matching touch in previous touches by identifier to prevent jumps
+        const last = s.lastTouches.find((t) => t.identifier === touch.identifier);
 
         if (touch && last) {
-          s.targetVel.x -= (touch.clientX - last.clientX) * 0.02;
-          s.targetVel.y += (touch.clientY - last.clientY) * 0.02;
+          // Increased drag sensitivity multiplier for a faster, lighter response on mobile screens
+          s.targetVel.x -= (touch.clientX - last.clientX) * 0.045;
+          s.targetVel.y += (touch.clientY - last.clientY) * 0.045;
         }
       } else if (touches.length === 2 && s.lastTouchDist > 0) {
         const dist = getTouchDistance(touches);
-        s.scrollAccum += (s.lastTouchDist - dist) * 0.006;
+        s.scrollAccum += (s.lastTouchDist - dist) * 0.008;
         s.lastTouchDist = dist;
       }
 
@@ -391,6 +394,9 @@ function SceneController({
     };
 
     const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        s.isDragging = false;
+      }
       s.lastTouches = Array.from(e.touches) as Touch[];
       s.lastTouchDist = getTouchDistance(s.lastTouches);
       setCursor("grab");

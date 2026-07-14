@@ -17,10 +17,9 @@ declare global {
 
 const navItems = [
   { name: "Work", href: "/work" },
-  { name: "Concepts", href: "/proposals" },
+  { name: "Vault", href: "/vault" },
   { name: "Home", href: "/" },
   { name: "Lab", href: "/lab" },
-  { name: "Vault", href: "/vault" },
   { name: "About", href: "/about" },
 ]
 
@@ -253,11 +252,9 @@ export default function Navbar() {
                   (item.name === "Work" && pathname.startsWith('/works/')) ||
                   (item.name === "Home" && pathname === '/')
                   ? "text-orange-500"
-                  : (item.name === "Concepts" && pathname.startsWith('/proposals/'))
-                    ? "text-orange-400"
-                    : isDarkPage
-                      ? "text-white"
-                      : "text-zinc-700"
+                  : isDarkPage
+                    ? "text-white"
+                    : "text-zinc-700"
                 }`}
               style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
             >

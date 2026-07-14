@@ -592,11 +592,17 @@ export default function FavoritesShelf() {
         }
       `}</style>
 
-      <h2 className="text-[10px] uppercase tracking-widest text-gray-400 text-center mb-2" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+      <h2
+        className="text-xl md:text-2xl text-gray-700 leading-snug mb-2 text-center"
+        style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
+      >
         A few of my favorite things
       </h2>
 
-      <h3 className="text-xl md:text-2xl text-gray-700 text-center leading-snug mb-6 h-8" style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}>
+      <h3
+        className="text-sm text-gray-500 mb-10 text-center h-8"
+        style={{ fontFamily: "FunnelDisplay, sans-serif" }}
+      >
         {activeCategory.title}
       </h3>
 

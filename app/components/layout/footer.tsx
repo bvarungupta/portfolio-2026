@@ -7,20 +7,23 @@ import { useEffect, useState } from 'react'
 import { DISABLE_WELCOME } from '../../lib/welcomeConfig'
 
 const links = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta' },
-  { label: 'Behance', href: 'https://behance.net/bvarungupta' },
-  { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5' },
+  { label: 'Behance', href: 'https://behance.net/bvarungupta', icon: '/images/HomeImages/behance.svg', color: '#0057ff' },
+  { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta', icon: '/images/HomeImages/dribbble.svg', color: '#ea4c89' },
+  { label: 'Figma', href: 'https://figma.com/@bvarungupta', icon: '/images/ToolsIcons/figma-icon.svg', color: '#f24e1e' },
+  { label: 'Medium', href: 'https://medium.com/@bvarungupta', icon: '/images/HomeImages/medium.svg', color: '#000000' },
 ]
 
 const navLinks = [
-  { label: 'Works', href: '/#work' },
-  { label: 'About', href: '/about' },
+  { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen-tool.png', color: '#f97316' },
+  { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316' },
 ]
 
 export default function Footer() {
   const pathname = usePathname()
   const isProposalPage = pathname?.startsWith('/proposals') || pathname === '/vault'
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
   useEffect(() => {
     if (DISABLE_WELCOME) {
@@ -111,7 +114,7 @@ export default function Footer() {
               className="opacity-40"
             />
             <span
-              className="text-xs text-gray-600"
+              className="text-sm font-light tracking-wide text-gray-600"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               © 2026 Varun Gupta
@@ -120,32 +123,97 @@ export default function Footer() {
 
           {/* Nav links */}
           <nav className="flex items-center gap-6">
-            {navLinks.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                className="text-xs text-gray-600 hover:text-black transition-colors duration-200"
-                style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {navLinks.map((l) => {
+              const isHovered = hoveredLink === l.label;
+              return (
+                <div key={l.label} className="relative">
+                  {/* Floating Nav Icon */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '24px',
+                      left: '50%',
+                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.0 : 0.1})`,
+                      opacity: isHovered ? 1 : 0,
+                      transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                      pointerEvents: 'none',
+                      zIndex: 20,
+                    }}
+                  >
+                    <img
+                      src={l.icon}
+                      alt=""
+                      style={{
+                        width: '28px',
+                        height: '28px',
+                        display: 'block',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                  <Link
+                    href={l.href}
+                    onMouseEnter={() => setHoveredLink(l.label)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="text-sm font-light tracking-wide transition-colors duration-200"
+                    style={{
+                      fontFamily: 'FunnelDisplay, sans-serif',
+                      color: isHovered ? l.color : '#4b5563',
+                    }}
+                  >
+                    {l.label}
+                  </Link>
+                </div>
+              )
+            })}
           </nav>
 
           {/* Social links */}
           <div className="flex items-center gap-6">
-            {links.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-600 hover:text-black transition-colors duration-200"
-                style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
-              >
-                {l.label}
-              </a>
-            ))}
+            {links.map((l) => {
+              const isHovered = hoveredLink === l.label;
+              return (
+                <div key={l.label} className="relative">
+                  {/* Floating Brand SVG Icon */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '24px',
+                      left: '50%',
+                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.0 : 0.1})`,
+                      opacity: isHovered ? 1 : 0,
+                      transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                      pointerEvents: 'none',
+                      zIndex: 20,
+                    }}
+                  >
+                    <img
+                      src={l.icon}
+                      alt=""
+                      style={{
+                        width: '26px',
+                        height: '26px',
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={() => setHoveredLink(l.label)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="text-sm font-light tracking-wide transition-colors duration-200"
+                    style={{
+                      fontFamily: 'FunnelDisplay, sans-serif',
+                      color: isHovered ? l.color : '#4b5563',
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                </div>
+              )
+            })}
           </div>
 
         </div>
