@@ -89,6 +89,9 @@ export default function Navbar() {
   const handleNavigation = (item: typeof navItems[0], e: React.MouseEvent) => {
     e.preventDefault()
 
+    // Clear hover state immediately on navigation click
+    setHoveredItem(null)
+
     // Add click animation
     if (navRef.current) {
       gsap.to(navRef.current, {
@@ -205,6 +208,7 @@ export default function Navbar() {
 
   // Page transition in effect
   useEffect(() => {
+    setHoveredItem(null)
     gsap.fromTo("main",
       {
         y: 50,
