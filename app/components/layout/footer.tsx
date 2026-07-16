@@ -15,8 +15,8 @@ const links = [
 ]
 
 const navLinks = [
-  { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen-tool.png', color: '#f97316' },
-  { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316' },
+  { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen.png', color: '#f97316', size: 42 },
+  { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316', size: 42 },
 ]
 
 export default function Footer() {
@@ -144,8 +144,9 @@ export default function Footer() {
                       src={l.icon}
                       alt=""
                       style={{
-                        width: '28px',
-                        height: '28px',
+                        width: `${l.size || 28}px`,
+                        height: `${l.size || 28}px`,
+                        maxWidth: 'none',
                         display: 'block',
                         objectFit: 'contain',
                       }}
@@ -193,6 +194,7 @@ export default function Footer() {
                       style={{
                         width: '26px',
                         height: '26px',
+                        maxWidth: 'none',
                         display: 'block',
                       }}
                     />

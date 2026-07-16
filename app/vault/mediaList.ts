@@ -6,6 +6,56 @@ export type MediaItem = {
 
 export const mediaList: MediaItem[] = [
   {
+    "url": "/images/visual-ref/1000241345.jpg",
+    "width": 2048,
+    "height": 1486
+  },
+  {
+    "url": "/images/visual-ref/1000241346.jpg",
+    "width": 4096,
+    "height": 3485
+  },
+  {
+    "url": "/images/visual-ref/1000241347.jpg",
+    "width": 4096,
+    "height": 2304
+  },
+  {
+    "url": "/images/visual-ref/1000241348.jpg",
+    "width": 4096,
+    "height": 2304
+  },
+  {
+    "url": "/images/visual-ref/1000241349.jpg",
+    "width": 4096,
+    "height": 2304
+  },
+  {
+    "url": "/images/visual-ref/1000241350.jpg",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "url": "/images/visual-ref/1000241351.jpg",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "url": "/images/visual-ref/1000241352.jpg",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "url": "/images/visual-ref/1000241353.jpg",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "url": "/images/visual-ref/1000241354.jpg",
+    "width": 3840,
+    "height": 2160
+  },
+  {
     "url": "/images/visual-ref/HIdZs3VaIAAcHOO.jpg",
     "width": 2048,
     "height": 1067

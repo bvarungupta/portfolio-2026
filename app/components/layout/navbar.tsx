@@ -16,11 +16,11 @@ declare global {
 }
 
 const navItems = [
-  { name: "Work", href: "/work" },
-  { name: "Vault", href: "/vault" },
+  { name: "Work", href: "/work", icon: "/images/varun-image-hover-images/pen.png", size: 42 },
+  { name: "Vault", href: "/vault", icon: "/images/varun-image-hover-images/bulb.png", size: 42 },
   { name: "Home", href: "/" },
-  { name: "Lab", href: "/lab" },
-  { name: "About", href: "/about" },
+  { name: "Lab", href: "/lab", icon: "/images/varun-image-hover-images/microscope.png", size: 42 },
+  { name: "About", href: "/about", icon: "/images/varun-image-hover-images/controller2.png", size: 42 },
 ]
 
 export default function Navbar() {
@@ -28,6 +28,7 @@ export default function Navbar() {
   const router = useRouter()
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   const isDarkPage = pathname === "/lab/specimen" || pathname?.startsWith("/proposals/")
 
@@ -243,37 +244,71 @@ export default function Navbar() {
         <div className={`absolute -top-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
         <div className={`absolute -bottom-1 -left-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
         <div className={`absolute -bottom-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
-        {navItems.map((item, index) => (
-          <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
-            <button
-              onClick={(e) => handleNavigation(item, e)}
-              className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"
-                } ${(pathname === item.href) ||
-                  (item.name === "Work" && pathname.startsWith('/works/')) ||
-                  (item.name === "Home" && pathname === '/')
-                  ? "text-orange-500"
-                  : isDarkPage
-                    ? "text-white"
-                    : "text-zinc-700"
-                }`}
-              style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
-            >
-              {item.name === "Home" ? (
-                <Image
-                  src="/images/common/vg26.svg"
-                  alt="Home"
-                  width={22}
-                  height={22}
-                  className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
-                  style={isDarkPage ? { filter: 'invert(1)' } : {}}
-                />
-              ) : item.name}
-            </button>
-            {index < navItems.length - 1 && (
-              <span className={`${isDarkPage ? "text-zinc-500" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
-            )}
-          </div>
-        ))}
+        {navItems.map((item, index) => {
+          const isHovered = hoveredItem === item.name;
+          return (
+            <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
+              <div className="relative">
+                {/* Floating Nav Icon */}
+                {item.icon && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '50%',
+                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                      opacity: isHovered ? 1 : 0,
+                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                      pointerEvents: 'none',
+                      zIndex: 20,
+                    }}
+                  >
+                    <img
+                      src={item.icon}
+                      alt=""
+                      style={{
+                        width: `${item.size || 28}px`,
+                        height: `${item.size || 28}px`,
+                        maxWidth: 'none',
+                        display: 'block',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                )}
+                <button
+                  onMouseEnter={() => setHoveredItem(item.name)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  onClick={(e) => handleNavigation(item, e)}
+                  className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"
+                    } ${(pathname === item.href) ||
+                      (item.name === "Work" && pathname.startsWith('/works/')) ||
+                      (item.name === "Home" && pathname === '/')
+                      ? "text-orange-500"
+                      : isDarkPage
+                        ? "text-white"
+                        : "text-zinc-700"
+                    }`}
+                  style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
+                >
+                  {item.name === "Home" ? (
+                    <Image
+                      src="/images/common/vg26.svg"
+                      alt="Home"
+                      width={22}
+                      height={22}
+                      className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
+                      style={isDarkPage ? { filter: 'invert(1)' } : {}}
+                    />
+                  ) : item.name}
+                </button>
+              </div>
+              {index < navItems.length - 1 && (
+                <span className={`${isDarkPage ? "text-zinc-500" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
+              )}
+            </div>
+          )
+        })}
       </nav>
     </div>
   )
