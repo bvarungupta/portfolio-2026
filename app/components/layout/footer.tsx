@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { DISABLE_WELCOME } from '../../lib/welcomeConfig'
+import { DiaGradient, GradientTheme } from '../dia-gradient/DiaGradient'
 
 const links = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5' },
@@ -17,6 +18,8 @@ const links = [
 const navLinks = [
   { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen.png', color: '#f97316', size: 42 },
   { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316', size: 42 },
+  { label: 'Lab', href: '/lab', icon: '/images/varun-image-hover-images/microscope.png', color: '#f97316', size: 42 },
+  { label: 'Vault', href: '/vault', icon: '/images/varun-image-hover-images/bulb.png', color: '#f97316', size: 42 },
 ]
 
 export default function Footer() {
@@ -24,6 +27,7 @@ export default function Footer() {
   const isProposalPage = pathname?.startsWith('/proposals') || pathname === '/vault'
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const theme: GradientTheme = 'dia'
 
   useEffect(() => {
     if (DISABLE_WELCOME) {
@@ -48,12 +52,13 @@ export default function Footer() {
   if (isProposalPage) return null
 
   return (
-    <footer className="mt-16 relative overflow-visible">
+    <footer className="mt-20 relative bg-white overflow-hidden pt-10">
 
-      <div className="max-w-5xl mx-auto px-6 md:px-10">
+      {/* ── 1. Footer Content (Compact gap mb-6 on mobile, mb-24 on desktop) ── */}
+      <div className="max-w-5xl mx-auto w-full px-6 md:px-10 mb-6 sm:mb-24 relative z-10">
 
         {/* Big name */}
-        <div className="pt-4 pb-8 text-center relative flex items-center justify-center gap-0">
+        <div className="pb-6 text-center relative flex items-center justify-center gap-0">
 
           {/* Left branch */}
           <img
@@ -77,8 +82,8 @@ export default function Footer() {
               <span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '6px' }}>arun</span>
             </h2>
             <p
-              className="mt-4 text-sm text-gray-600"
-              style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+              className="mt-4 text-sm text-gray-700 font-light"
+              style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               Product Designer
             </p>
@@ -99,10 +104,10 @@ export default function Footer() {
 
         </div>
 
-        <div className="border-t border-gray-100" />
+        <div className="border-t border-gray-200/80" />
 
-        {/* Bottom row */}
-        <div className="py-5 flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Bottom row: logo, nav links & social links */}
+        <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-6">
 
           {/* Logo + year */}
           <div className="flex items-center gap-3">
@@ -111,23 +116,22 @@ export default function Footer() {
               alt="Varun Gupta Portfolio Logo"
               width={28}
               height={28}
-              className="opacity-40"
+              className="opacity-50"
             />
             <span
-              className="text-sm font-light tracking-wide text-gray-600"
+              className="text-sm font-light tracking-wide text-gray-700"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               © 2026 Varun Gupta
             </span>
           </div>
 
-          {/* Nav links */}
-          <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          {/* Nav links (2 rows on mobile, 1 row on desktop) */}
+          <nav className="grid grid-cols-2 gap-x-10 gap-y-3 text-center sm:flex sm:flex-row sm:items-center sm:gap-6">
             {navLinks.map((l) => {
               const isHovered = hoveredLink === l.label;
               return (
                 <div key={l.label} className="relative">
-                  {/* Floating Nav Icon */}
                   <div
                     style={{
                       position: 'absolute',
@@ -159,7 +163,7 @@ export default function Footer() {
                     className="text-sm font-light tracking-wide transition-colors duration-200"
                     style={{
                       fontFamily: 'FunnelDisplay, sans-serif',
-                      color: isHovered ? l.color : '#4b5563',
+                      color: isHovered ? l.color : '#374151',
                     }}
                   >
                     {l.label}
@@ -169,57 +173,125 @@ export default function Footer() {
             })}
           </nav>
 
-          {/* Social links */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            {links.map((l) => {
-              const isHovered = hoveredLink === l.label;
-              return (
-                <div key={l.label} className="relative">
-                  {/* Floating Brand SVG Icon */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '24px',
-                      left: '50%',
-                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                      opacity: isHovered ? 1 : 0,
-                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                      pointerEvents: 'none',
-                      zIndex: 20,
-                    }}
-                  >
-                    <img
-                      src={l.icon}
-                      alt=""
+          {/* Social links (3 in Row 1, 2 in Row 2 on mobile; 1 row on desktop) */}
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+            {/* Row 1 on mobile (LinkedIn, Behance, Dribbble) */}
+            <div className="flex items-center gap-6">
+              {links.slice(0, 3).map((l) => {
+                const isHovered = hoveredLink === l.label;
+                return (
+                  <div key={l.label} className="relative">
+                    <div
                       style={{
-                        width: '26px',
-                        height: '26px',
-                        maxWidth: 'none',
-                        display: 'block',
+                        position: 'absolute',
+                        bottom: '24px',
+                        left: '50%',
+                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                        pointerEvents: 'none',
+                        zIndex: 20,
                       }}
-                    />
+                    >
+                      <img
+                        src={l.icon}
+                        alt=""
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          maxWidth: 'none',
+                          display: 'block',
+                        }}
+                      />
+                    </div>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => setHoveredLink(l.label)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className="text-sm font-light tracking-wide transition-colors duration-200"
+                      style={{
+                        fontFamily: 'FunnelDisplay, sans-serif',
+                        color: isHovered ? l.color : '#374151',
+                      }}
+                    >
+                      {l.label}
+                    </a>
                   </div>
-                  <a
-                    href={l.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => setHoveredLink(l.label)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    className="text-sm font-light tracking-wide transition-colors duration-200"
-                    style={{
-                      fontFamily: 'FunnelDisplay, sans-serif',
-                      color: isHovered ? l.color : '#4b5563',
-                    }}
-                  >
-                    {l.label}
-                  </a>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
+
+            {/* Row 2 on mobile (Figma, Medium) */}
+            <div className="flex items-center gap-6">
+              {links.slice(3).map((l) => {
+                const isHovered = hoveredLink === l.label;
+                return (
+                  <div key={l.label} className="relative">
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: '24px',
+                        left: '50%',
+                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                        pointerEvents: 'none',
+                        zIndex: 20,
+                      }}
+                    >
+                      <img
+                        src={l.icon}
+                        alt=""
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          maxWidth: 'none',
+                          display: 'block',
+                        }}
+                      />
+                    </div>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => setHoveredLink(l.label)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className="text-sm font-light tracking-wide transition-colors duration-200"
+                      style={{
+                        fontFamily: 'FunnelDisplay, sans-serif',
+                        color: isHovered ? l.color : '#374151',
+                      }}
+                    >
+                      {l.label}
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
         </div>
       </div>
+
+      {/* ── 2. Dia Default Theme Gradient (Uncut arc below footer content) ───────── */}
+      <div
+        aria-hidden
+        className="w-full relative pointer-events-none overflow-hidden"
+        style={{ height: '260px' }}
+      >
+        <DiaGradient
+          bars={15}
+          theme="dia"
+          reveal="none"
+          peak={1.0}
+          valley={0.32}
+          blur={13}
+          opacity={0.88}
+        />
+      </div>
+
     </footer>
   )
 }
