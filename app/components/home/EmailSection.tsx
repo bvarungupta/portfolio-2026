@@ -17,9 +17,9 @@ export default function EmailSection() {
       const deg = Math.min(window.scrollY / 60, 8)
       const isHovered = hoveredRef.current
       if (leftRef.current)
-        leftRef.current.style.transform = `translateX(${isHovered ? -10 : 0}px) rotate(-${deg}deg)`
+        leftRef.current.style.transform = `translateX(${isHovered ? -28 : 0}px) rotate(-${deg}deg)`
       if (rightRef.current)
-        rightRef.current.style.transform = `translateX(${isHovered ? 10 : 0}px) rotate(-${deg}deg)`
+        rightRef.current.style.transform = `translateX(${isHovered ? 28 : 0}px) rotate(-${deg}deg)`
     }
     window.addEventListener('scroll', update, { passive: true })
     return () => window.removeEventListener('scroll', update)
@@ -29,9 +29,9 @@ export default function EmailSection() {
   useEffect(() => {
     const deg = Math.min(window.scrollY / 60, 8)
     if (leftRef.current)
-      leftRef.current.style.transform = `translateX(${hovered ? -10 : 0}px) rotate(-${deg}deg)`
+      leftRef.current.style.transform = `translateX(${hovered ? -28 : 0}px) rotate(-${deg}deg)`
     if (rightRef.current)
-      rightRef.current.style.transform = `translateX(${hovered ? 10 : 0}px) rotate(-${deg}deg)`
+      rightRef.current.style.transform = `translateX(${hovered ? 28 : 0}px) rotate(-${deg}deg)`
   }, [hovered])
 
   return (
@@ -46,7 +46,7 @@ export default function EmailSection() {
         style={{
           width: '120px', height: '60px', position: 'relative', flexShrink: 0,
           marginRight: '-55px', zIndex: 1,
-          transition: 'transform 0.6s ease',
+          transition: 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
         }}
       >
         <img
@@ -55,7 +55,7 @@ export default function EmailSection() {
           style={{
             position: 'absolute', top: '50%', left: '50%',
             height: '120px', width: 'auto',
-            transform: 'translate(-50%, -50%) rotate(90deg)',
+            transform: 'translate(-50%, -50%) rotate(-90deg)',
             filter: 'brightness(0) opacity(0.75)',
           }}
         />
@@ -65,7 +65,7 @@ export default function EmailSection() {
       <div style={{
         position: 'relative', zIndex: 2, flexShrink: 0,
         boxShadow: hovered ? '0 2px 14px 0px rgba(30, 120, 60, 0.22)' : '0 2px 14px 0px rgba(30, 120, 60, 0)',
-        transition: 'box-shadow 0.5s ease',
+        transition: 'box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
       }}>
         <EmailCopy />
       </div>
@@ -76,7 +76,7 @@ export default function EmailSection() {
         style={{
           width: '120px', height: '60px', position: 'relative', flexShrink: 0,
           marginLeft: '-55px', zIndex: 1,
-          transition: 'transform 0.6s ease',
+          transition: 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
         }}
       >
         <img
@@ -85,7 +85,7 @@ export default function EmailSection() {
           style={{
             position: 'absolute', top: '50%', left: '50%',
             height: '120px', width: 'auto',
-            transform: 'translate(-50%, -50%) rotate(90deg) scaleX(-1)',
+            transform: 'translate(-50%, -50%) rotate(90deg)',
             filter: 'brightness(0) opacity(0.75)',
           }}
         />

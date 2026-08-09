@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ViewMoreWorkSection from './ViewMoreWorkSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -335,17 +336,8 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
       </div>
 
       {showViewMore && (
-        <div className="flex justify-center mt-12 md:mt-20">
-          <Link
-            href="/work"
-            className="group px-6 py-3 border border-gray-900 text-sm text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 flex items-center gap-2"
-            style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
-          >
-            View more work
-            <svg className="transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor">
-              <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
-            </svg>
-          </Link>
+        <div className="flex justify-center mt-6 md:mt-10">
+          <ViewMoreWorkSection />
         </div>
       )}
 
