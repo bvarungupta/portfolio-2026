@@ -3,12 +3,21 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 
-export default function LabHeader() {
+export default function LabHeader({
+  firstWord = "The",
+  secondWord = "Lab",
+}: {
+  firstWord?: string;
+  secondWord?: string;
+}) {
   const headerRef = useRef<HTMLDivElement>(null)
   const leftIconRef = useRef<HTMLImageElement>(null)
   const rightIconRef = useRef<HTMLImageElement>(null)
   const leftLineRef = useRef<HTMLSpanElement>(null)
   const rightLineRef = useRef<HTMLSpanElement>(null)
+
+  const firstLetter = firstWord.charAt(0);
+  const restOfFirstWord = firstWord.slice(1);
 
   useEffect(() => {
     const header = headerRef.current
@@ -19,12 +28,9 @@ export default function LabHeader() {
     if (!header || !leftIcon || !rightIcon || !leftLine || !rightLine) return
 
     const setup = () => {
-      // Lines start at scale 0
       gsap.set(leftLine,  { scaleX: 0, transformOrigin: 'right center', opacity: 0 })
       gsap.set(rightLine, { scaleX: 0, transformOrigin: 'left center',  opacity: 0 })
 
-      // Icons start pushed inward (no translateX — they're already next to the text)
-      // We'll animate them outward as the lines expand
       const tl = gsap.timeline({ defaults: { duration: 1.1, ease: 'power3.inOut' } })
 
       tl.to(leftLine,  { scaleX: 1, opacity: 1, ease: 'power2.inOut' }, 0)
@@ -44,8 +50,9 @@ export default function LabHeader() {
         className="text-2xl md:text-3xl font-light text-black"
         style={{ fontFamily: 'SatishSans, sans-serif', flexShrink: 0 }}
       >
-        <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>T</span><span style={{ marginLeft: '4px' }}>he</span>{' '}
-        <span style={{ fontFamily: 'SatishSans, sans-serif' }}>Lab</span>
+        <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.5em' }}>{firstLetter}</span>
+        <span style={{ marginLeft: restOfFirstWord ? '2px' : '0px' }}>{restOfFirstWord}</span>{' '}
+        <span style={{ fontFamily: 'SatishSans, sans-serif' }}>{secondWord}</span>
       </h1>
       <span ref={rightLineRef} style={{ flex: 1, height: '1px', background: '#d1d5db', display: 'block' }} />
       <img ref={rightIconRef} src="/images/HomeImages/HandC.svg" alt="" style={{ height: '28px', objectFit: 'contain', flexShrink: 0 }} />
