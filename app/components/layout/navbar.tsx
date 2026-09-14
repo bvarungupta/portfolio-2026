@@ -17,7 +17,6 @@ declare global {
 
 const navItems = [
   { name: "Work", href: "/work", icon: "/images/varun-image-hover-images/pen.png", size: 42 },
-  { name: "Vault", href: "/vault", icon: "/images/varun-image-hover-images/bulb.png", size: 42 },
   { name: "Home", href: "/" },
   { name: "Lab", href: "/lab", icon: "/images/varun-image-hover-images/microscope.png", size: 42 },
   { name: "About", href: "/about", icon: "/images/varun-image-hover-images/controller2.png", size: 42 },

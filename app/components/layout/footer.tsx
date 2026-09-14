@@ -19,12 +19,11 @@ const navLinks = [
   { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen.png', color: '#f97316', size: 42 },
   { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316', size: 42 },
   { label: 'Lab', href: '/lab', icon: '/images/varun-image-hover-images/microscope.png', color: '#f97316', size: 42 },
-  { label: 'Vault', href: '/vault', icon: '/images/varun-image-hover-images/bulb.png', color: '#f97316', size: 42 },
 ]
 
 export default function Footer() {
   const pathname = usePathname()
-  const isProposalPage = pathname?.startsWith('/proposals') || pathname === '/vault'
+  const isProposalPage = pathname?.startsWith('/proposals')
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
