@@ -453,7 +453,7 @@ export default function VisualExplorationsGallery() {
   }, [])
 
   return (
-    <div className="mt-20 md:mt-28">
+    <div id="visual-explorations" data-section="visual-explorations" className="mt-20 md:mt-28">
       {/* ── Section header ──────────────────────────────────────── */}
       <div ref={headerRef} className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
         <div className="relative">

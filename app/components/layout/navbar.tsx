@@ -17,6 +17,7 @@ declare global {
 
 const navItems = [
   { name: "Work", href: "/work", icon: "/images/varun-image-hover-images/pen.png", size: 42 },
+  { name: "Exploration", href: "/#visual-explorations", icon: "/images/varun-image-hover-images/burshes.png", size: 42 },
   { name: "Home", href: "/" },
   { name: "Lab", href: "/lab", icon: "/images/varun-image-hover-images/microscope.png", size: 42 },
   { name: "About", href: "/about", icon: "/images/varun-image-hover-images/controller2.png", size: 42 },
@@ -102,7 +103,17 @@ export default function Navbar() {
       })
     }
 
-    if (item.name === "Concepts") {
+    if (item.name === "Exploration" || item.name === "Explorations") {
+      if (pathname === '/') {
+        scrollToExplorationsSection()
+      } else {
+        navigateWithTransition('/', () => {
+          setTimeout(() => {
+            scrollToExplorationsSection()
+          }, 500)
+        })
+      }
+    } else if (item.name === "Concepts") {
       if (pathname === '/') {
         // Already on home, scroll to proposals
         scrollToProposalsSection()
@@ -198,6 +209,25 @@ export default function Navbar() {
         scrollTo: {
           y: proposalsSection,
           offsetY: 100
+        },
+        ease: "power2.inOut"
+      })
+    }
+  }
+
+  const scrollToExplorationsSection = () => {
+    const explorationsSection = document.querySelector('[data-section="visual-explorations"]') ||
+      document.querySelector('#visual-explorations') ||
+      Array.from(document.querySelectorAll('h2')).find(el =>
+        el.textContent?.toLowerCase().includes('explorations')
+      )?.closest('div')
+
+    if (explorationsSection) {
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: {
+          y: explorationsSection,
+          offsetY: 60
         },
         ease: "power2.inOut"
       })

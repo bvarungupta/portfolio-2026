@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useInView } from 'framer-motion';
+import Link from 'next/link';
 
 const TEAL = '#1D9E75';
 const TEAL_DARK = '#085041';
@@ -37,7 +38,7 @@ function ProposalNav() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <a
+          <Link
             href="/"
             style={{
               display: 'flex',
@@ -59,12 +60,12 @@ function ProposalNav() {
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </Link>
           <span className="xpay-nav-label">
             Product Designer / Application
           </span>
         </div>
-        <a
+        <Link
           href="/"
           style={{
             fontSize: 12,
@@ -86,7 +87,7 @@ function ProposalNav() {
         >
           <img src="/images/common/v26.svg" alt="" style={{ width: 14, height: 14, display: 'block', flexShrink: 0 }} />
           View my portfolio
-        </a>
+        </Link>
       </div>
     </nav>
   );
