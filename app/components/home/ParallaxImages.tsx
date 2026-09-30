@@ -82,6 +82,7 @@ export default function ParallaxImages() {
       {/* ── Desktop ──────────────────────────────────────────── */}
       <div
         ref={abhayDesktop}
+        data-hero-angel="left"
         className="absolute h-auto hidden md:block pointer-events-none"
         style={{ width: ABHAY.width, left: ABHAY.left, top: ABHAY.top, transform: `rotate(${ABHAY.rotate}deg)`, zIndex: 10 }}
       >
@@ -89,6 +90,7 @@ export default function ParallaxImages() {
       </div>
       <div
         ref={tejasDesktop}
+        data-hero-angel="right"
         className="absolute h-auto hidden md:block pointer-events-none"
         style={{ width: TEJAS.width, right: TEJAS.right, top: TEJAS.top, transform: `rotate(${TEJAS.rotate}deg)`, zIndex: 10 }}
       >
@@ -98,6 +100,7 @@ export default function ParallaxImages() {
       {/* ── Mobile — fixed to viewport, no container clipping ───────────────── */}
       <div
         ref={abhayMobile}
+        data-hero-angel="left"
         className="fixed block md:hidden pointer-events-none"
         style={{ width: 240, left: -90, top: '10vh', transform: 'rotate(40deg)', zIndex: 10 }}
       >
@@ -105,6 +108,7 @@ export default function ParallaxImages() {
       </div>
       <div
         ref={tejasMobile}
+        data-hero-angel="right"
         className="fixed block md:hidden pointer-events-none"
         style={{ width: 190, left: 'calc(100vw - 130px)', top: '55vh', transform: 'rotate(-90deg)', zIndex: 100 }}
       >

@@ -5,6 +5,7 @@ import ParallaxImages from "./ParallaxImages"
 import EmailSection from "./EmailSection"
 import VisualIdentityGallery from "./visualIdentityGallery"
 import ProposalsGallery from "./proposalsGallery"
+import MotionDesignGallery from "./MotionDesignGallery"
 import dynamic from "next/dynamic"
 
 const VisualExplorationsGallery = dynamic(() => import("./visualExplorationsGallery"), {
@@ -16,6 +17,7 @@ export default function HomePortfolio() {
     <div className="bg-white relative">
 
       <Image
+        data-hero-pillar="left"
         src="/images/HomeImages/piller-v.svg"
         alt=""
         width={120}
@@ -26,6 +28,7 @@ export default function HomePortfolio() {
         style={{ zIndex: 0, opacity: 0.18, left: "-70px" }}
       />
       <Image
+        data-hero-pillar="right"
         src="/images/HomeImages/piller-2-v.svg"
         alt=""
         width={120}
@@ -41,6 +44,7 @@ export default function HomePortfolio() {
 
           <div className="relative flex flex-col items-center gap-6 md:bg-white md:px-6 md:py-4" style={{ zIndex: 5 }}>
             <Image
+              id="hero-logo-outline"
               src="/images/common/vg-outline.svg"
               alt="Varun Gupta Portfolio Logo"
               width={48}
@@ -48,11 +52,12 @@ export default function HomePortfolio() {
               className="opacity-50"
               style={{ marginBottom: "70px" }}
             />
-            <h1 className="text-4xl md:text-5xl tracking-tight text-black">
+            <h1 data-hero-element="heading" className="text-4xl md:text-5xl tracking-tight text-black">
               <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>V</span><span style={{ fontFamily: "SatishSans, sans-serif", marginLeft: "4px" }}>arun </span>
               <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>G</span><span style={{ fontFamily: "SatishSans, sans-serif", marginLeft: "4px" }}>upta</span>
             </h1>
             <p
+              data-hero-element="tagline"
               className="text-sm md:text-base text-gray-600 leading-relaxed max-w-md"
               style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: "300" }}
             >
@@ -60,7 +65,7 @@ export default function HomePortfolio() {
             </p>
           </div>
 
-          <div className="absolute bottom-28 md:bottom-20 left-0 right-0 flex justify-center items-center" style={{ zIndex: 5 }}>
+          <div data-hero-element="email" className="absolute bottom-28 md:bottom-20 left-0 right-0 flex justify-center items-center" style={{ zIndex: 5 }}>
             <EmailSection />
           </div>
         </div>
@@ -75,6 +80,10 @@ export default function HomePortfolio() {
 
         <div data-section="proposals">
           <ProposalsGallery />
+        </div>
+
+        <div data-section="motion-design">
+          <MotionDesignGallery />
         </div>
 
         <div data-section="visual-explorations">

@@ -7,6 +7,7 @@ import SmoothScroll from "./components/layout/SmoothScroll"
 import ScrollReset from "./components/layout/ScrollReset"
 import Footer from "./components/layout/footer"
 import SpiralTransitionOverlay from "./components/layout/SpiralTransitionOverlay"
+import Preloader from "./components/layout/Preloader"
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import PageBranches from "./components/home/PageBranches"
@@ -87,7 +88,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
+      <head>
+        <link rel="preload" href="/images/common/vg26.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/images/common/vg-outline.svg" as="image" type="image/svg+xml" />
+      </head>
       <body suppressHydrationWarning>
+        <Preloader />
         <SmoothScroll />
         <ScrollReset />
         <NavbarClient />
