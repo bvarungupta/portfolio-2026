@@ -11,7 +11,7 @@ export const PRELOADER_CONFIG = {
   // Theme Background: Solid white matching site theme
   BG_COLOR: "#ffffff",
   // Typography font family
-  FONT_FAMILY: "SatishSans, sans-serif",
+  FONT_FAMILY: "'Quincy CF', Quincy, Georgia, serif",
 
   // Loading Durations
   MIN_PHASE1_MS: 1000,          // Calm steady pace 0 -> 80 (ms)
@@ -291,6 +291,7 @@ export default function Preloader() {
                   fontSize: "clamp(4rem, 12vw, 10rem)",
                   fontVariantNumeric: "tabular-nums",
                   fontFeatureSettings: '"tnum"',
+                  letterSpacing: "-0.05em",
                 }}
               >
                 {count}%
