@@ -1,14 +1,13 @@
 "use client"
 
 import React, { forwardRef, useEffect, useLayoutEffect, useRef } from "react"
-import * as HLModule from "@lucasmarkes/hairline"
+import { HL } from "./hairlineKernel"
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect
-const HL = HLModule as any
 
 const {
   Cam, facing, fit, open, proj, rings,
-  tval, tween, tset, tdone, mk, pointer, put, register, solid, prism,
+  tval, tween, tset, tdone, mk, pointer, put, register, solid, prism, disposer,
 } = HL
 
 const N = 9, W = 22, H = 10
@@ -34,26 +33,15 @@ export interface HairlineProps extends React.ComponentPropsWithoutRef<"div"> {
   onRead?: (text: string) => void
 }
 
-function createDisposer() {
-  let fns: (() => void)[] = []
-  return {
-    add: (fn: () => void) => {
-      fns.push(fn)
-    },
-    dispose: () => {
-      const run = fns
-      fns = []
-      for (let i = run.length - 1; i >= 0; i--) run[i]()
-    },
-  }
-}
-
 function mountDecisionMatrix(
   host: HTMLDivElement,
   options: { intensity?: number; theme?: string; label?: string; onRead?: (t: string) => void }
 ) {
-  const bag = createDisposer()
+  const bag = disposer()
   let stag = (options.intensity ?? 0.5) * 40
+
+  HL.inject(host)
+  host.setAttribute("data-hairline", "")
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
   svg.setAttribute("viewBox", "0 0 400 320")
@@ -65,8 +53,8 @@ function mountDecisionMatrix(
   bag.add(() => svg.remove())
 
   const C = Cam(45, 0.5, 1.6)
-  fit(C, [[X0, Y0, -PB], [X1, Y1, -PB], [X1, Y0, -PB], [X0, Y1, -PB], [X0, Y0, H + 20], [X1, Y1, H + 20]], 200, 166)
-  const P = proj(C), front = facing(C)
+  const P = fit(C, [[X0, Y0, -PB], [X1, Y1, -PB], [X1, Y0, -PB], [X0, Y1, -PB], [X0, Y0, H + 20], [X1, Y1, H + 20]], 200, 166)
+  const front = facing(C)
 
   const g = mk("g", {}, svg)
 
@@ -94,7 +82,7 @@ function mountDecisionMatrix(
   })
 
   function hit([sx, sy]: [number, number]) {
-    let best = -1, minDist = 40
+    let best = -1, minDist = 60
     blocks.forEach((b, idx) => {
       const sp = P(b.rx + W / 2, b.ry + W / 2, 0)
       const dist = Math.hypot(sx - sp[0], sy - sp[1])
