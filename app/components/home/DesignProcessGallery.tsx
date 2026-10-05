@@ -116,8 +116,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout matching exact reference image ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 -mx-6 md:-mx-24 lg:-mx-36 xl:-mx-48 px-2 md:px-0 mt-6">
+      {/* ── 3 Cards Grid Layout (Wider & Tighter Horizontal Breakout) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 -mx-6 md:-mx-28 lg:-mx-44 xl:-mx-56 px-2 md:px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
@@ -127,24 +127,24 @@ export default function DesignProcessGallery() {
               className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
               {/* Top Header Bar with Dot Indicator */}
-              <div className="px-6 py-2.5 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[36px]">
+              <div className="px-5 md:px-7 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
                 {Array.from({ length: item.dots }).map((_, i) => (
                   <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
                 ))}
               </div>
 
-              {/* Card Main Body Content */}
-              <div className="p-6 md:p-8 flex flex-col justify-between flex-1">
+              {/* Card Main Body Content (Tight Padding & No Bottom Gap) */}
+              <div className="px-5 py-5 md:px-7 md:py-6 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono */}
-                  <div className="font-mono text-base md:text-lg text-gray-800 font-medium mb-3 tracking-tight">
+                  <div className="font-mono text-base md:text-lg text-gray-800 font-medium mb-2 tracking-tight">
                     {item.step}
                   </div>
 
                   {/* Heading in Funnel Display */}
                   <h3
-                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-3 md:mb-4"
+                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
                     style={{ fontFamily: "FunnelDisplay, sans-serif" }}
                   >
                     {item.title}
@@ -152,15 +152,15 @@ export default function DesignProcessGallery() {
 
                   {/* Body Copy in Funnel Display (unconstrained full width) */}
                   <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-2 w-full max-w-none"
+                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-1.5 w-full max-w-none"
                     style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
                   >
                     {item.copy}
                   </p>
                 </div>
 
-                {/* Hairline Illustration closely aligned with content */}
-                <div className="w-full flex justify-center items-center pt-0 pb-2 mt-2">
+                {/* Hairline Illustration closely aligned & flush to bottom */}
+                <div className="w-full flex justify-center items-center pt-0 pb-0 mt-1">
                   <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
                 </div>
               </div>
