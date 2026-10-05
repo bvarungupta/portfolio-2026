@@ -6,6 +6,7 @@ import EmailSection from "./EmailSection"
 import VisualIdentityGallery from "./visualIdentityGallery"
 import ProposalsGallery from "./proposalsGallery"
 import MotionDesignGallery from "./MotionDesignGallery"
+import DesignProcessGallery from "./DesignProcessGallery"
 import dynamic from "next/dynamic"
 
 const VisualExplorationsGallery = dynamic(() => import("./visualExplorationsGallery"), {
@@ -72,6 +73,10 @@ export default function HomePortfolio() {
 
         <div data-section="work">
           <WorkGallery featuredOnly={true} showViewMore={true} />
+        </div>
+
+        <div data-section="design-process">
+          <DesignProcessGallery />
         </div>
 
         <div data-section="visual-identity">
