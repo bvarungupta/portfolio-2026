@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -11,7 +11,7 @@ interface MotionItem {
   video: string
 }
 
-const UNIFORM_ASPECT_RATIO = "aspect-[4/3]" // Change to "aspect-video" (16:9) or "aspect-square" (1:1) if preferred
+const UNIFORM_ASPECT_RATIO = "aspect-[4/3]"
 
 const motionItems: MotionItem[] = [
   {
@@ -45,6 +45,26 @@ export default function MotionDesignGallery() {
   const motionEl = useRef<HTMLHeadingElement>(null)
   const designEl = useRef<HTMLHeadingElement>(null)
   const lineEl = useRef<HTMLDivElement>(null)
+
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
+
+  useEffect(() => {
+    motionItems.forEach((item) => {
+      const videoEl = videoRefs.current[item.id]
+      if (!videoEl) return
+
+      if (hoveredId === null || hoveredId === item.id) {
+        if (videoEl.paused) {
+          videoEl.play().catch(() => {})
+        }
+      } else {
+        if (!videoEl.paused) {
+          videoEl.pause()
+        }
+      }
+    })
+  }, [hoveredId])
 
   useEffect(() => {
     const header = headerRef.current
@@ -125,24 +145,42 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* 2x3 Video Grid (3 columns, 2 rows) - Expanded 0.5x larger */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 -mx-2 md:-mx-12 lg:-mx-20 px-2 md:px-4">
-        {motionItems.map((item) => (
-          <div
-            key={item.id}
-            className={`relative rounded-none overflow-hidden bg-white border border-white transition-transform duration-500 hover:scale-[1.04] hover:z-10 ${UNIFORM_ASPECT_RATIO}`}
-          >
-            <video
-              src={item.video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover pointer-events-none select-none bg-white"
-            />
-          </div>
-        ))}
+      {/* Responsive Interactive 2x3 Video Grid */}
+      <div 
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 -mx-2 md:-mx-12 lg:-mx-20 px-2 md:px-4"
+        onMouseLeave={() => setHoveredId(null)}
+      >
+        {motionItems.map((item) => {
+          const isHovered = hoveredId === item.id
+          const isOtherHovered = hoveredId !== null && !isHovered
+
+          return (
+            <div
+              key={item.id}
+              onMouseEnter={() => setHoveredId(item.id)}
+              className={`relative rounded-xl overflow-hidden bg-white border border-gray-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${UNIFORM_ASPECT_RATIO} ${
+                isHovered
+                  ? "scale-[1.12] md:scale-[1.15] z-30 shadow-2xl opacity-100 ring-2 ring-black/10"
+                  : isOtherHovered
+                  ? "scale-[0.96] z-0 opacity-40 grayscale-[15%]"
+                  : "scale-100 z-10 opacity-100 shadow-sm"
+              }`}
+            >
+              <video
+                ref={(el) => {
+                  videoRefs.current[item.id] = el
+                }}
+                src={item.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover pointer-events-none select-none bg-white transition-opacity duration-300"
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )
