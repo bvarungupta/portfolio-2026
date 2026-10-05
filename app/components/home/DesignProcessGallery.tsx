@@ -135,15 +135,15 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Wider, Fatter & Unconstrained Width) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 -mx-6 md:-mx-16 lg:-mx-24 px-4 mt-6">
+      {/* ── 3 Cards Grid Layout (Substantially Wider & Fatter Horizontal Breakout) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 -mx-6 md:-mx-24 lg:-mx-36 xl:-mx-48 px-2 md:px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
           return (
             <div
               key={item.step}
-              className="group relative bg-white border border-gray-200 p-6 sm:p-8 md:p-10 rounded-none flex flex-col justify-between transition-all duration-300 hover:border-gray-400 hover:shadow-lg"
+              className="group relative bg-white border border-gray-200 p-6 md:p-8 rounded-none flex flex-col justify-between transition-all duration-300 hover:border-gray-400 hover:shadow-lg"
             >
               <PlusMark position="top-left" />
               <PlusMark position="top-right" />
@@ -151,7 +151,7 @@ export default function DesignProcessGallery() {
               <PlusMark position="bottom-right" />
 
               {/* Top Dot Indicator Bar */}
-              <div className="flex items-center gap-1.5 pb-4 mb-5 border-b border-gray-100">
+              <div className="flex items-center gap-1.5 pb-3 mb-4 border-b border-gray-100">
                 {Array.from({ length: item.dots }).map((_, i) => (
                   <span key={i} className="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block" />
                 ))}
@@ -160,30 +160,30 @@ export default function DesignProcessGallery() {
               {/* Text Information Stack */}
               <div className="w-full">
                 {/* Step Number in Geist Mono */}
-                <div className="font-mono text-sm md:text-base text-gray-800 font-medium mb-3 tracking-tight">
+                <div className="font-mono text-sm md:text-base text-gray-800 font-medium mb-2 tracking-tight">
                   {item.step}
                 </div>
 
                 {/* Heading in Funnel Display */}
                 <h3
-                  className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-3 md:mb-4"
+                  className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2.5"
                   style={{ fontFamily: "FunnelDisplay, sans-serif" }}
                 >
                   {item.title}
                 </h3>
 
-                {/* Body Copy in Funnel Display */}
+                {/* Body Copy in Funnel Display (unconstrained full width) */}
                 <p
-                  className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-8 md:mb-12 w-full max-w-none"
+                  className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-4 w-full max-w-none"
                   style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
                 >
                   {item.copy}
                 </p>
               </div>
 
-              {/* Large Hairline Illustration with Visual Focus */}
-              <div className="w-full flex justify-center items-center py-6 md:py-10 mt-auto min-h-[240px] md:min-h-[300px]">
-                <Illustration className="w-full max-w-[320px] md:max-w-[380px] aspect-[4/3]" theme="light" />
+              {/* Hairline Illustration (Proportional & Compact Height) */}
+              <div className="w-full flex justify-center items-center pt-2 pb-2 mt-auto">
+                <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
               </div>
             </div>
           )
