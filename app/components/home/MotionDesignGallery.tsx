@@ -146,7 +146,7 @@ export default function MotionDesignGallery() {
       </div>
 
       {/* ── Mobile View: 2-Row Auto-Moving Carousel (md:hidden) ── */}
-      <div className="relative block md:hidden mt-4 overflow-hidden w-full select-none">
+      <div className="relative block md:hidden mt-4 overflow-hidden -mx-6 select-none">
         <style>{`
           @keyframes autoMarqueeLeft {
             0% { transform: translate3d(0, 0, 0); }
@@ -159,11 +159,11 @@ export default function MotionDesignGallery() {
         `}</style>
 
         {/* Row 1 Auto Moving Left */}
-        <div className="flex gap-2 py-1" style={{ animation: "autoMarqueeLeft 22s linear infinite", willChange: "transform" }}>
+        <div className="flex gap-2.5 py-1.5" style={{ animation: "autoMarqueeLeft 24s linear infinite", willChange: "transform" }}>
           {[...motionItems.slice(0, 3), ...motionItems.slice(0, 3), ...motionItems.slice(0, 3)].map((item, idx) => (
             <div
               key={`m-r1-${item.id}-${idx}`}
-              className={`relative w-[calc(50vw-12px)] sm:w-[calc(50vw-16px)] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+              className={`relative w-[68vw] sm:w-[48vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
             >
               <video
                 src={item.video}
@@ -179,11 +179,11 @@ export default function MotionDesignGallery() {
         </div>
 
         {/* Row 2 Auto Moving Right */}
-        <div className="flex gap-2 py-1" style={{ animation: "autoMarqueeRight 22s linear infinite", willChange: "transform" }}>
+        <div className="flex gap-2.5 py-1.5" style={{ animation: "autoMarqueeRight 24s linear infinite", willChange: "transform" }}>
           {[...motionItems.slice(3, 6), ...motionItems.slice(3, 6), ...motionItems.slice(3, 6)].map((item, idx) => (
             <div
               key={`m-r2-${item.id}-${idx}`}
-              className={`relative w-[calc(50vw-12px)] sm:w-[calc(50vw-16px)] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+              className={`relative w-[68vw] sm:w-[48vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
             >
               <video
                 src={item.video}
