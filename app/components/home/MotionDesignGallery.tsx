@@ -109,6 +109,12 @@ export default function MotionDesignGallery() {
             </h2>
           </div>
         </div>
+        <p
+          className="text-center text-sm md:text-base text-gray-600 font-light leading-relaxed max-w-xl mx-auto mt-4"
+          style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+        >
+          Animations and micro-interactions from across my work. The details that make a product feel alive.
+        </p>
       </div>
 
       {/* 2x2 Video Wall Cards (Border-free & Full Frame) */}

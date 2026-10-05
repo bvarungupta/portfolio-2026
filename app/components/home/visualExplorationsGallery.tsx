@@ -467,6 +467,12 @@ export default function VisualExplorationsGallery() {
             </h2>
           </div>
         </div>
+        <p
+          className="text-center text-sm md:text-base text-gray-600 font-light leading-relaxed max-w-xl mx-auto mt-4"
+          style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+        >
+          Where I think out loud. Experiments, directions, and things I made just to see what would happen.
+        </p>
       </div>
 
       {/* ── Rubens 3D Showcase Window ───────────────────────────── */}

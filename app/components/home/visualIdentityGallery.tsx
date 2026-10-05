@@ -109,6 +109,12 @@ export default function VisualIdentityGallery() {
             </h2>
           </div>
         </div>
+        <p
+          className="text-center text-sm md:text-base text-gray-600 font-light leading-relaxed max-w-xl mx-auto mt-4"
+          style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+        >
+          Brand systems and visual identities built from scratch. Logos, colour, typography, and the full visual language that makes a brand feel like itself.
+        </p>
       </div>
 
       {/* ── Desktop collage (md+) ─────────────────────────────── */}

@@ -114,6 +114,12 @@ export default function ProposalsGallery() {
             </h2>
           </div>
         </div>
+        <p
+          className="text-center text-sm md:text-base text-gray-600 font-light leading-relaxed max-w-xl mx-auto mt-4"
+          style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
+        >
+          Unsolicited fixes for products I use and care about. Real problems, real solutions — no brief needed.
+        </p>
       </div>
 
       {/* Cards */}
