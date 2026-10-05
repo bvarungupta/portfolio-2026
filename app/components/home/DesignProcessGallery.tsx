@@ -126,8 +126,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 4 Cards 2x2 Grid Layout (2 columns x 2 rows) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mx-0 md:-mx-16 lg:-mx-24 xl:-mx-32 px-0 mt-6">
+      {/* ── 4 Cards 2x2 Grid Layout (Tighter Width & Larger Illustrations) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mx-0 md:-mx-4 lg:-mx-8 px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
@@ -143,8 +143,8 @@ export default function DesignProcessGallery() {
                 ))}
               </div>
 
-              {/* Card Main Body Content (Reduced Horizontal Padding for Max Text Span) */}
-              <div className="px-3 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
+              {/* Card Main Body Content */}
+              <div className="px-4 py-5 md:px-6 md:py-6 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono (Regular Weight) */}
@@ -162,16 +162,16 @@ export default function DesignProcessGallery() {
 
                   {/* Body Copy in Funnel Display (unconstrained full width) */}
                   <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-1.5 w-full max-w-none"
+                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-2 w-full max-w-none"
                     style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
                   >
                     {item.copy}
                   </p>
                 </div>
 
-                {/* Hairline Illustration closely aligned & flush to bottom */}
-                <div className="w-full flex justify-center items-center pt-0 pb-0 mt-1">
-                  <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
+                {/* Hairline Illustration closely aligned & enlarged */}
+                <div className="w-full flex justify-center items-center pt-2 pb-1 mt-2">
+                  <Illustration className="w-full max-w-[340px] md:max-w-[390px] lg:max-w-[420px] aspect-[4/3]" theme="light" />
                 </div>
               </div>
             </div>
