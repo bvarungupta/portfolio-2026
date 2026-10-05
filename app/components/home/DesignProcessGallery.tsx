@@ -126,8 +126,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 4 Cards Grid Layout (Matching Work Card Width on Mobile, 4-Column Breakout on Desktop) ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
+      {/* ── 4 Cards 2x2 Grid Layout (2 columns x 2 rows) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mx-0 md:-mx-16 lg:-mx-24 xl:-mx-32 px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
