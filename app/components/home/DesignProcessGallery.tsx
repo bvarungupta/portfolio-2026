@@ -141,8 +141,8 @@ export default function DesignProcessGallery() {
               <div className="px-4 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
-                  {/* Step Number in Geist Mono */}
-                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-medium mb-2 tracking-tight`}>
+                  {/* Step Number in Geist Mono (Regular Weight) */}
+                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-normal mb-2 tracking-tight`}>
                     {item.step}
                   </div>
 
