@@ -152,15 +152,15 @@ export default function DesignProcessGallery() {
 
                   {/* Body Copy in Funnel Display (unconstrained full width) */}
                   <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-6 w-full max-w-none"
+                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-2 w-full max-w-none"
                     style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
                   >
                     {item.copy}
                   </p>
                 </div>
 
-                {/* Hairline Illustration at bottom */}
-                <div className="w-full flex justify-center items-center pt-4 pb-2 mt-auto">
+                {/* Hairline Illustration closely aligned with content */}
+                <div className="w-full flex justify-center items-center pt-0 pb-2 mt-2">
                   <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
                 </div>
               </div>
