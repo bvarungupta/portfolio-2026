@@ -145,9 +145,37 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* Responsive Interactive 2x3 Video Grid — Tight Spacing, Borderless, Radius 0 */}
+      {/* ── Mobile View: Horizontal Scroll Carousel with Soft Blurred Edge Fade (md:hidden) ── */}
+      <div className="relative block md:hidden mt-4">
+        {/* Left Soft Blur Mask */}
+        <div className="absolute top-0 bottom-0 left-0 w-8 z-20 pointer-events-none bg-gradient-to-r from-white via-white/80 to-transparent backdrop-blur-[1.5px]" />
+        {/* Right Soft Blur Mask */}
+        <div className="absolute top-0 bottom-0 right-0 w-8 z-20 pointer-events-none bg-gradient-to-l from-white via-white/80 to-transparent backdrop-blur-[1.5px]" />
+
+        {/* Carousel Track */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 px-6 py-2 scrollbar-none">
+          {motionItems.map((item) => (
+            <div
+              key={`mobile-${item.id}`}
+              className={`relative w-[75vw] sm:w-[48vw] shrink-0 snap-center rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+            >
+              <video
+                src={item.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover pointer-events-none select-none bg-white"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Desktop View: Interactive 2x3 Grid with Hover Scale & Video Pause (hidden md:grid) ── */}
       <div 
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 -mx-2 md:-mx-12 lg:-mx-20 px-2 md:px-4"
+        className="hidden md:grid md:grid-cols-3 gap-3 -mx-12 lg:-mx-20 px-4 mt-6"
         onMouseLeave={() => setHoveredId(null)}
       >
         {motionItems.map((item) => {
