@@ -110,7 +110,7 @@ export default function MotionDesignGallery() {
           </div>
         </div>
         <p
-          className="text-center text-sm md:text-base text-gray-600 font-light leading-relaxed max-w-xl mx-auto mt-4"
+          className="w-full max-w-none text-center text-sm md:text-base text-gray-600 font-light leading-relaxed mt-3 md:mt-4 px-0"
           style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: 300 }}
         >
           Animations and micro-interactions from across my work. The details that make a product feel alive.
