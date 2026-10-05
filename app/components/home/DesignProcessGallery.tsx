@@ -126,8 +126,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 4 Cards 2x2 Grid Layout (Tighter Width & Larger Illustrations) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mx-0 md:-mx-4 lg:-mx-8 px-0 mt-6">
+      {/* ── 4 Cards 2x2 Grid Layout (Tighter Layout, Reduced Gaps & Restored Illustration Scale) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mx-0 md:max-w-5xl md:mx-auto px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
@@ -137,24 +137,24 @@ export default function DesignProcessGallery() {
               className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
               {/* Top Header Bar with Dot Indicator */}
-              <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
+              <div className="px-4 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[30px]">
                 {Array.from({ length: item.dots }).map((_, i) => (
                   <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
                 ))}
               </div>
 
-              {/* Card Main Body Content */}
-              <div className="px-4 py-5 md:px-6 md:py-6 flex flex-col justify-between flex-1">
+              {/* Card Main Body Content (Tight Padding & Reduced Negative Space) */}
+              <div className="px-4 pt-4 pb-0 md:px-5 md:pt-4.5 md:pb-0 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono (Regular Weight) */}
-                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-normal mb-2 tracking-tight`}>
+                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-normal mb-1 tracking-tight`}>
                     {item.step}
                   </div>
 
                   {/* Heading in Funnel Display */}
                   <h3
-                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
+                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-1 md:mb-1.5"
                     style={{ fontFamily: "FunnelDisplay, sans-serif" }}
                   >
                     {item.title}
@@ -162,16 +162,16 @@ export default function DesignProcessGallery() {
 
                   {/* Body Copy in Funnel Display (unconstrained full width) */}
                   <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-2 w-full max-w-none"
+                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed w-full max-w-none"
                     style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
                   >
                     {item.copy}
                   </p>
                 </div>
 
-                {/* Hairline Illustration closely aligned & enlarged */}
-                <div className="w-full flex justify-center items-center pt-2 pb-1 mt-2">
-                  <Illustration className="w-full max-w-[340px] md:max-w-[390px] lg:max-w-[420px] aspect-[4/3]" theme="light" />
+                {/* Hairline Illustration tight to content & flush against bottom edge */}
+                <div className="w-full flex justify-center items-end pt-0 pb-0 mt-1 md:mt-2 -mb-1 md:-mb-2 shrink-0">
+                  <Illustration className="w-full max-w-[240px] sm:max-w-[260px] md:max-w-[290px] aspect-[4/3]" theme="light" />
                 </div>
               </div>
             </div>
