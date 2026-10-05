@@ -145,9 +145,9 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* Responsive Interactive 2x3 Video Grid */}
+      {/* Responsive Interactive 2x3 Video Grid — Tight Spacing, Borderless, Radius 0 */}
       <div 
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 -mx-2 md:-mx-12 lg:-mx-20 px-2 md:px-4"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 -mx-2 md:-mx-12 lg:-mx-20 px-2 md:px-4"
         onMouseLeave={() => setHoveredId(null)}
       >
         {motionItems.map((item) => {
@@ -158,12 +158,12 @@ export default function MotionDesignGallery() {
             <div
               key={item.id}
               onMouseEnter={() => setHoveredId(item.id)}
-              className={`relative rounded-xl overflow-hidden bg-white border border-gray-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${UNIFORM_ASPECT_RATIO} ${
+              className={`relative rounded-none border-0 overflow-hidden bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${UNIFORM_ASPECT_RATIO} ${
                 isHovered
-                  ? "scale-[1.12] md:scale-[1.15] z-30 shadow-2xl opacity-100 ring-2 ring-black/10"
+                  ? "scale-[1.12] md:scale-[1.15] z-30 shadow-2xl opacity-100"
                   : isOtherHovered
                   ? "scale-[0.96] z-0 opacity-40 grayscale-[15%]"
-                  : "scale-100 z-10 opacity-100 shadow-sm"
+                  : "scale-100 z-10 opacity-100 shadow-none"
               }`}
             >
               <video
