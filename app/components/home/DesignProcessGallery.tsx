@@ -84,44 +84,44 @@ export default function DesignProcessGallery() {
 
       // Set initial states
       gsap.set(line, { scaleX: 0, transformOrigin: "center center", opacity: 0 })
-      gsap.set(cards, { y: 80, opacity: 0 })
+      gsap.set(cards, { y: 50, opacity: 0 })
 
-      // Pinned Scroll-Controlled Timeline
+      // Pinned Scroll-Controlled Timeline (Tight & Immediate Response)
       masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top",
-          end: "+=2400",
+          start: "top 40px",
+          end: "+=1200",
           pin: true,
           pinSpacing: true,
-          scrub: 0.8,
+          scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       })
 
-      // Stage 0: Header animation
+      // Stage 0: Header animation (0.0s to 0.5s)
       masterTl
-        .to(design, { x: designFinalX, duration: 0.8, ease: "power2.out" }, 0)
-        .to(line, { scaleX: 1, opacity: 1, duration: 0.8, ease: "power2.out" }, 0)
-        .to(process, { x: processFinalX, duration: 0.8, ease: "power2.out" }, 0)
+        .to(design, { x: designFinalX, duration: 0.5, ease: "power2.out" }, 0)
+        .to(line, { scaleX: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, 0)
+        .to(process, { x: processFinalX, duration: 0.5, ease: "power2.out" }, 0)
 
-      // Stage 1-4: Sequential card assembly (01 Research -> 02 Strategy -> 03 Design -> 04 Build)
+      // Stage 1-4: Immediate sequential card assembly (01 Research -> 02 Strategy -> 03 Design -> 04 Build)
       cards.forEach((card, i) => {
         masterTl.to(
           card,
           {
             y: 0,
             opacity: 1,
-            duration: 1,
+            duration: 0.9,
             ease: "power2.out",
           },
-          1 + i * 1.15 // Ensures each card settles completely before next card starts
+          0.1 + i * 0.95 // Card 01 starts immediately at 0.1s! Zero dead whitespace.
         )
       })
 
-      // Hold full grid briefly before section unpins
-      masterTl.to({}, { duration: 0.6 })
+      // Brief hold after 04 Build settles before section unpins cleanly
+      masterTl.to({}, { duration: 0.3 })
     }
 
     document.fonts.ready.then(() => requestAnimationFrame(setupPinAnimation))
@@ -137,7 +137,7 @@ export default function DesignProcessGallery() {
   return (
     <div
       ref={sectionRef}
-      className="w-full min-h-screen flex flex-col justify-center py-10 md:py-16 overflow-hidden bg-white"
+      className="w-full pt-8 pb-14 md:pt-12 md:pb-16 overflow-hidden bg-white"
     >
       {/* ── Section Header ── */}
       <div ref={headerRef} className="px-6 md:px-10 pb-6 md:pb-10 overflow-hidden">
