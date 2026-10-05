@@ -119,8 +119,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Wide, Reduced Internal Padding & Geist Mono Step Numbers) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 -mx-6 md:-mx-28 lg:-mx-44 xl:-mx-56 px-2 md:px-0 mt-6">
+      {/* ── 3 Cards Grid Layout (Matching Work Card Width on Mobile, Wide Breakout on Desktop) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
