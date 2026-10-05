@@ -34,36 +34,50 @@ const processSteps = [
   },
 ]
 
+// Gap between cards in px — keep in sync with the gap-5 (20px) class below
+const CARD_GAP = 20
+
 export default function DesignProcessGallery() {
-  const headerRef = useRef<HTMLDivElement>(null)
-  const designEl = useRef<HTMLHeadingElement>(null)
-  const processEl = useRef<HTMLHeadingElement>(null)
-  const lineEl = useRef<HTMLDivElement>(null)
+  const sectionRef    = useRef<HTMLDivElement>(null)
+  const headerRef     = useRef<HTMLDivElement>(null)
+  const designEl      = useRef<HTMLHeadingElement>(null)
+  const processEl     = useRef<HTMLHeadingElement>(null)
+  const lineEl        = useRef<HTMLDivElement>(null)
+  const viewportRef   = useRef<HTMLDivElement>(null)   // clipping window
+  const trackRef      = useRef<HTMLDivElement>(null)   // scrolling flex row
 
   useEffect(() => {
-    const header = headerRef.current
-    const design = designEl.current
-    const process = processEl.current
-    const line = lineEl.current
-    if (!header || !design || !process || !line) return
+    const section   = sectionRef.current
+    const header    = headerRef.current
+    const design    = designEl.current
+    const process   = processEl.current
+    const line      = lineEl.current
+    const viewport  = viewportRef.current
+    const track     = trackRef.current
+    if (!section || !header || !design || !process || !line || !viewport || !track) return
 
-    let tl: gsap.core.Timeline
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    if (prefersReducedMotion) {
+      gsap.set(line, { scaleX: 1, opacity: 1 })
+      return
+    }
+
+    let headerTl  : gsap.core.Timeline
+    let carouselST: ScrollTrigger
 
     const setup = () => {
-      const cRect = header.getBoundingClientRect()
-      const dRect = design.getBoundingClientRect()
-      const pRect = process.getBoundingClientRect()
-
-      const paddingX = parseFloat(window.getComputedStyle(header).paddingLeft)
-      const contentLeft = cRect.left + paddingX
-      const contentRight = cRect.right - paddingX
-
-      const designFinalX = contentLeft - dRect.left
-      const processFinalX = contentRight - pRect.width - pRect.left
+      // ── 1. Header split animation (fires before pin takes over) ──────────
+      const cRect    = header.getBoundingClientRect()
+      const dRect    = design.getBoundingClientRect()
+      const pRect    = process.getBoundingClientRect()
+      const padX     = parseFloat(window.getComputedStyle(header).paddingLeft)
+      const cLeft    = cRect.left + padX
+      const cRight   = cRect.right - padX
 
       gsap.set(line, { scaleX: 0, transformOrigin: "center center", opacity: 0 })
 
-      tl = gsap.timeline({
+      headerTl = gsap.timeline({
         defaults: { duration: 1.1, ease: "power3.inOut" },
         scrollTrigger: {
           trigger: header,
@@ -72,20 +86,67 @@ export default function DesignProcessGallery() {
         },
       })
 
-      tl.to(design, { x: designFinalX }, 0)
-        .to(line, { scaleX: 1, opacity: 1, ease: "power2.inOut" }, 0)
-        .to(process, { x: processFinalX }, 0)
+      headerTl
+        .to(design,  { x: cLeft  - dRect.left }, 0)
+        .to(line,    { scaleX: 1, opacity: 1, ease: "power2.inOut" }, 0)
+        .to(process, { x: cRight - pRect.width - pRect.left }, 0)
+
+      // ── 2. Horizontal carousel — pin + scrub ─────────────────────────────
+      //
+      // Each card is exactly half the viewport wide (minus half the gap),
+      // so 2 cards sit side-by-side inside the clipping viewport.
+      //
+      // Total track shift:  (numCards − 2) × (cardW + gap)
+      //   = 1 × (cardW + gap)          ← Research exits left, Build enters right
+      //
+      // We want Build to be *completely* in view at 100% scroll progress,
+      // which the GSAP scrub handles automatically.
+
+      const vw      = viewport.offsetWidth
+      const cardW   = (vw - CARD_GAP) / 2       // exactly 2 cards fit in viewport
+      const shift   = (processSteps.length - 2) * (cardW + CARD_GAP)
+      // 3 cards − 2 visible = 1 card-width shift total
+
+      // Reset track position
+      gsap.set(track, { x: 0 })
+
+      // The animation: track slides left by `shift` pixels
+      const carouselTl = gsap.timeline()
+      carouselTl.to(track, {
+        x: -shift,
+        ease: "none",   // linear — scroll progress IS the easing
+        duration: 1,
+      })
+
+      // Pin section; drive carouselTl with scroll
+      carouselST = ScrollTrigger.create({
+        trigger     : section,
+        start       : "top top",
+        // Give 1× viewport-height of scroll distance to traverse the full shift.
+        // Feels deliberate without being tedious.
+        end         : `+=${vw}`,
+        pin         : true,
+        pinSpacing  : true,
+        scrub       : 0.6,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        animation   : carouselTl,
+      })
     }
 
     document.fonts.ready.then(() => requestAnimationFrame(setup))
 
     return () => {
-      tl?.kill()
+      headerTl?.kill()
+      carouselST?.kill()
     }
   }, [])
 
   return (
-    <div className="mt-20 md:mt-28">
+    <div
+      ref={sectionRef}
+      className="mt-20 md:mt-28 bg-white overflow-hidden"
+    >
       {/* ── Section Header ── */}
       <div ref={headerRef} className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
         <div className="relative">
@@ -119,57 +180,77 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Matching Work Card Width on Mobile, Wide Breakout on Desktop) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
-        {processSteps.map((item) => {
-          const Illustration = item.Illustration
+      {/* ── Carousel Viewport: clips overflow so only 2 cards show at a time ── */}
+      <div
+        ref={viewportRef}
+        className="w-full overflow-hidden"
+      >
+        {/* ── Card Track: all 3 cards in one horizontal flex row ── */}
+        <div
+          ref={trackRef}
+          className="flex flex-row will-change-transform"
+          style={{ gap: `${CARD_GAP}px` }}
+        >
+          {processSteps.map((item) => {
+            const Illustration = item.Illustration
 
-          return (
-            <div
-              key={item.step}
-              className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
-            >
-              {/* Top Header Bar with Dot Indicator */}
-              <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
-                {Array.from({ length: item.dots }).map((_, i) => (
-                  <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
-                ))}
-              </div>
+            return (
+              <div
+                key={item.step}
+                className={[
+                  // Each card is exactly 50% of the viewport width minus half the gap,
+                  // so 2 cards sit flush inside the clipping viewport at any time.
+                  "w-[calc(50vw-10px)]",
+                  "shrink-0",
+                  "group relative bg-white border border-gray-300 rounded-none",
+                  "flex flex-col justify-between overflow-hidden",
+                  "transition-colors duration-300 hover:border-gray-500 hover:shadow-md",
+                ].join(" ")}
+              >
+                {/* Top Header Bar with Dot Indicator */}
+                <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px] shrink-0">
+                  {Array.from({ length: item.dots }).map((_, i) => (
+                    <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
+                  ))}
+                </div>
 
-              {/* Card Main Body Content (Reduced Horizontal Padding for Max Text Span) */}
-              <div className="px-3 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
-                {/* Text Information Stack */}
-                <div className="w-full">
-                  {/* Step Number in Geist Mono (Regular Weight) */}
-                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-normal mb-2 tracking-tight`}>
-                    {item.step}
+                {/* Card Body */}
+                <div className="px-3 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
+                  <div className="w-full">
+                    {/* Step number */}
+                    <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-normal mb-2 tracking-tight`}>
+                      {item.step}
+                    </div>
+
+                    {/* Title */}
+                    <h3
+                      className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
+                      style={{ fontFamily: "FunnelDisplay, sans-serif" }}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {/* Body copy */}
+                    <p
+                      className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-1.5 w-full max-w-none"
+                      style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
+                    >
+                      {item.copy}
+                    </p>
                   </div>
 
-                  {/* Heading in Funnel Display */}
-                  <h3
-                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
-                    style={{ fontFamily: "FunnelDisplay, sans-serif" }}
-                  >
-                    {item.title}
-                  </h3>
-
-                  {/* Body Copy in Funnel Display (unconstrained full width) */}
-                  <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-1.5 w-full max-w-none"
-                    style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
-                  >
-                    {item.copy}
-                  </p>
-                </div>
-
-                {/* Hairline Illustration closely aligned & flush to bottom */}
-                <div className="w-full flex justify-center items-center pt-0 pb-0 mt-1">
-                  <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
+                  {/* Hairline Illustration — native pointer interaction preserved */}
+                  <div className="w-full flex justify-center items-center pt-0 pb-0 mt-1">
+                    <Illustration
+                      className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]"
+                      theme="light"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </div>
   )
