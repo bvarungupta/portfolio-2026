@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Riffle, Turntable, Laptop } from "@lucasmarkes/hairline/react"
+import { Riffle, Turntable, Laptop, Terminal } from "@lucasmarkes/hairline/react"
 import { Geist_Mono } from "next/font/google"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -31,6 +31,13 @@ const processSteps = [
     title: "Design",
     copy: "With the direction clear, I move into design. I explore concepts, structure the experience, and refine the visual system across typography, color, components, and interaction, taking everything through high-fidelity design, prototyping, and developer handoff.",
     Illustration: Laptop,
+  },
+  {
+    step: "04",
+    dots: 4,
+    title: "Build",
+    copy: "I take the final designs into production, working closely with developers through implementation, QA, and launch. I handle the handoff, resolve edge cases, and make sure the finished product stays true to the design while working as it should.",
+    Illustration: Terminal,
   },
 ]
 
@@ -119,8 +126,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Matching Work Card Width on Mobile, Wide Breakout on Desktop) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
+      {/* ── 4 Cards Grid Layout (Matching Work Card Width on Mobile, 4-Column Breakout on Desktop) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
