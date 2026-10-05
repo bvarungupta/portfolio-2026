@@ -159,11 +159,11 @@ export default function MotionDesignGallery() {
         `}</style>
 
         {/* Row 1 Auto Moving Left */}
-        <div className="flex gap-2.5 py-1" style={{ animation: "autoMarqueeLeft 24s linear infinite" }}>
+        <div className="flex gap-2 py-1" style={{ animation: "autoMarqueeLeft 22s linear infinite", willChange: "transform" }}>
           {[...motionItems.slice(0, 3), ...motionItems.slice(0, 3), ...motionItems.slice(0, 3)].map((item, idx) => (
             <div
               key={`m-r1-${item.id}-${idx}`}
-              className={`relative w-[58vw] sm:w-[38vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+              className={`relative w-[calc(50vw-12px)] sm:w-[calc(50vw-16px)] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
             >
               <video
                 src={item.video}
@@ -179,11 +179,11 @@ export default function MotionDesignGallery() {
         </div>
 
         {/* Row 2 Auto Moving Right */}
-        <div className="flex gap-2.5 py-1" style={{ animation: "autoMarqueeRight 24s linear infinite" }}>
+        <div className="flex gap-2 py-1" style={{ animation: "autoMarqueeRight 22s linear infinite", willChange: "transform" }}>
           {[...motionItems.slice(3, 6), ...motionItems.slice(3, 6), ...motionItems.slice(3, 6)].map((item, idx) => (
             <div
               key={`m-r2-${item.id}-${idx}`}
-              className={`relative w-[58vw] sm:w-[38vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+              className={`relative w-[calc(50vw-12px)] sm:w-[calc(50vw-16px)] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
             >
               <video
                 src={item.video}
