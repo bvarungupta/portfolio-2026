@@ -125,12 +125,12 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* 3x2 Video Grid (2 columns, 3 rows) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-2 md:px-4">
+      {/* 2x3 Video Grid (3 columns, 2 rows) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 px-2 md:px-4">
         {motionItems.map((item) => (
           <div
             key={item.id}
-            className={`relative rounded-none overflow-hidden bg-white border border-white transition-transform duration-500 scale-[1.025] hover:scale-[1.045] hover:z-10 ${UNIFORM_ASPECT_RATIO}`}
+            className={`relative rounded-none overflow-hidden bg-white border border-white transition-transform duration-500 hover:scale-[1.035] hover:z-10 ${UNIFORM_ASPECT_RATIO}`}
           >
             <video
               src={item.video}
