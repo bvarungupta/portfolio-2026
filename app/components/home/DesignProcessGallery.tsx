@@ -130,14 +130,14 @@ export default function DesignProcessGallery() {
               className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
               {/* Top Header Bar with Dot Indicator */}
-              <div className="px-4 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
+              <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
                 {Array.from({ length: item.dots }).map((_, i) => (
                   <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
                 ))}
               </div>
 
               {/* Card Main Body Content (Reduced Horizontal Padding for Max Text Span) */}
-              <div className="px-4 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
+              <div className="px-3 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono (Regular Weight) */}
