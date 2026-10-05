@@ -42,6 +42,7 @@ const processSteps = [
 ]
 
 export default function DesignProcessGallery() {
+  const sectionRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const designEl = useRef<HTMLHeadingElement>(null)
   const processEl = useRef<HTMLHeadingElement>(null)
@@ -50,19 +51,26 @@ export default function DesignProcessGallery() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
+    const section = sectionRef.current
     const header = headerRef.current
     const design = designEl.current
     const process = processEl.current
     const line = lineEl.current
     const grid = gridContainerRef.current
     const cards = cardsRef.current.filter(Boolean)
-    if (!header || !design || !process || !line || !grid || cards.length !== 4) return
+    if (!section || !header || !design || !process || !line || !grid || cards.length !== 4) return
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    let headerTl: gsap.core.Timeline
+    if (prefersReducedMotion) {
+      gsap.set(cards, { y: 0, opacity: 1 })
+      gsap.set(line, { scaleX: 1, opacity: 1 })
+      return
+    }
 
-    const setupHeader = () => {
+    let masterTl: gsap.core.Timeline
+
+    const setupPinAnimation = () => {
       const cRect = header.getBoundingClientRect()
       const dRect = design.getBoundingClientRect()
       const pRect = process.getBoundingClientRect()
@@ -74,97 +82,65 @@ export default function DesignProcessGallery() {
       const designFinalX = contentLeft - dRect.left
       const processFinalX = contentRight - pRect.width - pRect.left
 
+      // Set initial states
       gsap.set(line, { scaleX: 0, transformOrigin: "center center", opacity: 0 })
+      gsap.set(cards, { y: 80, opacity: 0 })
 
-      headerTl = gsap.timeline({
-        defaults: { duration: 1.1, ease: "power3.inOut" },
+      // Pinned Scroll-Controlled Timeline
+      masterTl = gsap.timeline({
         scrollTrigger: {
-          trigger: header,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
+          trigger: section,
+          start: "top top",
+          end: "+=2400",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       })
 
-      headerTl.to(design, { x: designFinalX }, 0)
-        .to(line, { scaleX: 1, opacity: 1, ease: "power2.inOut" }, 0)
-        .to(process, { x: processFinalX }, 0)
+      // Stage 0: Header animation
+      masterTl
+        .to(design, { x: designFinalX, duration: 0.8, ease: "power2.out" }, 0)
+        .to(line, { scaleX: 1, opacity: 1, duration: 0.8, ease: "power2.out" }, 0)
+        .to(process, { x: processFinalX, duration: 0.8, ease: "power2.out" }, 0)
+
+      // Stage 1-4: Sequential card assembly (01 Research -> 02 Strategy -> 03 Design -> 04 Build)
+      cards.forEach((card, i) => {
+        masterTl.to(
+          card,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+          },
+          1 + i * 1.15 // Ensures each card settles completely before next card starts
+        )
+      })
+
+      // Hold full grid briefly before section unpins
+      masterTl.to({}, { duration: 0.6 })
     }
 
-    document.fonts.ready.then(() => requestAnimationFrame(setupHeader))
-
-    if (prefersReducedMotion) {
-      gsap.set(cards, { y: 0, opacity: 1 })
-      return () => {
-        headerTl?.kill()
-      }
-    }
-
-    const mm = gsap.matchMedia()
-
-    mm.add(
-      {
-        isDesktop: "(min-width: 768px)",
-        isMobile: "(max-width: 767px)",
-      },
-      (context) => {
-        const { isDesktop } = context.conditions!
-
-        if (isDesktop) {
-          // Set initial state: cards hidden 70px below
-          gsap.set(cards, { y: 70, opacity: 0 })
-
-          // Scrubbed timeline for sequential card reveal
-          const cardsTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: grid,
-              start: "top 78%",
-              end: "bottom 65%",
-              scrub: 0.6,
-              invalidateOnRefresh: true,
-            },
-          })
-
-          // Reveal one card at a time in exact order: 01 Research -> 02 Strategy -> 03 Design -> 04 Build
-          cards.forEach((card) => {
-            cardsTl.to(card, {
-              y: 0,
-              opacity: 1,
-              ease: "power2.out",
-              duration: 1,
-            })
-          })
-        } else {
-          // Mobile: single column, each card enters upward as user approaches it
-          cards.forEach((card) => {
-            gsap.set(card, { y: 60, opacity: 0 })
-
-            gsap.to(card, {
-              y: 0,
-              opacity: 1,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 88%",
-                end: "top 62%",
-                scrub: 0.6,
-                invalidateOnRefresh: true,
-              },
-            })
-          })
-        }
-      }
-    )
+    document.fonts.ready.then(() => requestAnimationFrame(setupPinAnimation))
 
     return () => {
-      headerTl?.kill()
-      mm.revert()
+      masterTl?.kill()
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.trigger === section) st.kill()
+      })
     }
   }, [])
 
   return (
-    <div className="mt-20 md:mt-28">
+    <div
+      ref={sectionRef}
+      className="w-full min-h-screen flex flex-col justify-center py-10 md:py-16 overflow-hidden bg-white"
+    >
       {/* ── Section Header ── */}
-      <div ref={headerRef} className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
+      <div ref={headerRef} className="px-6 md:px-10 pb-6 md:pb-10 overflow-hidden">
         <div className="relative">
           <div
             ref={lineEl}
@@ -196,10 +172,10 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 4 Cards 2x2 Grid Layout (Scroll-Driven Sequential Reveal) ── */}
+      {/* ── 4 Cards 2x2 Grid Layout (Pinned Scroll-Controlled Sequential Reveal) ── */}
       <div
         ref={gridContainerRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mx-0 md:max-w-5xl md:mx-auto px-0 mt-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mx-0 md:max-w-5xl md:mx-auto px-4 md:px-0 mt-4 md:mt-6 w-full"
       >
         {processSteps.map((item, index) => {
           const Illustration = item.Illustration
@@ -220,7 +196,7 @@ export default function DesignProcessGallery() {
               </div>
 
               {/* Card Main Body Content (Tight Padding & Reduced Negative Space) */}
-              <div className="px-4 pt-4 pb-0 md:px-5 md:pt-4.5 md:pb-0 flex flex-col justify-between flex-1">
+              <div className="px-4 pt-3.5 pb-0 md:px-5 md:pt-4.5 md:pb-0 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono (Regular Weight) */}
@@ -247,7 +223,7 @@ export default function DesignProcessGallery() {
 
                 {/* Hairline Illustration tight to content & flush against bottom edge */}
                 <div className="w-full flex justify-center items-end pt-0 pb-0 mt-1 md:mt-2 -mb-1 md:-mb-2 shrink-0">
-                  <Illustration className="w-full max-w-[240px] sm:max-w-[260px] md:max-w-[290px] aspect-[4/3]" theme="light" />
+                  <Illustration className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[290px] aspect-[4/3]" theme="light" />
                 </div>
               </div>
             </div>
