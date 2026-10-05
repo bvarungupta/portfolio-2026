@@ -46,17 +46,23 @@ export default function DesignProcessGallery() {
   const designEl = useRef<HTMLHeadingElement>(null)
   const processEl = useRef<HTMLHeadingElement>(null)
   const lineEl = useRef<HTMLDivElement>(null)
+  const gridContainerRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const header = headerRef.current
     const design = designEl.current
     const process = processEl.current
     const line = lineEl.current
-    if (!header || !design || !process || !line) return
+    const grid = gridContainerRef.current
+    const cards = cardsRef.current.filter(Boolean)
+    if (!header || !design || !process || !line || !grid || cards.length !== 4) return
 
-    let tl: gsap.core.Timeline
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    const setup = () => {
+    let headerTl: gsap.core.Timeline
+
+    const setupHeader = () => {
       const cRect = header.getBoundingClientRect()
       const dRect = design.getBoundingClientRect()
       const pRect = process.getBoundingClientRect()
@@ -70,7 +76,7 @@ export default function DesignProcessGallery() {
 
       gsap.set(line, { scaleX: 0, transformOrigin: "center center", opacity: 0 })
 
-      tl = gsap.timeline({
+      headerTl = gsap.timeline({
         defaults: { duration: 1.1, ease: "power3.inOut" },
         scrollTrigger: {
           trigger: header,
@@ -79,15 +85,79 @@ export default function DesignProcessGallery() {
         },
       })
 
-      tl.to(design, { x: designFinalX }, 0)
+      headerTl.to(design, { x: designFinalX }, 0)
         .to(line, { scaleX: 1, opacity: 1, ease: "power2.inOut" }, 0)
         .to(process, { x: processFinalX }, 0)
     }
 
-    document.fonts.ready.then(() => requestAnimationFrame(setup))
+    document.fonts.ready.then(() => requestAnimationFrame(setupHeader))
+
+    if (prefersReducedMotion) {
+      gsap.set(cards, { y: 0, opacity: 1 })
+      return () => {
+        headerTl?.kill()
+      }
+    }
+
+    const mm = gsap.matchMedia()
+
+    mm.add(
+      {
+        isDesktop: "(min-width: 768px)",
+        isMobile: "(max-width: 767px)",
+      },
+      (context) => {
+        const { isDesktop } = context.conditions!
+
+        if (isDesktop) {
+          // Set initial state: cards hidden 70px below
+          gsap.set(cards, { y: 70, opacity: 0 })
+
+          // Scrubbed timeline for sequential card reveal
+          const cardsTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: grid,
+              start: "top 78%",
+              end: "bottom 65%",
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          })
+
+          // Reveal one card at a time in exact order: 01 Research -> 02 Strategy -> 03 Design -> 04 Build
+          cards.forEach((card) => {
+            cardsTl.to(card, {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              duration: 1,
+            })
+          })
+        } else {
+          // Mobile: single column, each card enters upward as user approaches it
+          cards.forEach((card) => {
+            gsap.set(card, { y: 60, opacity: 0 })
+
+            gsap.to(card, {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                end: "top 62%",
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+              },
+            })
+          })
+        }
+      }
+    )
 
     return () => {
-      tl?.kill()
+      headerTl?.kill()
+      mm.revert()
     }
   }, [])
 
@@ -126,14 +196,20 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 4 Cards 2x2 Grid Layout (Tighter Layout, Reduced Gaps & Restored Illustration Scale) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mx-0 md:max-w-5xl md:mx-auto px-0 mt-6">
-        {processSteps.map((item) => {
+      {/* ── 4 Cards 2x2 Grid Layout (Scroll-Driven Sequential Reveal) ── */}
+      <div
+        ref={gridContainerRef}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mx-0 md:max-w-5xl md:mx-auto px-0 mt-6"
+      >
+        {processSteps.map((item, index) => {
           const Illustration = item.Illustration
 
           return (
             <div
               key={item.step}
+              ref={(el) => {
+                cardsRef.current[index] = el
+              }}
               className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
               {/* Top Header Bar with Dot Indicator */}
