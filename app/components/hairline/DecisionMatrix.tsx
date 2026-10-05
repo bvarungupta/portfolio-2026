@@ -8,7 +8,7 @@ const HL = HLModule as any
 
 const {
   Cam, facing, fit, open, proj, rings,
-  tval, tween, tset, tdone, disposer, mk, pointer, put, register, solid, prism,
+  tval, tween, tset, tdone, mk, pointer, put, register, solid, prism,
 } = HL
 
 const N = 9, W = 22, H = 10
@@ -34,11 +34,25 @@ export interface HairlineProps extends React.ComponentPropsWithoutRef<"div"> {
   onRead?: (text: string) => void
 }
 
+function createDisposer() {
+  let fns: (() => void)[] = []
+  return {
+    add: (fn: () => void) => {
+      fns.push(fn)
+    },
+    dispose: () => {
+      const run = fns
+      fns = []
+      for (let i = run.length - 1; i >= 0; i--) run[i]()
+    },
+  }
+}
+
 function mountDecisionMatrix(
   host: HTMLDivElement,
   options: { intensity?: number; theme?: string; label?: string; onRead?: (t: string) => void }
 ) {
-  const bag = disposer()
+  const bag = createDisposer()
   let stag = (options.intensity ?? 0.5) * 40
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
