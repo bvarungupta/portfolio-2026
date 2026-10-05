@@ -145,19 +145,45 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* ── Mobile View: Horizontal Scroll Carousel with Soft Blurred Edge Fade (md:hidden) ── */}
-      <div className="relative block md:hidden mt-4">
-        {/* Left Soft Blur Mask */}
-        <div className="absolute top-0 bottom-0 left-0 w-8 z-20 pointer-events-none bg-gradient-to-r from-white via-white/80 to-transparent backdrop-blur-[1.5px]" />
-        {/* Right Soft Blur Mask */}
-        <div className="absolute top-0 bottom-0 right-0 w-8 z-20 pointer-events-none bg-gradient-to-l from-white via-white/80 to-transparent backdrop-blur-[1.5px]" />
+      {/* ── Mobile View: 2-Row Auto-Moving Carousel (md:hidden) ── */}
+      <div className="relative block md:hidden mt-4 overflow-hidden w-full select-none">
+        <style>{`
+          @keyframes autoMarqueeLeft {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-33.3333%, 0, 0); }
+          }
+          @keyframes autoMarqueeRight {
+            0% { transform: translate3d(-33.3333%, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+          }
+        `}</style>
 
-        {/* Carousel Track */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 px-6 py-2 scrollbar-none">
-          {motionItems.map((item) => (
+        {/* Row 1 Auto Moving Left */}
+        <div className="flex gap-2.5 py-1" style={{ animation: "autoMarqueeLeft 24s linear infinite" }}>
+          {[...motionItems.slice(0, 3), ...motionItems.slice(0, 3), ...motionItems.slice(0, 3)].map((item, idx) => (
             <div
-              key={`mobile-${item.id}`}
-              className={`relative w-[75vw] sm:w-[48vw] shrink-0 snap-center rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+              key={`m-r1-${item.id}-${idx}`}
+              className={`relative w-[58vw] sm:w-[38vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+            >
+              <video
+                src={item.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover pointer-events-none select-none bg-white"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Row 2 Auto Moving Right */}
+        <div className="flex gap-2.5 py-1" style={{ animation: "autoMarqueeRight 24s linear infinite" }}>
+          {[...motionItems.slice(3, 6), ...motionItems.slice(3, 6), ...motionItems.slice(3, 6)].map((item, idx) => (
+            <div
+              key={`m-r2-${item.id}-${idx}`}
+              className={`relative w-[58vw] sm:w-[38vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
             >
               <video
                 src={item.video}
