@@ -40,6 +40,108 @@ const motionItems: MotionItem[] = [
   },
 ]
 
+function TouchAutoCarousel({
+  items,
+  direction = "left",
+  speed = 0.6,
+  cardWidthClass = "w-[51vw] sm:w-[36vw]",
+}: {
+  items: MotionItem[]
+  direction?: "left" | "right"
+  speed?: number
+  cardWidthClass?: string
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isInteractingRef = useRef(false)
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const quadItems = [...items, ...items, ...items, ...items]
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    let animationFrameId: number
+
+    const tick = () => {
+      if (el && !isInteractingRef.current) {
+        const oneSetWidth = el.scrollWidth / 4
+        if (direction === "left") {
+          el.scrollLeft += speed
+          if (el.scrollLeft >= oneSetWidth * 2) {
+            el.scrollLeft -= oneSetWidth
+          }
+        } else {
+          el.scrollLeft -= speed
+          if (el.scrollLeft <= oneSetWidth) {
+            el.scrollLeft += oneSetWidth
+          }
+        }
+      }
+      animationFrameId = requestAnimationFrame(tick)
+    }
+
+    requestAnimationFrame(() => {
+      if (el) {
+        const oneSetWidth = el.scrollWidth / 4
+        if (direction === "right" && el.scrollLeft === 0) {
+          el.scrollLeft = oneSetWidth * 2
+        }
+      }
+    })
+
+    animationFrameId = requestAnimationFrame(tick)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [direction, speed])
+
+  const handleTouchStart = () => {
+    isInteractingRef.current = true
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+  }
+
+  const handleTouchEnd = () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false
+    }, 1200)
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      onMouseDown={handleTouchStart}
+      onMouseUp={handleTouchEnd}
+      className="flex gap-2 py-1 overflow-x-auto no-scrollbar select-none touch-pan-x"
+      style={{
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      {quadItems.map((item, idx) => (
+        <div
+          key={`tc-${direction}-${item.id}-${idx}`}
+          className={`relative ${cardWidthClass} shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
+        >
+          <video
+            src={item.video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover pointer-events-none select-none bg-white"
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function MotionDesignGallery() {
   const headerRef = useRef<HTMLDivElement>(null)
   const motionEl = useRef<HTMLHeadingElement>(null)
@@ -145,57 +247,29 @@ export default function MotionDesignGallery() {
         </p>
       </div>
 
-      {/* ── Mobile View: 2-Row Auto-Moving Carousel (md:hidden) ── */}
+      {/* ── Mobile View: Touch-Slideable + Auto-Moving Carousel (md:hidden) ── */}
       <div className="relative block md:hidden mt-4 overflow-hidden -mx-6 select-none">
         <style>{`
-          @keyframes autoMarqueeLeft {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-33.3333%, 0, 0); }
-          }
-          @keyframes autoMarqueeRight {
-            0% { transform: translate3d(-33.3333%, 0, 0); }
-            100% { transform: translate3d(0, 0, 0); }
-          }
+          .no-scrollbar::-webkit-scrollbar { display: none; }
+          .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
 
-        {/* Row 1 Auto Moving Left */}
-        <div className="flex gap-2.5 py-1.5" style={{ animation: "autoMarqueeLeft 24s linear infinite", willChange: "transform" }}>
-          {[...motionItems.slice(0, 3), ...motionItems.slice(0, 3), ...motionItems.slice(0, 3)].map((item, idx) => (
-            <div
-              key={`m-r1-${item.id}-${idx}`}
-              className={`relative w-[68vw] sm:w-[48vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
-            >
-              <video
-                src={item.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover pointer-events-none select-none bg-white"
-              />
-            </div>
-          ))}
-        </div>
+        {/* Row 1 Auto Moving Left + Touch Slideable */}
+        <TouchAutoCarousel
+          items={motionItems.slice(0, 3)}
+          direction="left"
+          speed={0.6}
+          cardWidthClass="w-[51vw] sm:w-[36vw]"
+        />
 
-        {/* Row 2 Auto Moving Right */}
-        <div className="flex gap-2.5 py-1.5" style={{ animation: "autoMarqueeRight 24s linear infinite", willChange: "transform" }}>
-          {[...motionItems.slice(3, 6), ...motionItems.slice(3, 6), ...motionItems.slice(3, 6)].map((item, idx) => (
-            <div
-              key={`m-r2-${item.id}-${idx}`}
-              className={`relative w-[68vw] sm:w-[48vw] shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
-            >
-              <video
-                src={item.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover pointer-events-none select-none bg-white"
-              />
-            </div>
-          ))}
+        {/* Row 2 Auto Moving Right + Touch Slideable */}
+        <div className="mt-2">
+          <TouchAutoCarousel
+            items={motionItems.slice(3, 6)}
+            direction="right"
+            speed={0.6}
+            cardWidthClass="w-[51vw] sm:w-[36vw]"
+          />
         </div>
       </div>
 
