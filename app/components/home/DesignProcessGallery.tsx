@@ -4,6 +4,9 @@ import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Riffle, Branches, Laptop } from "@lucasmarkes/hairline/react"
+import { Geist_Mono } from "next/font/google"
+
+const geistMono = Geist_Mono({ subsets: ["latin"] })
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -116,7 +119,7 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Wider & Tighter Horizontal Breakout) ── */}
+      {/* ── 3 Cards Grid Layout (Wide, Reduced Internal Padding & Geist Mono Step Numbers) ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 -mx-6 md:-mx-28 lg:-mx-44 xl:-mx-56 px-2 md:px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
@@ -127,18 +130,18 @@ export default function DesignProcessGallery() {
               className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
               {/* Top Header Bar with Dot Indicator */}
-              <div className="px-5 md:px-7 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
+              <div className="px-4 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
                 {Array.from({ length: item.dots }).map((_, i) => (
                   <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
                 ))}
               </div>
 
-              {/* Card Main Body Content (Tight Padding & No Bottom Gap) */}
-              <div className="px-5 py-5 md:px-7 md:py-6 flex flex-col justify-between flex-1">
+              {/* Card Main Body Content (Reduced Horizontal Padding for Max Text Span) */}
+              <div className="px-4 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
                 {/* Text Information Stack */}
                 <div className="w-full">
                   {/* Step Number in Geist Mono */}
-                  <div className="font-mono text-base md:text-lg text-gray-800 font-medium mb-2 tracking-tight">
+                  <div className={`${geistMono.className} text-base md:text-lg text-gray-800 font-medium mb-2 tracking-tight`}>
                     {item.step}
                   </div>
 
