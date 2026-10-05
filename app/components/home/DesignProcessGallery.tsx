@@ -3,8 +3,7 @@
 import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Riffle, Laptop } from "@lucasmarkes/hairline/react"
-import { DecisionMatrix } from "@/app/components/hairline/DecisionMatrix"
+import { Riffle, Turntable, Laptop } from "@lucasmarkes/hairline/react"
 import { Geist_Mono } from "next/font/google"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -24,7 +23,7 @@ const processSteps = [
     dots: 2,
     title: "Strategy",
     copy: "I turn what I’ve learned into a clear direction. Through stakeholder conversations, surveys, workshops, and product discovery, I define the goals, priorities, and experience principles so everyone is aligned before execution begins.",
-    Illustration: DecisionMatrix,
+    Illustration: Turntable,
   },
   {
     step: "03",
