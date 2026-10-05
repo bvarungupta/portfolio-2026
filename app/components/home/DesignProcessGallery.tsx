@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Riffle, Turntable, Laptop } from "@lucasmarkes/hairline/react"
+import { Riffle, Laptop, Terminal } from "@lucasmarkes/hairline/react"
 import { Geist_Mono } from "next/font/google"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -21,16 +21,16 @@ const processSteps = [
   {
     step: "02",
     dots: 2,
-    title: "Strategy",
-    copy: "I turn what I’ve learned into a clear direction. Through stakeholder conversations, surveys, workshops, and product discovery, I define the goals, priorities, and experience principles so everyone is aligned before execution begins.",
-    Illustration: Turntable,
+    title: "Design",
+    copy: "With the direction clear, I move into design. I explore concepts, structure the experience, and refine the visual system across typography, color, components, and interaction, taking everything through high-fidelity design, prototyping, and developer handoff.",
+    Illustration: Laptop,
   },
   {
     step: "03",
     dots: 3,
-    title: "Design",
-    copy: "With the direction clear, I move into design. I explore concepts, structure the experience, and refine the visual system across typography, color, components, and interaction, taking everything through high-fidelity design, prototyping, and developer handoff.",
-    Illustration: Laptop,
+    title: "Build",
+    copy: "I take the final designs into production, working closely with developers through implementation, QA, and launch. I handle the handoff, resolve edge cases, and make sure the finished product stays true to the design while working as it should.",
+    Illustration: Terminal,
   },
 ]
 
