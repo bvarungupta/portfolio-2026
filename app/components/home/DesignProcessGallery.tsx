@@ -133,14 +133,14 @@ export default function DesignProcessGallery() {
       </div>
 
       {/* ── 3 Cards Grid Layout ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 -mx-4 md:-mx-12 lg:-mx-16 px-2 md:px-4 mt-4">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
 
           return (
             <div
               key={item.step}
-              className="group relative bg-white border border-gray-200 p-6 md:p-7 rounded-none flex flex-col justify-between transition-all duration-300 hover:border-gray-400 hover:shadow-md"
+              className="group relative bg-white border border-gray-200 p-6 md:p-8 rounded-none flex flex-col justify-between transition-all duration-300 hover:border-gray-400 hover:shadow-md"
             >
               <PlusMark position="top-left" />
               <PlusMark position="top-right" />
@@ -168,9 +168,9 @@ export default function DesignProcessGallery() {
                 </p>
               </div>
 
-              {/* Interactive Hairline Illustration Container */}
-              <div className="w-full py-6 px-4 bg-gray-50/70 border border-gray-100 flex justify-center items-center transition-colors duration-300 group-hover:bg-gray-50 group-hover:border-gray-200 min-h-[180px]">
-                <Illustration className="w-full max-w-[220px] aspect-[4/3]" theme="light" />
+              {/* Interactive Hairline Illustration Container (Transparent Background) */}
+              <div className="w-full py-4 px-0 bg-transparent border-0 flex justify-center items-center min-h-[200px]">
+                <Illustration className="w-full max-w-[250px] aspect-[4/3]" theme="light" />
               </div>
             </div>
           )
