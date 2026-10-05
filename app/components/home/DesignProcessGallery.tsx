@@ -31,25 +31,6 @@ const processSteps = [
   },
 ]
 
-// Corner plus marker matching portfolio aesthetic
-const PlusMark = ({ position }: { position: "top-left" | "top-right" | "bottom-left" | "bottom-right" }) => {
-  const styles: Record<string, React.CSSProperties> = {
-    "top-left": { top: 0, left: 0, transform: "translate(-50%, -50%)" },
-    "top-right": { top: 0, right: 0, transform: "translate(50%, -50%)" },
-    "bottom-left": { bottom: 0, left: 0, transform: "translate(-50%, 50%)" },
-    "bottom-right": { bottom: 0, right: 0, transform: "translate(50%, 50%)" },
-  }
-
-  return (
-    <span
-      className="absolute select-none pointer-events-none text-[13px] leading-none text-gray-300 group-hover:text-gray-400 transition-colors duration-300 font-mono"
-      style={{ ...styles[position], zIndex: 10 }}
-    >
-      +
-    </span>
-  )
-}
-
 export default function DesignProcessGallery() {
   const headerRef = useRef<HTMLDivElement>(null)
   const designEl = useRef<HTMLHeadingElement>(null)
@@ -135,7 +116,7 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards Grid Layout (Substantially Wider & Fatter Horizontal Breakout) ── */}
+      {/* ── 3 Cards Grid Layout matching exact reference image ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 -mx-6 md:-mx-24 lg:-mx-36 xl:-mx-48 px-2 md:px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
@@ -143,47 +124,45 @@ export default function DesignProcessGallery() {
           return (
             <div
               key={item.step}
-              className="group relative bg-white border border-gray-200 p-6 md:p-8 rounded-none flex flex-col justify-between transition-all duration-300 hover:border-gray-400 hover:shadow-lg"
+              className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
             >
-              <PlusMark position="top-left" />
-              <PlusMark position="top-right" />
-              <PlusMark position="bottom-left" />
-              <PlusMark position="bottom-right" />
-
-              {/* Top Dot Indicator Bar */}
-              <div className="flex items-center gap-1.5 pb-3 mb-4 border-b border-gray-100">
+              {/* Top Header Bar with Dot Indicator */}
+              <div className="px-6 py-2.5 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[36px]">
                 {Array.from({ length: item.dots }).map((_, i) => (
-                  <span key={i} className="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block" />
+                  <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
                 ))}
               </div>
 
-              {/* Text Information Stack */}
-              <div className="w-full">
-                {/* Step Number in Geist Mono */}
-                <div className="font-mono text-sm md:text-base text-gray-800 font-medium mb-2 tracking-tight">
-                  {item.step}
+              {/* Card Main Body Content */}
+              <div className="p-6 md:p-8 flex flex-col justify-between flex-1">
+                {/* Text Information Stack */}
+                <div className="w-full">
+                  {/* Step Number in Geist Mono */}
+                  <div className="font-mono text-base md:text-lg text-gray-800 font-medium mb-3 tracking-tight">
+                    {item.step}
+                  </div>
+
+                  {/* Heading in Funnel Display */}
+                  <h3
+                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-3 md:mb-4"
+                    style={{ fontFamily: "FunnelDisplay, sans-serif" }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  {/* Body Copy in Funnel Display (unconstrained full width) */}
+                  <p
+                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-6 w-full max-w-none"
+                    style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
+                  >
+                    {item.copy}
+                  </p>
                 </div>
 
-                {/* Heading in Funnel Display */}
-                <h3
-                  className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2.5"
-                  style={{ fontFamily: "FunnelDisplay, sans-serif" }}
-                >
-                  {item.title}
-                </h3>
-
-                {/* Body Copy in Funnel Display (unconstrained full width) */}
-                <p
-                  className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-4 w-full max-w-none"
-                  style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
-                >
-                  {item.copy}
-                </p>
-              </div>
-
-              {/* Hairline Illustration (Proportional & Compact Height) */}
-              <div className="w-full flex justify-center items-center pt-2 pb-2 mt-auto">
-                <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
+                {/* Hairline Illustration at bottom */}
+                <div className="w-full flex justify-center items-center pt-4 pb-2 mt-auto">
+                  <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
+                </div>
               </div>
             </div>
           )
