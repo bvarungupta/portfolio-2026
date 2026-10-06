@@ -26,7 +26,7 @@ export default function HomePortfolio() {
         height={800}
         loading="eager"
         priority
-        className="fixed top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
+        className="absolute top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, left: "-70px" }}
       />
       <Image
@@ -35,7 +35,7 @@ export default function HomePortfolio() {
         alt=""
         width={120}
         height={800}
-        className="fixed top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
+        className="absolute top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, right: "-40px" }}
       />
 
