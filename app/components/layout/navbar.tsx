@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
+import { useColumnBlinds } from "./ColumnBlindsTransition"
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollToPlugin)
@@ -26,6 +27,7 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
+  const { navigateWithBlinds } = useColumnBlinds()
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
@@ -143,25 +145,7 @@ export default function Navbar() {
   }
 
   const navigateWithTransition = (href: string, callback?: () => void) => {
-    if (href === "/about" && window.playSpiralIn) {
-      window.playSpiralIn().then(() => {
-        router.push(href)
-        if (callback) callback()
-      })
-      return
-    }
-
-    // Page transition out
-    gsap.to("main", {
-      y: 50,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power2.inOut",
-      onComplete: () => {
-        router.push(href)
-        if (callback) callback()
-      }
-    })
+    navigateWithBlinds(href, callback)
   }
 
   const scrollToTop = () => {
@@ -235,22 +219,9 @@ export default function Navbar() {
   }
 
 
-  // Page transition in effect
+  // Route change reset
   useEffect(() => {
     setHoveredItem(null)
-    gsap.fromTo("main",
-      {
-        y: 50,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out",
-        delay: 0.1
-      }
-    )
   }, [pathname])
 
   return (

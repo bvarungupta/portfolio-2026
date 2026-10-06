@@ -200,7 +200,7 @@ export default function SkillRadius() {
           </div>
 
           {/* SR-01 — full-width cover */}
-          <div className="w-full border-b border-gray-200">
+          <div data-work-hero className="w-full border-b border-gray-200">
             <Image
               src="/images/WorkImages/skillradius/SR-01.png"
               alt="SkillRadius cover"

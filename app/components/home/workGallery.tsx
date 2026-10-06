@@ -2,10 +2,12 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { Reveal } from 'cube-motion/react'
 import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ViewMoreWorkSection from './ViewMoreWorkSection'
+import { useWorkTransition, hasMatchingHeroImage } from '@/app/components/layout/WorkSharedTransition'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,6 +17,7 @@ const works = [
     title: 'Jio Tesseract',
     description: "Designed the full landing page experience for India's first consumer MR glasses. End to end — from user research and moodboarding to final visual design and handoff.",
     image: '/images/WorkImages/jio/thumbnail.webp',
+    heroImage: '/images/WorkImages/jio/thumbnail.webp',
     href: '/works/jio',
     year: '2025',
     available: true,
@@ -26,6 +29,7 @@ const works = [
     title: 'Sol',
     description: "A premium health and fitness tracking app that reads your body's natural rhythms to tell you what to do, when to do it, and how hard to push.",
     image: '/images/WorkImages/Sol/thumb_short.png',
+    heroImage: '/images/WorkImages/Sol/main_thumb.png',
     href: '/works/sol',
     year: '2026',
     available: true,
@@ -37,6 +41,7 @@ const works = [
     title: 'Smart Nation',
     description: 'Brand, product, and motion design for a smart home IoT startup. 280+ units installed across 40+ spaces. Shipped in 3 months.',
     image: '/images/WorkImages/smartNationImages/SN-thumb.webp',
+    heroImage: '/images/WorkImages/smartNationImages/SNN.png',
     href: '/works/smartNation',
     year: '2025',
     available: true,
@@ -48,6 +53,7 @@ const works = [
     title: 'Blume Health',
     description: 'Designed V1 of a SaaS that puts solo physicians on 40+ patient platforms from one profile. $350+ MRR within weeks of launch. Shipped in 3 weeks.',
     image: '/images/WorkImages/blumeHealthImages/BM-thumnail.webp',
+    heroImage: '/images/WorkImages/blumeHealthImages/bh-01.png',
     href: '/works/blumeHealth',
     year: '2025',
     available: true,
@@ -59,6 +65,7 @@ const works = [
     title: 'SkinSage',
     description: 'Designed the full product for a personalised skincare app: skin assessment, dermatologist consultation, and AI routine builder. 73% day-7 retention.',
     image: '/images/WorkImages/skinSageImages/SS-thumnail-1.webp',
+    heroImage: '/images/WorkImages/skinSageImages/SS-01B.png',
     href: '/works/skinSage',
     year: '2025',
     available: true,
@@ -70,6 +77,7 @@ const works = [
     title: 'SkillRadius',
     description: 'Designed the full product for a job-skill learning platform: courses, video lessons, notes, quizzes, and dashboard. Zero to V1, end to end.',
     image: '/images/WorkImages/skillradius/SR-thumnail.webp',
+    heroImage: '/images/WorkImages/skillradius/SR-01.png',
     href: '/works/skillRadius',
     year: '2025',
     available: true,
@@ -102,6 +110,31 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
   const lineEl     = useRef<HTMLDivElement>(null)
   const branchContainerRef = useRef<HTMLDivElement>(null)
   const [hoveredCta, setHoveredCta] = useState<string | null>(null)
+  const { startWorkTransition } = useWorkTransition()
+
+  const handleWorkNavigate = (e: React.MouseEvent, work: typeof works[0], triggerEl: HTMLElement | null) => {
+    if (!work.available || !work.href) return
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+
+    // Condition: ONLY intercept for morph animation if thumbnail and destination hero cover image are identical!
+    const canMorph = hasMatchingHeroImage(work.href, work.image, work.heroImage)
+    if (!canMorph) {
+      // Normal instantaneous Next.js Link routing
+      return
+    }
+
+    e.preventDefault()
+
+    const card = triggerEl?.closest('[data-work-card]') as HTMLElement | null
+    const imgEl = card?.querySelector<HTMLElement>('[data-card-image]') || triggerEl
+    startWorkTransition({
+      imageSrc: work.image,
+      heroImageSrc: work.heroImage,
+      title: work.title,
+      targetHref: work.href,
+      sourceElement: imgEl,
+    })
+  }
 
   // Parallax + tilt for all branches via data attributes
   useEffect(() => {
@@ -246,13 +279,14 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
           style={{ width: 'auto', height: '390px', top: '85%', right: 'calc(50% - 50vw - 25px)', transform: 'translateY(0px) rotate(-18deg)', filter: 'brightness(0) opacity(0.10)' }}
         />
 
-      <div className="flex flex-col gap-10 md:gap-16">
+      <Reveal as="div" targets="children" stagger={200} className="flex flex-col gap-10 md:gap-16">
         {(() => {
           const displayWorks = featuredOnly ? works.filter(w => w.featured) : works
           return (limit ? displayWorks.slice(0, limit) : displayWorks)
         })().map((work) => (
           <div
             key={work.num}
+            data-work-card
             className="relative border border-gray-200 grid grid-cols-1 md:grid-cols-2"
           >
             {/* Corner plus markers */}
@@ -288,6 +322,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
                 {work.available && work.href && (
                   <Link
                     href={work.href}
+                    onClick={(e) => handleWorkNavigate(e, work, e.currentTarget)}
                     onMouseEnter={() => setHoveredCta(work.num)}
                     onMouseLeave={() => setHoveredCta(null)}
                     className="px-4 py-2 border text-xs shrink-0 flex items-center gap-2 transition-all duration-200"
@@ -310,7 +345,13 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
             </div>
 
             {/* Image — right on desktop, above info on mobile */}
-            <Link href={work.href ?? '#'} className="relative overflow-hidden order-1 md:order-2 aspect-square block bg-gray-100">
+            <Link
+              href={work.href ?? '#'}
+              data-card-image
+              data-cursor="view"
+              onClick={(e) => handleWorkNavigate(e, work, e.currentTarget)}
+              className="relative overflow-hidden order-1 md:order-2 aspect-square block bg-gray-100"
+            >
               {work.image && (
                 <Image
                   src={work.image}
@@ -333,7 +374,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
             </Link>
           </div>
         ))}
-      </div>
+      </Reveal>
 
       {showViewMore && (
         <div className="flex justify-center mt-6 md:mt-10">

@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import FavoritesShelf from "./FavoritesShelf";
 import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion";
+import { rise } from "cube-motion";
+import { Reveal, Morph } from "cube-motion/react";
 
 const companies: {
   src: string;
@@ -167,6 +169,35 @@ export default function About() {
   const [logoHovered, setLogoHovered] = useState(false);
   const [copied, setCopied] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const [transitionDone, setTransitionDone] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let triggered = false;
+    const onDone = () => {
+      if (triggered) return;
+      triggered = true;
+      setTransitionDone(true);
+    };
+
+    window.addEventListener("page-transition-complete", onDone);
+    window.addEventListener("preloader-complete", onDone);
+
+    // Fallback timer ensures hero is revealed even if navigating directly or if events were missed
+    const isInitialPreload = typeof window !== "undefined" && sessionStorage.getItem("portfolio-preloader-shown") !== "true";
+    const timer = setTimeout(onDone, isInitialPreload ? 2000 : 650);
+
+    return () => {
+      window.removeEventListener("page-transition-complete", onDone);
+      window.removeEventListener("preloader-complete", onDone);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!transitionDone || !heroRef.current) return;
+    rise(heroRef.current, { targets: "children", stagger: 140 });
+  }, [transitionDone]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText('bvarungupta@gmail.com');
@@ -248,8 +279,14 @@ export default function About() {
         </div>
 
         {/* ── Section 1: intro + photo ─────────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-end gap-10 md:gap-16 mb-10">
-          <div className="flex-1 order-2 md:order-1">
+        <div
+          ref={heroRef}
+          className="flex flex-col md:flex-row md:items-end gap-10 md:gap-16 mb-10"
+        >
+          <div
+            className="flex-1 order-2 md:order-1"
+            style={{ opacity: transitionDone ? 1 : 0 }}
+          >
             <p
               className="text-2xl md:text-3xl leading-snug text-gray-800 mb-6"
               style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
@@ -264,7 +301,10 @@ export default function About() {
 
           <div
             className="flex-shrink-0 flex justify-center md:justify-end md:pt-4 order-1 md:order-2"
-            style={{ position: "relative" }}
+            style={{
+              position: "relative",
+              opacity: transitionDone ? 1 : 0,
+            }}
             onMouseEnter={() => setImageHovered(true)}
             onMouseLeave={() => setImageHovered(false)}
             onClick={() => setLogoHovered(prev => !prev)}
@@ -364,7 +404,7 @@ export default function About() {
         </div>
 
         {/* ── Section 2: full-width description ───────────────── */}
-        <div className="mb-20">
+        <Reveal as="div" className="mb-20">
           <p className="text-base text-gray-600 leading-relaxed">
             I design digital products that are simple to use and hard to forget.
 
@@ -383,7 +423,7 @@ export default function About() {
             brand identity because good product designers understand
             the full picture.
           </p>
-        </div>
+        </Reveal>
 
         {/* ── Experience timeline ──────────────────────────────── */}
         {false && (
@@ -468,17 +508,19 @@ export default function About() {
 
         {/* ── Section: Elsewhere / Connect ────────────────────── */}
         <div className="mb-20">
-          <p
-            className="text-xl md:text-2xl text-gray-700 leading-snug mb-2 text-center"
-            style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
-          >
-            Also Here
-          </p>
-          <p className="text-sm text-gray-500 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
-            Same person, different tabs.
-          </p>
+          <Reveal as="div" className="text-center mb-10">
+            <p
+              className="text-xl md:text-2xl text-gray-700 leading-snug mb-2"
+              style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
+            >
+              Also Here
+            </p>
+            <p className="text-sm text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+              Same person, different tabs.
+            </p>
+          </Reveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 justify-items-center gap-x-6 gap-y-12 md:gap-x-12 md:gap-y-16 max-w-3xl mx-auto">
+          <Reveal as="div" targets="children" stagger={80} className="grid grid-cols-2 md:grid-cols-3 justify-items-center gap-x-6 gap-y-12 md:gap-x-12 md:gap-y-16 max-w-3xl mx-auto">
             {socialPlatforms.map((platform, index) => {
               const isHovered = hoveredSocial === platform.label;
               const rotation = ((index % 2 === 0 ? -1 : 1) * (5 + (index % 4) * 2)).toFixed(2);
@@ -560,54 +602,56 @@ export default function About() {
                 </a>
               );
             })}
-          </div>
+          </Reveal>
         </div>
 
         {/* ── Toolkit ──────────────────────────────────────────── */}
         <div className="mb-20">
-          <p
-            className="text-xl md:text-2xl text-gray-700 leading-snug mb-2 text-center"
-            style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
-          >
-            My Toolkit
-          </p>
-          <p className="text-sm text-gray-500 mb-10 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
-            Tools I use to design, build, and ship every day.
-          </p>
+          <Reveal as="div" className="text-center mb-10">
+            <p
+              className="text-xl md:text-2xl text-gray-700 leading-snug mb-2"
+              style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
+            >
+              My Toolkit
+            </p>
+            <p className="text-sm text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>
+              Tools I use to design, build, and ship every day.
+            </p>
+          </Reveal>
 
           <div className="flex flex-col gap-12">
 
             {/* Design & Animations */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Design & Animations</p>
-              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
+              <Reveal as="div" targets="children" stagger={35} className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {designTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
                 <div className="flex flex-col items-center gap-2 text-center justify-center w-20 select-none">
                   <span className="text-[11px] text-gray-500" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>+ more</span>
                 </div>
-              </div>
+              </Reveal>
             </div>
 
             {/* Development */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Development</p>
-              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
+              <Reveal as="div" targets="children" stagger={35} className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {developmentTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
-              </div>
+              </Reveal>
             </div>
 
             {/* Productivity & Assistive Tools */}
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-5 text-center" style={{ fontFamily: "FunnelDisplay, sans-serif" }}>Productivity & Assistive Tools</p>
-              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
+              <Reveal as="div" targets="children" stagger={35} className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-8">
                 {productivityTools.map((tool, index) => (
                   <FavStyleToolIcon key={tool.name} tool={tool} index={index} />
                 ))}
-              </div>
+              </Reveal>
             </div>
 
           </div>
@@ -617,7 +661,7 @@ export default function About() {
         <FavoritesShelf />
 
         {/* ── Closing CTA ──────────────────────────────────────── */}
-        <div className="text-center">
+        <Reveal as="div" targets="children" stagger={120} className="text-center">
           <p
             className="text-2xl md:text-3xl text-gray-700 leading-snug mb-8"
             style={{ fontFamily: "SatishSans, serif", fontWeight: 400 }}
@@ -637,21 +681,32 @@ export default function About() {
                 </svg>
               </a>
               <div
-                className="flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 border-gray-200 text-sm text-gray-700 select-all cursor-pointer bg-zinc-50/20"
+                className={`flex items-center justify-center px-5 py-3 border border-t-0 md:border-t md:border-l-0 text-sm select-all cursor-pointer transition-colors duration-300 ${
+                  copied ? 'bg-black text-white border-black' : 'border-gray-200 text-gray-700 bg-zinc-50/20'
+                }`}
                 style={{ fontFamily: "FunnelDisplay, sans-serif", letterSpacing: "0.03em" }}
                 onClick={handleCopy}
               >
-                <span className="truncate">{/* bvarungupta */}bvarungupta@gmail.com</span>
+                <Morph
+                  active={copied}
+                  off="bvarungupta@gmail.com"
+                  on="copieeeeeeed!!!"
+                  className={`text-sm transition-colors duration-300 ${copied ? 'text-white' : 'text-gray-700'}`}
+                />
                 <button
                   onClick={(e) => { e.stopPropagation(); handleCopy(); }}
-                  className="ml-2 text-gray-500 hover:text-gray-800 transition-colors duration-200 flex-shrink-0 cursor-pointer"
+                  className={`ml-2.5 transition-colors duration-200 flex-shrink-0 cursor-pointer ${copied ? 'text-white' : 'text-gray-500 hover:text-gray-800'}`}
                   title="Copy email"
                 >
-                  {copied ? (
-                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  ) : (
-                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
-                  )}
+                  <Morph
+                    active={copied}
+                    off={
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="5" y="5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M9 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+                    }
+                    on={
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    }
+                  />
                 </button>
               </div>
             </div>
@@ -672,7 +727,7 @@ export default function About() {
               </svg>
             </a>
           </div>
-        </div>
+        </Reveal>
 
       </div>
     </div>

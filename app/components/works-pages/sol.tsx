@@ -394,7 +394,7 @@ export default function Sol() {
           </div>
 
           {/* Full-width cover image */}
-          <div className="w-full border-b border-gray-200">
+          <div data-work-hero className="w-full border-b border-gray-200">
             <Image
               src="/images/WorkImages/Sol/main_thumb.png"
               alt="Sol Energy Cover"

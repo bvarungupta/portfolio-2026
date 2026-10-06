@@ -209,7 +209,7 @@ export default function BlumeHealth() {
           </div>
 
           {/* Hero image — edge to edge */}
-          <div className="relative overflow-visible border-b border-gray-200">
+          <div data-work-hero className="relative overflow-visible border-b border-gray-200">
             <Image
               src="/images/WorkImages/blumeHealthImages/bh-01.png"
               alt="Blume Health"

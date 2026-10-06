@@ -1,14 +1,10 @@
 "use client"
 
-import { useRef, useEffect } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Riffle, Laptop, Terminal } from "@lucasmarkes/hairline/react"
+import { Reveal } from 'cube-motion/react'
+import { Riffle, Turntable, Laptop, Terminal } from "@lucasmarkes/hairline/react"
 import { Geist_Mono } from "next/font/google"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
-
-gsap.registerPlugin(ScrollTrigger)
 
 const processSteps = [
   {
@@ -19,14 +15,14 @@ const processSteps = [
     Illustration: Riffle,
   },
   {
-    step: "02",
+    step: "03",
     dots: 2,
     title: "Design",
     copy: "With the direction clear, I move into design. I explore concepts, structure the experience, and refine the visual system across typography, color, components, and interaction, taking everything through high-fidelity design, prototyping, and developer handoff.",
     Illustration: Laptop,
   },
   {
-    step: "03",
+    step: "04",
     dots: 3,
     title: "Build",
     copy: "I take the final designs into production, working closely with developers through implementation, QA, and launch. I handle the handoff, resolve edge cases, and make sure the finished product stays true to the design while working as it should.",
@@ -35,71 +31,21 @@ const processSteps = [
 ]
 
 export default function DesignProcessGallery() {
-  const headerRef  = useRef<HTMLDivElement>(null)
-  const designEl   = useRef<HTMLHeadingElement>(null)
-  const processEl  = useRef<HTMLHeadingElement>(null)
-  const lineEl     = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const header  = headerRef.current
-    const design  = designEl.current
-    const process = processEl.current
-    const line    = lineEl.current
-    if (!header || !design || !process || !line) return
-
-    let tl: gsap.core.Timeline
-
-    const setup = () => {
-      const cRect  = header.getBoundingClientRect()
-      const dRect  = design.getBoundingClientRect()
-      const pRect  = process.getBoundingClientRect()
-      const padX   = parseFloat(window.getComputedStyle(header).paddingLeft)
-      const cLeft  = cRect.left + padX
-      const cRight = cRect.right - padX
-
-      gsap.set(line, { scaleX: 0, transformOrigin: "center center", opacity: 0 })
-
-      tl = gsap.timeline({
-        defaults: { duration: 1.1, ease: "power3.inOut" },
-        scrollTrigger: {
-          trigger: header,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      })
-
-      tl.to(design,  { x: cLeft  - dRect.left }, 0)
-        .to(line,    { scaleX: 1, opacity: 1, ease: "power2.inOut" }, 0)
-        .to(process, { x: cRight - pRect.width - pRect.left }, 0)
-    }
-
-    document.fonts.ready.then(() => requestAnimationFrame(setup))
-
-    return () => { tl?.kill() }
-  }, [])
-
   return (
     <div className="mt-20 md:mt-28">
       {/* ── Section Header ── */}
-      <div ref={headerRef} className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
+      <div className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
         <div className="relative">
           <div
-            ref={lineEl}
             className="absolute inset-x-0 border-t border-gray-300"
             style={{ top: "50%" }}
           />
-          <div className="relative flex items-baseline justify-center gap-2">
-            <h2
-              ref={designEl}
-              className="relative bg-white pr-3 text-2xl md:text-3xl font-light text-black shrink-0 whitespace-nowrap"
-            >
+          <div className="relative flex items-baseline justify-between">
+            <h2 className="relative bg-white pr-3 text-2xl md:text-3xl font-light text-black shrink-0 whitespace-nowrap">
               <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>D</span>
               <span style={{ fontFamily: "SatishSans, sans-serif" }}>esign</span>
             </h2>
-            <h2
-              ref={processEl}
-              className="relative bg-white pl-3 text-2xl md:text-3xl font-light text-black shrink-0 whitespace-nowrap"
-            >
+            <h2 className="relative bg-white pl-3 text-2xl md:text-3xl font-light text-black shrink-0 whitespace-nowrap">
               <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.5em" }}>P</span>
               <span style={{ fontFamily: "SatishSans, sans-serif" }}>rocess</span>
             </h2>
@@ -113,8 +59,8 @@ export default function DesignProcessGallery() {
         </p>
       </div>
 
-      {/* ── 3 Cards — wide breakout grid ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
+      {/* ── 3 Cards Grid (negative-margin breakout on desktop) ── */}
+      <Reveal as="div" targets="children" stagger={200} className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
         {processSteps.map((item) => {
           const Illustration = item.Illustration
           return (
@@ -159,7 +105,7 @@ export default function DesignProcessGallery() {
             </div>
           )
         })}
-      </div>
+      </Reveal>
     </div>
   )
 }

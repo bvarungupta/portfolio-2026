@@ -6,8 +6,10 @@ import NavbarClient from "./components/layout/NavbarClient"
 import SmoothScroll from "./components/layout/SmoothScroll"
 import ScrollReset from "./components/layout/ScrollReset"
 import Footer from "./components/layout/footer"
-import SpiralTransitionOverlay from "./components/layout/SpiralTransitionOverlay"
+import { WorkSharedTransitionProvider } from "./components/layout/WorkSharedTransition"
+import { ColumnBlindsProvider } from "./components/layout/ColumnBlindsTransition"
 import Preloader from "./components/layout/Preloader"
+import CustomCursor from "./components/layout/CustomCursor"
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import PageBranches from "./components/home/PageBranches"
@@ -93,62 +95,66 @@ export default function RootLayout({
         <link rel="preload" href="/images/common/vg-outline.svg" as="image" type="image/svg+xml" />
       </head>
       <body suppressHydrationWarning>
-        <Preloader />
-        <SmoothScroll />
-        <ScrollReset />
-        <NavbarClient />
-        <SpiralTransitionOverlay />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "ProfilePage",
-                "mainEntity": {
-                  "@type": "Person",
-                  "@id": "https://bvarungupta.vercel.app/#varungupta",
-                  "name": "Varun Gupta",
-                  "alternateName": "bvarungupta",
-                  "jobTitle": "Product Designer",
-                  "description": "Product designer specialising in brand, product, and design systems for early-stage startups.",
-                  "url": "https://bvarungupta.vercel.app",
-                  "email": "bvarungupta@gmail.com",
-                  "knowsAbout": ["Product Design", "UI/UX Design", "Brand Identity", "Design Systems", "SaaS"],
-                  "sameAs": [
-                    "https://linkedin.com/in/bvarungupta",
-                    "https://behance.net/bvarungupta",
-                    "https://dribbble.com/bvarungupta"
-                  ],
-                  "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Hyderabad",
-                    "addressRegion": "Telangana",
-                    "addressCountry": "IN"
+        <ColumnBlindsProvider>
+          <WorkSharedTransitionProvider>
+            <CustomCursor />
+            <Preloader />
+            <SmoothScroll />
+            <ScrollReset />
+            <NavbarClient />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify([
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "ProfilePage",
+                    "mainEntity": {
+                      "@type": "Person",
+                      "@id": "https://bvarungupta.vercel.app/#varungupta",
+                      "name": "Varun Gupta",
+                      "alternateName": "bvarungupta",
+                      "jobTitle": "Product Designer",
+                      "description": "Product designer specialising in brand, product, and design systems for early-stage startups.",
+                      "url": "https://bvarungupta.vercel.app",
+                      "email": "bvarungupta@gmail.com",
+                      "knowsAbout": ["Product Design", "UI/UX Design", "Brand Identity", "Design Systems", "SaaS"],
+                      "sameAs": [
+                        "https://linkedin.com/in/bvarungupta",
+                        "https://behance.net/bvarungupta",
+                        "https://dribbble.com/bvarungupta"
+                      ],
+                      "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Hyderabad",
+                        "addressRegion": "Telangana",
+                        "addressCountry": "IN"
+                      }
+                    }
+                  },
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "url": "https://bvarungupta.vercel.app",
+                    "name": "Varun Gupta Portfolio",
+                    "description": "Portfolio of Varun Gupta, Product Designer based in India.",
+                    "author": {
+                      "@type": "Person",
+                      "name": "Varun Gupta"
+                    }
                   }
-                }
-              },
-              {
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                "url": "https://bvarungupta.vercel.app",
-                "name": "Varun Gupta Portfolio",
-                "description": "Portfolio of Varun Gupta, Product Designer based in India.",
-                "author": {
-                  "@type": "Person",
-                  "name": "Varun Gupta"
-                }
-              }
-            ])
-          }}
-        />
-        <main className="relative">
-          {children}
-          <PageBranches />
-          <Analytics />
-          <SpeedInsights />
-        </main>
-        <Footer />
+                ])
+              }}
+            />
+            <main className="relative">
+              {children}
+              <PageBranches />
+              <Analytics />
+              <SpeedInsights />
+            </main>
+            <Footer />
+          </WorkSharedTransitionProvider>
+        </ColumnBlindsProvider>
       </body>
     </html>
   )

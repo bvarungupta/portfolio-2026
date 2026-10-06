@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import { Morph } from 'cube-motion/react'
 
 const EMAIL = 'bvarungupta@gmail.com'
 
@@ -11,7 +12,7 @@ const CopyIcon = () => (
 )
 
 const TickIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="white">
+  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor">
     <path d="M382.81-258.69 175.08-466.42l40.04-40.04 167.69 167.88 362.27-362.27 39.84 40.04-402.11 402.12Z"/>
   </svg>
 )
@@ -50,6 +51,7 @@ export default function EmailCopy() {
 
   return (
     <div
+      data-cursor="copy"
       className="relative border cursor-pointer transition-colors duration-300"
       style={{
         fontFamily: 'FunnelDisplay, sans-serif',
@@ -65,15 +67,16 @@ export default function EmailCopy() {
       <Plus h="left"  v="bottom" />
       <Plus h="right" v="bottom" />
 
-      <div className={`flex items-center transition-opacity duration-200 ${copied ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-        <span className="pl-4 pr-2 py-2 text-xs text-gray-500 select-none">{EMAIL}</span>
-        <button aria-label="Copy email" className="pl-2 pr-4 py-2 shrink-0 flex items-center justify-center outline-none">
-          <CopyIcon />
-        </button>
-      </div>
-
-      <div className={`absolute inset-0 flex items-center justify-center gap-2 text-white text-xs transition-opacity duration-200 ${copied ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <TickIcon /> copieeeeeeed!!!
+      <div className="flex items-center px-4 py-2 gap-2">
+        <Morph
+          active={copied}
+          off={EMAIL}
+          on="copieeeeeeed!!!"
+          className={`text-xs transition-colors duration-300 ${copied ? 'text-white' : 'text-gray-500'}`}
+        />
+        <span className={`shrink-0 flex items-center justify-center transition-colors duration-300 ${copied ? 'text-white' : ''}`}>
+          {copied ? <TickIcon /> : <CopyIcon />}
+        </span>
       </div>
     </div>
   )

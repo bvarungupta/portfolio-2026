@@ -24,12 +24,28 @@ export default function PageTransitionWrapper({ children, isWorkPage = false }: 
     if (isWorkPage) {
       gsap.fromTo(containerRef.current,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          onComplete: () => {
+            window.dispatchEvent(new CustomEvent("page-transition-complete"));
+          },
+        }
       );
     } else {
       gsap.fromTo(containerRef.current,
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          onComplete: () => {
+            window.dispatchEvent(new CustomEvent("page-transition-complete"));
+          },
+        }
       );
     }
   }, [pathname, isWorkPage]);

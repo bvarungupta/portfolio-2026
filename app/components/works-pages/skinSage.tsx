@@ -202,7 +202,7 @@ export default function SkinSage() {
           </div>
 
           {/* SS-01 — full-width cover image */}
-          <div className="w-full border-b border-gray-200">
+          <div data-work-hero className="w-full border-b border-gray-200">
             <Image
               src="/images/WorkImages/skinSageImages/SS-01B.png"
               alt="SkinSage cover"
