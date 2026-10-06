@@ -765,7 +765,9 @@ html {
   -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
-[data-cursor="view"],
-[data-cursor="view"] * {
-  cursor: none !important;
+@media (hover: hover) and (pointer: fine) {
+  [data-cursor="view"],
+  [data-cursor="view"] * {
+    cursor: none !important;
+  }
 }

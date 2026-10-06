@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 
 export default function CustomCursor() {
+  const [isEnabled, setIsEnabled] = useState(false)
   const cursorRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
   const isVisible = useRef(false)
@@ -14,8 +15,18 @@ export default function CustomCursor() {
   const size = 68
 
   useEffect(() => {
-    // Disable on touch devices
-    if (window.matchMedia("(pointer: coarse)").matches) return
+    // Disable on touch devices and mobile screens
+    const isTouch = window.matchMedia("(pointer: coarse)").matches
+    const isFine = window.matchMedia("(pointer: fine)").matches
+    const isDesktop = window.innerWidth >= 768
+
+    if (!isTouch && isFine && isDesktop) {
+      setIsEnabled(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isEnabled) return
 
     const cursor = cursorRef.current
     const label = labelRef.current
@@ -171,13 +182,16 @@ export default function CustomCursor() {
       window.removeEventListener("click", onClickDrop)
       document.removeEventListener("mouseleave", onMouseLeaveDoc)
     }
-  }, [size])
+  }, [size, isEnabled])
+
+  if (!isEnabled) return null
 
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full flex items-center justify-center select-none backdrop-blur-[10px] saturate-[180%]"
+      className="hidden md:flex fixed top-0 left-0 pointer-events-none z-[99999] rounded-full items-center justify-center select-none backdrop-blur-[10px] saturate-[180%]"
       style={{
+        opacity: 0,
         width: size,
         height: size,
         willChange: "transform, left, top",
