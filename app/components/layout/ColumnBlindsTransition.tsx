@@ -49,6 +49,37 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
   const callbackRef = useRef<(() => void) | null>(null)
   const isHoldingRef = useRef(false)
 
+  // Disable scrolling while page transition animation is active
+  useEffect(() => {
+    if (!isBlindsActive) return
+
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+    if (lenis) {
+      lenis.stop()
+    }
+
+    const originalBodyOverflow = document.body.style.overflow
+    const originalHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+
+    const preventDefault = (e: Event) => {
+      e.preventDefault()
+    }
+    window.addEventListener("wheel", preventDefault, { passive: false })
+    window.addEventListener("touchmove", preventDefault, { passive: false })
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow
+      document.documentElement.style.overflow = originalHtmlOverflow
+      window.removeEventListener("wheel", preventDefault)
+      window.removeEventListener("touchmove", preventDefault)
+      if (lenis) {
+        lenis.start()
+      }
+    }
+  }, [isBlindsActive])
+
   // 0.75x calibrated timing for luxury architectural pacing
   const DURATION = 0.56
   const STAGGER = 0.053

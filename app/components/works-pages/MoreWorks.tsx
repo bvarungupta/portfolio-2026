@@ -10,7 +10,6 @@ const allWorks = [
     title: 'Jio Tesseract',
     href: '/works/jio',
     image: '/images/WorkImages/jio/thumbnail.webp',
-    heroImage: '/images/WorkImages/jio/thumbnail.webp',
     tags: ['Product Design'],
   },
   {

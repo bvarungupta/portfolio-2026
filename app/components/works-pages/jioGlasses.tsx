@@ -469,7 +469,7 @@ export default function JioGlasses() {
           `}</style>
 
           {/* Cover image */}
-          <div data-work-hero className="w-full border-b border-gray-200">
+          <div className="w-full border-b border-gray-200">
             <Image
               src="/images/WorkImages/jio/thumbnail.webp"
               alt="Jio Tesseract"

@@ -10,7 +10,6 @@ import { gsap } from "gsap"
  * matches the destination page's hero cover image.
  */
 export const WORK_HERO_IMAGES: Record<string, string> = {
-  '/works/jio': '/images/WorkImages/jio/thumbnail.webp',
   '/works/sol': '/images/WorkImages/Sol/main_thumb.png',
   '/works/smartNation': '/images/WorkImages/smartNationImages/SNN.png',
   '/works/blumeHealth': '/images/WorkImages/blumeHealthImages/bh-01.png',
@@ -74,6 +73,37 @@ export function WorkSharedTransitionProvider({ children }: { children: React.Rea
   const imgRef = useRef<HTMLImageElement>(null)
   const targetHrefRef = useRef<string | null>(null)
   const morphTimelineRef = useRef<gsap.core.Timeline | null>(null)
+
+  // Disable scrolling while work shared transition animation is active
+  useEffect(() => {
+    if (!isTransitioning) return
+
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+    if (lenis) {
+      lenis.stop()
+    }
+
+    const originalBodyOverflow = document.body.style.overflow
+    const originalHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+
+    const preventDefault = (e: Event) => {
+      e.preventDefault()
+    }
+    window.addEventListener("wheel", preventDefault, { passive: false })
+    window.addEventListener("touchmove", preventDefault, { passive: false })
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow
+      document.documentElement.style.overflow = originalHtmlOverflow
+      window.removeEventListener("wheel", preventDefault)
+      window.removeEventListener("touchmove", preventDefault)
+      if (lenis) {
+        lenis.start()
+      }
+    }
+  }, [isTransitioning])
 
   const startWorkTransition = useCallback(
     ({

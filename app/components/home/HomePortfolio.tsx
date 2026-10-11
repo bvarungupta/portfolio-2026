@@ -38,9 +38,9 @@ export default function HomePortfolio() {
         className="absolute top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, right: "-40px" }}
       />
+      <MouseColorBloom />
 
       <div className="max-w-5xl mx-auto px-6 md:px-10">
-        <MouseColorBloom />
         <div className="relative min-h-[calc(100vh-120px)] flex flex-col justify-center items-center text-center gap-6 overflow-hidden md:overflow-visible">
           <ParallaxImages />
 
@@ -72,28 +72,30 @@ export default function HomePortfolio() {
           </div>
         </div>
 
-        <div data-section="work">
-          <WorkGallery featuredOnly={true} showViewMore={true} />
-        </div>
+        <div className="relative z-10 bg-white">
+          <div data-section="work">
+            <WorkGallery featuredOnly={true} showViewMore={true} />
+          </div>
 
-        <div data-section="design-process">
-          <DesignProcessGallery />
-        </div>
+          <div data-section="design-process">
+            <DesignProcessGallery />
+          </div>
 
-        <div data-section="visual-identity">
-          <VisualIdentityGallery />
-        </div>
+          <div data-section="visual-identity">
+            <VisualIdentityGallery />
+          </div>
 
-        <div data-section="proposals">
-          <ProposalsGallery />
-        </div>
+          <div data-section="proposals">
+            <ProposalsGallery />
+          </div>
 
-        <div data-section="motion-design">
-          <MotionDesignGallery />
-        </div>
+          <div data-section="motion-design">
+            <MotionDesignGallery />
+          </div>
 
-        <div data-section="visual-explorations">
-          <VisualExplorationsGallery />
+          <div data-section="visual-explorations">
+            <VisualExplorationsGallery />
+          </div>
         </div>
 
       </div>

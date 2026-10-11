@@ -17,7 +17,6 @@ const works = [
     title: 'Jio Tesseract',
     description: "Designed the full landing page experience for India's first consumer MR glasses. End to end — from user research and moodboarding to final visual design and handoff.",
     image: '/images/WorkImages/jio/thumbnail.webp',
-    heroImage: '/images/WorkImages/jio/thumbnail.webp',
     href: '/works/jio',
     year: '2025',
     available: true,

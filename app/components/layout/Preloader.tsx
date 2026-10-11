@@ -44,10 +44,31 @@ export default function Preloader() {
       }
     }
 
-    // 2. Lock scroll while loading
+    // 2. Lock scroll while loading (Lenis, touch, wheel, overflow)
     const originalOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
     document.documentElement.style.overflow = "hidden"
+
+    const preventDefault = (e: Event) => {
+      e.preventDefault()
+    }
+    const preventNavKeys = (e: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown", "Space", "PageUp", "PageDown", "Home", "End"].includes(e.code)) {
+        e.preventDefault()
+      }
+    }
+    window.addEventListener("wheel", preventDefault, { passive: false })
+    window.addEventListener("touchmove", preventDefault, { passive: false })
+    window.addEventListener("keydown", preventNavKeys, { passive: false })
+
+    const stopLenis = () => {
+      const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+      if (lenis) {
+        lenis.stop()
+      }
+    }
+    stopLenis()
+    const lenisCheckInterval = setInterval(stopLenis, 40)
 
     // 3. Measure & Position Solid Logo over Hero Outline Logo
     const alignSolidLogo = () => {
@@ -84,8 +105,16 @@ export default function Preloader() {
     if (reducedMotion) {
       setCount(100)
       sessionStorage.setItem("portfolio-preloader-shown", "true")
+      clearInterval(lenisCheckInterval)
+      window.removeEventListener("wheel", preventDefault)
+      window.removeEventListener("touchmove", preventDefault)
+      window.removeEventListener("keydown", preventNavKeys)
       document.body.style.overflow = originalOverflow
       document.documentElement.style.overflow = ""
+      const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+      if (lenis) {
+        lenis.start()
+      }
       setIsDone(true)
       clearInterval(alignInterval)
       return
@@ -169,8 +198,16 @@ export default function Preloader() {
 
       const tl = gsap.timeline({
         onComplete: () => {
+          clearInterval(lenisCheckInterval)
+          window.removeEventListener("wheel", preventDefault)
+          window.removeEventListener("touchmove", preventDefault)
+          window.removeEventListener("keydown", preventNavKeys)
           document.body.style.overflow = originalOverflow
           document.documentElement.style.overflow = ""
+          const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+          if (lenis) {
+            lenis.start()
+          }
           setIsDone(true)
           window.dispatchEvent(new CustomEvent("preloader-complete"))
         },
@@ -249,10 +286,18 @@ export default function Preloader() {
       cancelAnimationFrame(rafId)
       clearTimeout(timeoutId)
       clearInterval(alignInterval)
+      clearInterval(lenisCheckInterval)
+      window.removeEventListener("wheel", preventDefault)
+      window.removeEventListener("touchmove", preventDefault)
+      window.removeEventListener("keydown", preventNavKeys)
       window.removeEventListener("load", handleLoadComplete)
       window.removeEventListener("resize", alignSolidLogo)
       document.body.style.overflow = originalOverflow
       document.documentElement.style.overflow = ""
+      const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis
+      if (lenis) {
+        lenis.start()
+      }
     }
   }, [])
 

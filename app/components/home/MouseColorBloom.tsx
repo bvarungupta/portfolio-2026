@@ -5,32 +5,55 @@ import { useRef, useEffect } from 'react'
 // ─── Bloom config ─────────────────────────────────────────────────────────────
 const BLOOM = {
   radius:  140,                        // px — size of the color circle
-  color:   'rgba(59, 130, 246, 0.85)', // blue — change hue/opacity here
-  // Try: 'rgba(168, 85, 247, 0.8)'  → purple
-  // Try: 'rgba(239, 68, 68, 0.8)'   → red
-  // Try: 'rgba(16, 185, 129, 0.8)'  → green
+  color:   'rgba(59, 130, 246, 0.85)', // original blue bloom hue
 }
 
 export default function MouseColorBloom() {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Only enable on desktop with fine pointer (disable on mobile and touch devices)
+    const isTouch = window.matchMedia('(pointer: coarse)').matches
+    const isFine = window.matchMedia('(pointer: fine)').matches
+    const isDesktop = window.innerWidth >= 768
+
+    if (isTouch || !isFine || !isDesktop) return
+
     const el = ref.current
     if (!el) return
 
     const onMove = (e: MouseEvent) => {
+      // Deactivate when scrolled down past the hero fold
+      if (window.scrollY > window.innerHeight) {
+        el.style.setProperty('--mx', '-500px')
+        el.style.setProperty('--my', '-500px')
+        return
+      }
+
       el.style.setProperty('--mx', `${e.clientX}px`)
       el.style.setProperty('--my', `${e.clientY}px`)
     }
 
-    window.addEventListener('mousemove', onMove)
-    return () => window.removeEventListener('mousemove', onMove)
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight) {
+        el.style.setProperty('--mx', '-500px')
+        el.style.setProperty('--my', '-500px')
+      }
+    }
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
     <div
       ref={ref}
-      className="fixed inset-0 pointer-events-none"
+      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none select-none hidden md:block"
       style={{
         zIndex: 2,
         background: `radial-gradient(circle ${BLOOM.radius}px at var(--mx, -500px) var(--my, -500px), ${BLOOM.color} 0%, transparent 100%)`,
