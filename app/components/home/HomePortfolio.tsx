@@ -5,11 +5,14 @@ import MouseColorBloom from "./MouseColorBloom"
 import ParallaxImages from "./ParallaxImages"
 import EmailSection from "./EmailSection"
 import VisualIdentityGallery from "./visualIdentityGallery"
-import ProposalsGallery from "./proposalsGallery"
-import MotionDesignGallery from "./MotionDesignGallery"
-import DesignProcessGallery from "./DesignProcessGallery"
 import dynamic from "next/dynamic"
 
+const DesignProcessGallery = dynamic(() => import("./DesignProcessGallery"), {
+  ssr: false,
+})
+const MotionDesignGallery = dynamic(() => import("./MotionDesignGallery"), {
+  ssr: false,
+})
 const VisualExplorationsGallery = dynamic(() => import("./visualExplorationsGallery"), {
   ssr: false,
 })
@@ -83,10 +86,6 @@ export default function HomePortfolio() {
 
           <div data-section="visual-identity">
             <VisualIdentityGallery />
-          </div>
-
-          <div data-section="proposals">
-            <ProposalsGallery />
           </div>
 
           <div data-section="motion-design">

@@ -32,7 +32,7 @@ export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
-  const isDarkPage = pathname === "/lab/specimen" || pathname?.startsWith("/proposals/")
+  const isDarkPage = pathname === "/lab/specimen"
 
   // Prevent hydration mismatch by waiting for client mount
   useEffect(() => {
@@ -115,18 +115,6 @@ export default function Navbar() {
           }, 500)
         })
       }
-    } else if (item.name === "Concepts") {
-      if (pathname === '/') {
-        // Already on home, scroll to proposals
-        scrollToProposalsSection()
-      } else {
-        // Navigate to home and scroll to proposals
-        navigateWithTransition('/', () => {
-          setTimeout(() => {
-            scrollToProposalsSection()
-          }, 500)
-        })
-      }
     } else if (item.name === "About") {
       navigateWithTransition('/about')
     } else if (item.name === "Home") {
@@ -172,26 +160,6 @@ export default function Navbar() {
         duration: 1.2,
         scrollTo: {
           y: workSection,
-          offsetY: 100
-        },
-        ease: "power2.inOut"
-      })
-    }
-  }
-
-  const scrollToProposalsSection = () => {
-    // Find proposals section
-    const proposalsSection = document.querySelector('[data-section="proposals"]') ||
-      // Try to find by text content containing "Proposals"
-      Array.from(document.querySelectorAll('h2, h3')).find(el =>
-        el.textContent?.toLowerCase().includes('proposals')
-      )?.closest('div')
-
-    if (proposalsSection) {
-      gsap.to(window, {
-        duration: 1.2,
-        scrollTo: {
-          y: proposalsSection,
           offsetY: 100
         },
         ease: "power2.inOut"

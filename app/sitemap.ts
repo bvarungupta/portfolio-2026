@@ -67,12 +67,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/proposals/xpay`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
       url: `${baseUrl}/lab/visitor-card`,
       lastModified: now,
       changeFrequency: 'monthly',

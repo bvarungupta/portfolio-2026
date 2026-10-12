@@ -23,7 +23,6 @@ const navLinks = [
 
 export default function Footer() {
   const pathname = usePathname()
-  const isProposalPage = pathname?.startsWith('/proposals')
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
@@ -47,7 +46,6 @@ export default function Footer() {
   }, [])
 
   if (pathname === '/' && welcomeActive) return null
-  if (isProposalPage) return null
 
   return (
     <RuixenGradientFooter

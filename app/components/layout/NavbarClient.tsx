@@ -30,6 +30,5 @@ export default function NavbarClient() {
   }, [])
 
   if (pathname === '/' && welcomeActive) return null
-  if (pathname?.startsWith('/proposals')) return null
   return <Navbar />
 }

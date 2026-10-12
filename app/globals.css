@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Garamond';
-  src: url('/fonts/garamond/Garamond_Condensed_Light_Regular.ttf') format('truetype');
+  src: url('/fonts/garamond/Garamond_Condensed_Light_Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'JioType';
-  src: url('/fonts/JioType/JioType-Light.ttf') format('truetype');
+  src: url('/fonts/JioType/JioType-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'JioType';
-  src: url('/fonts/JioType/JioType.ttf') format('truetype');
+  src: url('/fonts/JioType/JioType.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'JioType';
-  src: url('/fonts/JioType/JioType-Medium.ttf') format('truetype');
+  src: url('/fonts/JioType/JioType-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -40,7 +40,7 @@
 
 @font-face {
   font-family: 'JioType';
-  src: url('/fonts/JioType/JioType-Bold.ttf') format('truetype');
+  src: url('/fonts/JioType/JioType-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -48,7 +48,7 @@
 
 @font-face {
   font-family: 'SatishSans';
-  src: url('/fonts/satish-font/Satish-sans.ttf') format('truetype');
+  src: url('/fonts/satish-font/Satish-sans.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -56,7 +56,7 @@
 
 @font-face {
   font-family: 'VarunCapsSans';
-  src: url('/fonts/satish-font/satish-caps-sans.ttf') format('truetype');
+  src: url('/fonts/satish-font/satish-caps-sans.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -64,7 +64,7 @@
 
 @font-face {
   font-family: 'FunnelDisplay';
-  src: url('/fonts/FunnelDisplay/FunnelDisplay-Light.ttf') format('truetype');
+  src: url('/fonts/FunnelDisplay/FunnelDisplay-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,7 @@
 
 @font-face {
   font-family: 'FunnelDisplay';
-  src: url('/fonts/FunnelDisplay/FunnelDisplay-Regular.ttf') format('truetype');
+  src: url('/fonts/FunnelDisplay/FunnelDisplay-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -80,7 +80,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+  src: url('/fonts/Poppins/Poppins-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -88,7 +88,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  src: url('/fonts/Poppins/Poppins-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -96,7 +96,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  src: url('/fonts/Poppins/Poppins-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -104,7 +104,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Poppins/Poppins-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -112,7 +112,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  src: url('/fonts/Poppins/Poppins-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -120,55 +120,7 @@
 
 @font-face {
   font-family: 'CarmenSans';
-  src: url('/fonts/CarmenSans/CarmenSans-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CarmenSans';
-  src: url('/fonts/CarmenSans/CarmenSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CarmenSans';
-  src: url('/fonts/CarmenSans/CarmenSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CarmenSans';
-  src: url('/fonts/CarmenSans/CarmenSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CarmenSans';
-  src: url('/fonts/CarmenSans/CarmenSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat/Montserrat-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+  src: url('/fonts/CarmenSans/CarmenSans-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -176,23 +128,7 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat/Montserrat-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'InstrumentSans';
-  src: url('/fonts/InstrumentalSans/InstrumentSans-Regular.ttf') format('truetype');
+  src: url('/fonts/Montserrat/Montserrat-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -200,24 +136,8 @@
 
 @font-face {
   font-family: 'InstrumentSans';
-  src: url('/fonts/InstrumentalSans/InstrumentSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'InstrumentSans';
-  src: url('/fonts/InstrumentalSans/InstrumentSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'InstrumentSans';
-  src: url('/fonts/InstrumentalSans/InstrumentSans-Bold.ttf') format('truetype');
-  font-weight: 700;
+  src: url('/fonts/InstrumentalSans/InstrumentSans-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
