@@ -40,24 +40,60 @@ const motionItems: MotionItem[] = [
   },
 ]
 
+function useInView(ref: React.RefObject<HTMLElement | null>, rootMargin = "400px") {
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting)
+      },
+      { rootMargin }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref, rootMargin])
+  return inView
+}
+
 function TouchAutoCarousel({
   items,
   direction = "left",
   speed = 0.6,
   cardWidthClass = "w-[51vw] sm:w-[36vw]",
+  isActive = true,
 }: {
   items: MotionItem[]
   direction?: "left" | "right"
   speed?: number
   cardWidthClass?: string
+  isActive?: boolean
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInteractingRef = useRef(false)
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   const quadItems = [...items, ...items, ...items, ...items]
 
+  // Play / pause videos only when active in viewport
   useEffect(() => {
+    videoRefs.current.forEach((v) => {
+      if (!v) return
+      if (isActive) {
+        if (v.paused) v.play().catch(() => {})
+      } else {
+        if (!v.paused) v.pause()
+      }
+    })
+  }, [isActive])
+
+  useEffect(() => {
+    if (!isActive) return
     const el = containerRef.current
     if (!el) return
 
@@ -95,7 +131,7 @@ function TouchAutoCarousel({
     return () => {
       cancelAnimationFrame(animationFrameId)
     }
-  }, [direction, speed])
+  }, [direction, speed, isActive])
 
   const handleTouchStart = () => {
     isInteractingRef.current = true
@@ -128,12 +164,15 @@ function TouchAutoCarousel({
           className={`relative ${cardWidthClass} shrink-0 rounded-none border-0 overflow-hidden bg-white ${UNIFORM_ASPECT_RATIO}`}
         >
           <video
+            ref={(el) => {
+              videoRefs.current[idx] = el
+            }}
             src={item.video}
-            autoPlay
+            autoPlay={isActive}
             loop
             muted
             playsInline
-            preload="auto"
+            preload={isActive ? "metadata" : "none"}
             className="w-full h-full object-cover pointer-events-none select-none bg-white"
           />
         </div>
@@ -143,6 +182,9 @@ function TouchAutoCarousel({
 }
 
 export default function MotionDesignGallery() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const isSectionVisible = useInView(sectionRef, "350px")
+
   const headerRef = useRef<HTMLDivElement>(null)
   const motionEl = useRef<HTMLHeadingElement>(null)
   const designEl = useRef<HTMLHeadingElement>(null)
@@ -152,6 +194,13 @@ export default function MotionDesignGallery() {
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
 
   useEffect(() => {
+    if (!isSectionVisible) {
+      Object.values(videoRefs.current).forEach((v) => {
+        if (v && !v.paused) v.pause()
+      })
+      return
+    }
+
     motionItems.forEach((item) => {
       const videoEl = videoRefs.current[item.id]
       if (!videoEl) return
@@ -166,7 +215,7 @@ export default function MotionDesignGallery() {
         }
       }
     })
-  }, [hoveredId])
+  }, [hoveredId, isSectionVisible])
 
   useEffect(() => {
     const header = headerRef.current
@@ -213,7 +262,7 @@ export default function MotionDesignGallery() {
   }, [])
 
   return (
-    <div className="mt-20 md:mt-28">
+    <div ref={sectionRef} className="mt-20 md:mt-28">
       {/* Section Header matching other sections */}
       <div ref={headerRef} className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden">
         <div className="relative">
@@ -260,6 +309,7 @@ export default function MotionDesignGallery() {
           direction="left"
           speed={0.6}
           cardWidthClass="w-[51vw] sm:w-[36vw]"
+          isActive={isSectionVisible}
         />
 
         {/* Row 2 Auto Moving Right + Touch Slideable */}
@@ -269,6 +319,7 @@ export default function MotionDesignGallery() {
             direction="right"
             speed={0.6}
             cardWidthClass="w-[51vw] sm:w-[36vw]"
+            isActive={isSectionVisible}
           />
         </div>
       </div>
@@ -299,11 +350,11 @@ export default function MotionDesignGallery() {
                   videoRefs.current[item.id] = el
                 }}
                 src={item.video}
-                autoPlay
+                autoPlay={isSectionVisible}
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload={isSectionVisible ? "metadata" : "none"}
                 className="w-full h-full object-cover pointer-events-none select-none bg-white transition-opacity duration-300"
               />
             </div>

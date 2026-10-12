@@ -14,15 +14,15 @@ export const PRELOADER_CONFIG = {
   FONT_FAMILY: "'Quincy CF', Quincy, Georgia, serif",
 
   // Loading Durations
-  MIN_PHASE1_MS: 1000,          // Calm steady pace 0 -> 80 (ms)
-  ACCELERATION_MS: 450,         // Rapid ease-in acceleration 80 -> 100 (ms)
-  MAX_LOAD_TIMEOUT_MS: 3500,    // Safety fallback timeout (ms)
+  MIN_PHASE1_MS: 400,          // Calm steady pace 0 -> 80 (ms)
+  ACCELERATION_MS: 250,         // Rapid ease-in acceleration 80 -> 100 (ms)
+  MAX_LOAD_TIMEOUT_MS: 1200,    // Safety fallback timeout (ms)
 
   // Exit Animation Sequence Timings (in seconds)
-  COUNTER_FADE_DURATION: 0.3,   // Step 1: Counter & progress line fade duration
-  PANEL_FADE_DURATION: 0.7,     // Step 2: White panel fade duration
-  LOGO_CROSSFADE_DURATION: 0.5, // Step 3: Solid logo crossfade duration
-  HERO_STAGGER_DELAY: 0.12,     // Step 4: Stagger interval between hero elements
+  COUNTER_FADE_DURATION: 0.2,   // Step 1: Counter & progress line fade duration
+  PANEL_FADE_DURATION: 0.45,    // Step 2: White panel fade duration
+  LOGO_CROSSFADE_DURATION: 0.35,// Step 3: Solid logo crossfade duration
+  HERO_STAGGER_DELAY: 0.06,     // Step 4: Stagger interval between hero elements
 }
 
 export default function Preloader() {
@@ -129,7 +129,7 @@ export default function Preloader() {
     if (email) gsap.set(email, { opacity: 0, y: 20 })
     if (navbar) gsap.set(navbar, { opacity: 0, y: -40 })
 
-    // 5. Real loading progress tracking
+    // 5. Essential page loading progress tracking (does not wait for offscreen media)
     let realLoadFinished = false
     let phase = 1 // 1: 0->80 calm pace, 2: 80->100 rapid ease-in, 3: exit
     const startTime = performance.now()
@@ -137,14 +137,25 @@ export default function Preloader() {
     let startValPhase2 = 0
     let rafId: number
 
-    const handleLoadComplete = () => {
+    const handleEssentialReady = () => {
       realLoadFinished = true
     }
 
-    if (document.readyState === "complete") {
+    if (document.readyState === "complete" || document.readyState === "interactive") {
       realLoadFinished = true
     } else {
-      window.addEventListener("load", handleLoadComplete, { once: true })
+      document.addEventListener("DOMContentLoaded", handleEssentialReady, { once: true })
+      window.addEventListener("load", handleEssentialReady, { once: true })
+    }
+
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready
+        .then(() => {
+          realLoadFinished = true
+        })
+        .catch(() => {
+          realLoadFinished = true
+        })
     }
 
     const timeoutId = setTimeout(() => {
@@ -290,7 +301,8 @@ export default function Preloader() {
       window.removeEventListener("wheel", preventDefault)
       window.removeEventListener("touchmove", preventDefault)
       window.removeEventListener("keydown", preventNavKeys)
-      window.removeEventListener("load", handleLoadComplete)
+      window.removeEventListener("load", handleEssentialReady)
+      document.removeEventListener("DOMContentLoaded", handleEssentialReady)
       window.removeEventListener("resize", alignSolidLogo)
       document.body.style.overflow = originalOverflow
       document.documentElement.style.overflow = ""
