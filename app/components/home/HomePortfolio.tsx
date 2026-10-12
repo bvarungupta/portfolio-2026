@@ -72,7 +72,7 @@ export default function HomePortfolio() {
           </div>
         </div>
 
-        <div className="relative z-10 bg-white">
+        <div className="relative">
           <div data-section="work">
             <WorkGallery featuredOnly={true} showViewMore={true} />
           </div>

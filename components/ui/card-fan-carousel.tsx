@@ -28,13 +28,13 @@ const FAN_POSITIONS = [
 ];
 
 export const DEMO_CARDS: CardItem[] = [
-  { imgUrl: "/images/about/beach.jpg", alt: "Beach" },
-  { imgUrl: "/images/about/concert.jpg", alt: "Concert" },
-  { imgUrl: "/images/about/books.jpeg", alt: "Books" },
-  { imgUrl: "/images/about/varun.jpg", alt: "Varun Gupta" },
-  { imgUrl: "/images/about/harbor.jpg", alt: "Harbor" },
-  { imgUrl: "/images/about/imax.jpg", alt: "IMAX Cinema" },
-  { imgUrl: "/images/about/ps.jpeg", alt: "PlayStation" },
+  { imgUrl: "/images/about/beach.webp", alt: "Beach" },
+  { imgUrl: "/images/about/concert.webp", alt: "Concert" },
+  { imgUrl: "/images/about/books.webp", alt: "Books" },
+  { imgUrl: "/images/about/varun.webp", alt: "Varun Gupta" },
+  { imgUrl: "/images/about/harbor.webp", alt: "Harbor" },
+  { imgUrl: "/images/about/imax.webp", alt: "IMAX Cinema" },
+  { imgUrl: "/images/about/ps.webp", alt: "PlayStation" },
 ];
 
 function getResponsiveMultiplier(width: number) {
