@@ -40,6 +40,28 @@ export default function Navbar() {
     setIsMounted(true)
   }, [])
 
+  // Idle prefetch for primary destinations (/work, /about, /lab) without downloading heavy media
+  useEffect(() => {
+    const idlePrefetch = () => {
+      const targets = ['/work', '/about', '/lab']
+      targets.forEach((route) => {
+        if (route !== pathname) {
+          prefetchWithBlinds(route)
+        }
+      })
+    }
+
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        const id = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(idlePrefetch, { timeout: 3000 })
+        return () => (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id)
+      } else {
+        const timer = setTimeout(idlePrefetch, 1500)
+        return () => clearTimeout(timer)
+      }
+    }
+  }, [pathname, prefetchWithBlinds])
+
   useEffect(() => {
     // Create the SVG displacement map for liquid glass effect
     const mapSvg = `

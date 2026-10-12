@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { cn } from "@/lib/utils";
 
@@ -280,16 +280,8 @@ export default function SocialCards({ cards = DEMO_CARDS, className }: SocialCar
           className="fan-layout relative flex justify-center items-center w-full h-[15rem] min-[390px]:h-[16.5rem] sm:h-[18.5rem] md:h-[21rem] lg:h-[22.5rem] touch-pan-y"
         >
           {displayCards.map((card, index) => {
-            const cardContent = (
-              <div className="relative w-full h-full overflow-hidden rounded-xl md:rounded-2xl border-[2px] border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-neutral-100">
-                <img
-                  src={card.imgUrl}
-                  loading="lazy"
-                  alt={card.alt || `Card ${index + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                />
-              </div>
-            );
+            const isCenter = index === (totalCards >> 1) || card.imgUrl.includes("varun.webp");
+            const cardContent = <FanCardImage card={card} index={index} isCenter={isCenter} />;
 
             const commonClasses =
               "fan-card absolute left-1/2 top-[42%] sm:top-[44%] md:top-[46%] lg:top-1/2 -translate-x-1/2 -translate-y-1/2 w-[6.4rem] h-[8.9rem] min-[390px]:w-[7.2rem] min-[390px]:h-[10rem] min-[480px]:w-[8.2rem] min-[480px]:h-[11.4rem] sm:w-[9.6rem] sm:h-[13.4rem] md:w-[11rem] md:h-[15.2rem] lg:w-[12.4rem] lg:h-[17.2rem] cursor-pointer will-change-transform touch-manipulation";
@@ -313,5 +305,58 @@ export default function SocialCards({ cards = DEMO_CARDS, className }: SocialCar
         </div>
       </div>
     </section>
+  );
+}
+
+function FanCardImage({
+  card,
+  index,
+  isCenter,
+}: {
+  card: CardItem;
+  index: number;
+  isCenter: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+      setLoaded(true);
+    }
+  }, []);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden rounded-xl md:rounded-2xl border-[2px] border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-neutral-100">
+      {/* Subtle, design-consistent neutral placeholder */}
+      {!loaded && !error && (
+        <div
+          className="absolute inset-0 bg-gradient-to-tr from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse pointer-events-none"
+          aria-hidden="true"
+        />
+      )}
+
+      {error ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-neutral-100 text-neutral-400 text-xs font-mono select-none">
+          <span>{card.alt || `Card ${index + 1}`}</span>
+        </div>
+      ) : (
+        <img
+          ref={imgRef}
+          src={card.imgUrl}
+          loading={isCenter ? "eager" : "lazy"}
+          fetchPriority={isCenter ? "high" : "low"}
+          decoding="async"
+          alt={card.alt || `Card ${index + 1}`}
+          onLoad={() => setLoaded(true)}
+          onError={() => setError(true)}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-300 ease-out",
+            loaded ? "opacity-100" : "opacity-0"
+          )}
+        />
+      )}
+    </div>
   );
 }

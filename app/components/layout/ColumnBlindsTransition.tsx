@@ -48,7 +48,9 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
   const containerRef = useRef<HTMLDivElement>(null)
   const targetHrefRef = useRef<string | null>(null)
   const callbackRef = useRef<(() => void) | null>(null)
-  const isHoldingRef = useRef(false)
+  const isClosedRef = useRef(false)
+  const isRouteReadyRef = useRef(false)
+  const isUnveilingRef = useRef(false)
 
   // Disable scrolling while page transition animation is active
   useEffect(() => {
@@ -93,6 +95,63 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
     }
   }
 
+  // Reveal destination page smoothly once both curtain is closed AND destination is mounted
+  const triggerUnveil = useCallback(() => {
+    if (isUnveilingRef.current || !containerRef.current) return
+    isUnveilingRef.current = true
+
+    const container = containerRef.current
+    const allCols = Array.from(container.querySelectorAll<HTMLElement>(".global-blind-col"))
+    const columns = allCols.filter(col => window.getComputedStyle(col).display !== "none")
+    const allLabels = Array.from(container.querySelectorAll<HTMLElement>(".global-blind-label"))
+    const labels = allLabels.filter(el => {
+      const col = el.closest(".global-blind-col")
+      if (col && window.getComputedStyle(col).display === "none") return false
+      return window.getComputedStyle(el).display !== "none"
+    })
+
+    requestAnimationFrame(() => {
+      const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number, opts: { immediate: boolean }) => void } }).__lenis
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true })
+      } else {
+        window.scrollTo({ top: 0, behavior: "instant" })
+      }
+
+      const { duration, stagger } = getTiming()
+      const exitTl = gsap.timeline({
+        onComplete: () => {
+          gsap.set(container, { visibility: "hidden", pointerEvents: "none" })
+          setIsBlindsActive(false)
+          targetHrefRef.current = null
+          isClosedRef.current = false
+          isRouteReadyRef.current = false
+          isUnveilingRef.current = false
+          if (callbackRef.current) {
+            callbackRef.current()
+            callbackRef.current = null
+          }
+        }
+      })
+
+      // Labels glide up and dissolve
+      exitTl.to(labels, {
+        opacity: 0,
+        y: -10,
+        duration: 0.12,
+        ease: "power2.in"
+      })
+      // Columns exit upward (transformOrigin: top center) with identical cascade
+      .set(columns, { transformOrigin: "top center" })
+      .to(columns, {
+        scaleY: 0,
+        duration,
+        stagger,
+        ease: "power4.inOut"
+      }, "-=0.08")
+    })
+  }, [])
+
   const navigateWithBlinds = useCallback((href: string, callback?: () => void) => {
     if (isBlindsActive || !containerRef.current) return
 
@@ -101,9 +160,6 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
       window.scrollTo({ top: 0, behavior: "smooth" })
       return
     }
-
-    // Prefetch destination chunks immediately upon user intent
-    router.prefetch(href)
 
     const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reducedMotion) {
@@ -116,7 +172,13 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
     targetHrefRef.current = href
     callbackRef.current = callback || null
     setIsBlindsActive(true)
-    isHoldingRef.current = false
+    isClosedRef.current = false
+    isRouteReadyRef.current = false
+    isUnveilingRef.current = false
+
+    // Prefetch destination chunks and initiate route transition in parallel with curtain closing!
+    router.prefetch(href)
+    router.push(href)
 
     const container = containerRef.current
     const allCols = Array.from(container.querySelectorAll<HTMLElement>(".global-blind-col"))
@@ -133,13 +195,17 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
 
     const tl = gsap.timeline({
       onComplete: () => {
-        isHoldingRef.current = true
-        // Swap route while curtain is fully closed
-        router.push(href)
+        isClosedRef.current = true
+        // Scroll reset behind closed curtain
         window.scrollTo({ top: 0, behavior: "instant" })
         const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number, opts: { immediate: boolean }) => void } }).__lenis
         if (lenis) {
           lenis.scrollTo(0, { immediate: true })
+        }
+
+        // If the destination route is already mounted behind the closed curtain, unveil immediately!
+        if (isRouteReadyRef.current && !isUnveilingRef.current) {
+          triggerUnveil()
         }
       }
     })
@@ -161,20 +227,22 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
         ease: "power2.out"
       }, `-=${duration * 0.45}`)
 
-    // Safety timeout in case navigation stalls (1.6s max)
+    // Safety timeout in case navigation stalls (2.0s max)
     const safety = setTimeout(() => {
       if (isBlindsActive) {
         setIsBlindsActive(false)
-        isHoldingRef.current = false
         targetHrefRef.current = null
+        isClosedRef.current = false
+        isRouteReadyRef.current = false
+        isUnveilingRef.current = false
         gsap.set(container, { visibility: "hidden", pointerEvents: "none" })
       }
-    }, 1600)
+    }, 2000)
 
     return () => clearTimeout(safety)
-  }, [isBlindsActive, pathname, router])
+  }, [isBlindsActive, pathname, router, triggerUnveil])
 
-  // Destination route mounted: unveil smoothly to top without artificial delay
+  // Destination route mounted: unveil smoothly once curtain is fully closed
   useEffect(() => {
     if (!isBlindsActive || !targetHrefRef.current || !containerRef.current) return
 
@@ -182,57 +250,23 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
     const targetNorm = targetHrefRef.current.replace(/\/$/, "")
 
     if (currentNorm === targetNorm) {
-      const container = containerRef.current
-      const allCols = Array.from(container.querySelectorAll<HTMLElement>(".global-blind-col"))
-      const columns = allCols.filter(col => window.getComputedStyle(col).display !== "none")
-      const allLabels = Array.from(container.querySelectorAll<HTMLElement>(".global-blind-label"))
-      const labels = allLabels.filter(el => {
-        const col = el.closest(".global-blind-col")
-        if (col && window.getComputedStyle(col).display === "none") return false
-        return window.getComputedStyle(el).display !== "none"
-      })
+      isRouteReadyRef.current = true
 
-      // Frame tick for the new page DOM to mount cleanly behind closed blinds
-      requestAnimationFrame(() => {
-        const { duration, stagger } = getTiming()
-        const exitTl = gsap.timeline({
-          onComplete: () => {
-            gsap.set(container, { visibility: "hidden", pointerEvents: "none" })
-            setIsBlindsActive(false)
-            isHoldingRef.current = false
-            targetHrefRef.current = null
-            if (callbackRef.current) {
-              callbackRef.current()
-              callbackRef.current = null
-            }
-          }
-        })
-
-        // Labels glide up and dissolve
-        exitTl.to(labels, {
-          opacity: 0,
-          y: -10,
-          duration: 0.12,
-          ease: "power2.in"
-        })
-        // Columns exit upward (transformOrigin: top center) with identical cascade
-        .set(columns, { transformOrigin: "top center" })
-        .to(columns, {
-          scaleY: 0,
-          duration,
-          stagger,
-          ease: "power4.inOut"
-        }, "-=0.08")
-      })
+      // If curtain has already completed its closing cascade, unveil immediately!
+      if (isClosedRef.current && !isUnveilingRef.current) {
+        triggerUnveil()
+      }
     }
-  }, [pathname, isBlindsActive])
+  }, [pathname, isBlindsActive, triggerUnveil])
 
   // Browser Back/Forward navigation safety (popstate)
   useEffect(() => {
     const handlePopState = () => {
       if (isBlindsActive && containerRef.current) {
         setIsBlindsActive(false)
-        isHoldingRef.current = false
+        isClosedRef.current = false
+        isRouteReadyRef.current = false
+        isUnveilingRef.current = false
         targetHrefRef.current = null
         gsap.set(containerRef.current, { visibility: "hidden", pointerEvents: "none" })
       }
