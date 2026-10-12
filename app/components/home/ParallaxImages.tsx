@@ -93,6 +93,7 @@ export default function ParallaxImages() {
           height={500}
           priority
           loading="eager"
+          fetchPriority="high"
           className="w-full h-auto object-contain block"
           style={{ width: 'auto', height: 'auto' }}
         />
@@ -108,8 +109,8 @@ export default function ParallaxImages() {
           alt="Tejas - Client Collaboration"
           width={TEJAS.width}
           height={500}
-          priority
           loading="eager"
+          fetchPriority="low"
           className="w-full h-auto object-contain block"
           style={{ width: 'auto', height: 'auto' }}
         />
@@ -129,6 +130,7 @@ export default function ParallaxImages() {
           height={332}
           priority
           loading="eager"
+          fetchPriority="high"
           className="w-full h-auto object-contain block"
           style={{ width: 'auto', height: 'auto' }}
         />
@@ -144,8 +146,8 @@ export default function ParallaxImages() {
           alt="Tejas - Client Collaboration"
           width={190}
           height={270}
-          priority
           loading="eager"
+          fetchPriority="low"
           className="w-full h-auto object-contain block"
           style={{ width: 'auto', height: 'auto' }}
         />

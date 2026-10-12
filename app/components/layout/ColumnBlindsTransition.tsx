@@ -7,6 +7,7 @@ import { gsap } from "gsap"
 
 interface ColumnBlindsContextType {
   navigateWithBlinds: (href: string, callback?: () => void) => void
+  prefetchWithBlinds: (href: string) => void
   isBlindsActive: boolean
 }
 
@@ -80,9 +81,17 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
     }
   }, [isBlindsActive])
 
-  // 0.75x calibrated timing for luxury architectural pacing
-  const DURATION = 0.56
-  const STAGGER = 0.053
+  const prefetchWithBlinds = useCallback((href: string) => {
+    router.prefetch(href)
+  }, [router])
+
+  const getTiming = () => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768
+    return {
+      duration: isMobile ? 0.32 : 0.40,
+      stagger: isMobile ? 0.03 : 0.035,
+    }
+  }
 
   const navigateWithBlinds = useCallback((href: string, callback?: () => void) => {
     if (isBlindsActive || !containerRef.current) return
@@ -90,6 +99,17 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
     // If already on the same page, just scroll top
     if (pathname === href) {
       window.scrollTo({ top: 0, behavior: "smooth" })
+      return
+    }
+
+    // Prefetch destination chunks immediately upon user intent
+    router.prefetch(href)
+
+    const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reducedMotion) {
+      router.push(href)
+      window.scrollTo({ top: 0, behavior: "instant" })
+      if (callback) callback()
       return
     }
 
@@ -108,6 +128,7 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
       return window.getComputedStyle(el).display !== "none"
     })
 
+    const { duration, stagger } = getTiming()
     gsap.set(container, { visibility: "visible", pointerEvents: "auto" })
 
     const tl = gsap.timeline({
@@ -123,24 +144,24 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
       }
     })
 
-    // Phase 1: Columns slide up from bottom with 0.75x architectural cascade
+    // Phase 1: Columns slide up from bottom with calibrated architectural cascade
     tl.set(columns, { scaleY: 0, transformOrigin: "bottom center" })
-      .set(labels, { opacity: 0, y: 14 })
+      .set(labels, { opacity: 0, y: 10 })
       .to(columns, {
         scaleY: 1,
-        duration: DURATION,
-        stagger: STAGGER,
+        duration,
+        stagger,
         ease: "power4.inOut"
       })
       .to(labels, {
         opacity: 0.9,
         y: 0,
-        duration: 0.22,
-        stagger: STAGGER,
+        duration: 0.16,
+        stagger,
         ease: "power2.out"
-      }, `-=${DURATION * 0.45}`)
+      }, `-=${duration * 0.45}`)
 
-    // Safety timeout in case navigation stalls
+    // Safety timeout in case navigation stalls (1.6s max)
     const safety = setTimeout(() => {
       if (isBlindsActive) {
         setIsBlindsActive(false)
@@ -148,12 +169,12 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
         targetHrefRef.current = null
         gsap.set(container, { visibility: "hidden", pointerEvents: "none" })
       }
-    }, 3500)
+    }, 1600)
 
     return () => clearTimeout(safety)
-  }, [isBlindsActive, pathname, router, DURATION, STAGGER])
+  }, [isBlindsActive, pathname, router])
 
-  // Destination route mounted: unveil smoothly to top
+  // Destination route mounted: unveil smoothly to top without artificial delay
   useEffect(() => {
     if (!isBlindsActive || !targetHrefRef.current || !containerRef.current) return
 
@@ -171,10 +192,10 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
         return window.getComputedStyle(el).display !== "none"
       })
 
-      // Small tick for the new page DOM to mount cleanly behind closed blinds
+      // Frame tick for the new page DOM to mount cleanly behind closed blinds
       requestAnimationFrame(() => {
+        const { duration, stagger } = getTiming()
         const exitTl = gsap.timeline({
-          delay: 0.08,
           onComplete: () => {
             gsap.set(container, { visibility: "hidden", pointerEvents: "none" })
             setIsBlindsActive(false)
@@ -190,21 +211,35 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
         // Labels glide up and dissolve
         exitTl.to(labels, {
           opacity: 0,
-          y: -14,
-          duration: 0.18,
+          y: -10,
+          duration: 0.12,
           ease: "power2.in"
         })
-        // Columns exit upward (transformOrigin: top center) with identical 0.75x cascade
+        // Columns exit upward (transformOrigin: top center) with identical cascade
         .set(columns, { transformOrigin: "top center" })
         .to(columns, {
           scaleY: 0,
-          duration: DURATION,
-          stagger: STAGGER,
+          duration,
+          stagger,
           ease: "power4.inOut"
-        }, "-=0.06")
+        }, "-=0.08")
       })
     }
-  }, [pathname, isBlindsActive, DURATION, STAGGER])
+  }, [pathname, isBlindsActive])
+
+  // Browser Back/Forward navigation safety (popstate)
+  useEffect(() => {
+    const handlePopState = () => {
+      if (isBlindsActive && containerRef.current) {
+        setIsBlindsActive(false)
+        isHoldingRef.current = false
+        targetHrefRef.current = null
+        gsap.set(containerRef.current, { visibility: "hidden", pointerEvents: "none" })
+      }
+    }
+    window.addEventListener("popstate", handlePopState)
+    return () => window.removeEventListener("popstate", handlePopState)
+  }, [isBlindsActive])
 
   // Expose global window helper for easy invocation
   useEffect(() => {
@@ -215,7 +250,7 @@ export function ColumnBlindsProvider({ children }: { children: React.ReactNode }
   }, [navigateWithBlinds])
 
   return (
-    <ColumnBlindsContext.Provider value={{ navigateWithBlinds, isBlindsActive }}>
+    <ColumnBlindsContext.Provider value={{ navigateWithBlinds, prefetchWithBlinds, isBlindsActive }}>
       {children}
 
       {/* ───────────────────────────────────────────────────────────── */}

@@ -27,10 +27,11 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
-  const { navigateWithBlinds } = useColumnBlinds()
+  const { navigateWithBlinds, prefetchWithBlinds } = useColumnBlinds()
   const navRef = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [activeIcons, setActiveIcons] = useState<Record<string, boolean>>({})
 
   const isDarkPage = pathname === "/lab/specimen"
 
@@ -222,7 +223,7 @@ export default function Navbar() {
             <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
               <div className="relative">
                 {/* Floating Nav Icon */}
-                {item.icon && (
+                {item.icon && activeIcons[item.name] && (
                   <div
                     style={{
                       position: 'absolute',
@@ -249,7 +250,14 @@ export default function Navbar() {
                   </div>
                 )}
                 <button
-                  onMouseEnter={() => setHoveredItem(item.name)}
+                  onMouseEnter={() => {
+                    setHoveredItem(item.name)
+                    setActiveIcons(prev => prev[item.name] ? prev : { ...prev, [item.name]: true })
+                    if (item.href && item.href !== pathname) prefetchWithBlinds(item.href)
+                  }}
+                  onTouchStart={() => {
+                    if (item.href && item.href !== pathname) prefetchWithBlinds(item.href)
+                  }}
                   onMouseLeave={() => setHoveredItem(null)}
                   onClick={(e) => handleNavigation(item, e)}
                   className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"

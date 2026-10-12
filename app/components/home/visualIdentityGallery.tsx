@@ -25,6 +25,7 @@ const items = [
 ]
 
 export default function VisualIdentityGallery() {
+  const containerRef = useRef<HTMLDivElement>(null)
   const headerRef  = useRef<HTMLDivElement>(null)
   const visualEl   = useRef<HTMLHeadingElement>(null)
   const identityEl = useRef<HTMLHeadingElement>(null)
@@ -32,10 +33,43 @@ export default function VisualIdentityGallery() {
   const [cycleIndex, setCycleIndex] = useState(0)
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setCycleIndex(i => (i + 1) % fuellstackImages.length)
-    }, 500)
-    return () => clearInterval(id)
+    const el = containerRef.current
+    if (!el || typeof IntersectionObserver === "undefined") {
+      const id = setInterval(() => {
+        setCycleIndex(i => (i + 1) % fuellstackImages.length)
+      }, 500)
+      return () => clearInterval(id)
+    }
+
+    let intervalId: ReturnType<typeof setInterval> | null = null
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!intervalId) {
+            intervalId = setInterval(() => {
+              setCycleIndex(i => (i + 1) % fuellstackImages.length)
+            }, 500)
+          }
+        } else {
+          if (intervalId) {
+            clearInterval(intervalId)
+            intervalId = null
+          }
+        }
+      },
+      { rootMargin: "250px 0px" }
+    )
+
+    observer.observe(el)
+
+    return () => {
+      observer.disconnect()
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -81,7 +115,7 @@ export default function VisualIdentityGallery() {
   }, [])
 
   return (
-    <div className="mt-20 md:mt-28">
+    <div ref={containerRef} className="mt-20 md:mt-28">
 
       {/* ── Section header ──────────────────────────────────────── */}
       <div

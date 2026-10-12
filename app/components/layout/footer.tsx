@@ -25,6 +25,7 @@ export default function Footer() {
   const pathname = usePathname()
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [activeLinks, setActiveLinks] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (DISABLE_WELCOME) {
@@ -131,33 +132,38 @@ export default function Footer() {
               const isHovered = hoveredLink === l.label;
               return (
                 <div key={l.label} className="relative">
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '24px',
-                      left: '50%',
-                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                      opacity: isHovered ? 1 : 0,
-                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                      pointerEvents: 'none',
-                      zIndex: 20,
-                    }}
-                  >
-                    <img
-                      src={l.icon}
-                      alt=""
+                  {l.icon && activeLinks[l.label] && (
+                    <div
                       style={{
-                        width: `${l.size || 28}px`,
-                        height: `${l.size || 28}px`,
-                        maxWidth: 'none',
-                        display: 'block',
-                        objectFit: 'contain',
+                        position: 'absolute',
+                        bottom: '24px',
+                        left: '50%',
+                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                        pointerEvents: 'none',
+                        zIndex: 20,
                       }}
-                    />
-                  </div>
+                    >
+                      <img
+                        src={l.icon}
+                        alt=""
+                        style={{
+                          width: `${l.size || 28}px`,
+                          height: `${l.size || 28}px`,
+                          maxWidth: 'none',
+                          display: 'block',
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </div>
+                  )}
                   <Link
                     href={l.href}
-                    onMouseEnter={() => setHoveredLink(l.label)}
+                    onMouseEnter={() => {
+                      setHoveredLink(l.label)
+                      setActiveLinks(prev => prev[l.label] ? prev : { ...prev, [l.label]: true })
+                    }}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="text-sm font-light tracking-wide transition-colors duration-200"
                     style={{

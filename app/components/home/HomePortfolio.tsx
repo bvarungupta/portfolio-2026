@@ -13,9 +13,7 @@ const DesignProcessGallery = dynamic(() => import("./DesignProcessGallery"), {
 const MotionDesignGallery = dynamic(() => import("./MotionDesignGallery"), {
   ssr: false,
 })
-const VisualExplorationsGallery = dynamic(() => import("./visualExplorationsGallery"), {
-  ssr: false,
-})
+import DeferredVisualExplorations from "./DeferredVisualExplorations"
 
 export default function HomePortfolio() {
   return (
@@ -27,8 +25,6 @@ export default function HomePortfolio() {
         alt=""
         width={120}
         height={800}
-        loading="eager"
-        priority
         className="absolute top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, left: "-70px" }}
       />
@@ -93,7 +89,7 @@ export default function HomePortfolio() {
           </div>
 
           <div data-section="visual-explorations">
-            <VisualExplorationsGallery />
+            <DeferredVisualExplorations />
           </div>
         </div>
 

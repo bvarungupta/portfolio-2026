@@ -14,15 +14,15 @@ export const PRELOADER_CONFIG = {
   FONT_FAMILY: "'Quincy CF', Quincy, Georgia, serif",
 
   // Loading Durations
-  MIN_PHASE1_MS: 400,          // Calm steady pace 0 -> 80 (ms)
-  ACCELERATION_MS: 250,         // Rapid ease-in acceleration 80 -> 100 (ms)
-  MAX_LOAD_TIMEOUT_MS: 1200,    // Safety fallback timeout (ms)
+  MIN_PHASE1_MS: 280,          // Calm steady pace 0 -> 80 (ms)
+  ACCELERATION_MS: 180,         // Rapid ease-in acceleration 80 -> 100 (ms)
+  MAX_LOAD_TIMEOUT_MS: 1000,    // Safety fallback timeout (ms)
 
   // Exit Animation Sequence Timings (in seconds)
-  COUNTER_FADE_DURATION: 0.2,   // Step 1: Counter & progress line fade duration
-  PANEL_FADE_DURATION: 0.45,    // Step 2: White panel fade duration
-  LOGO_CROSSFADE_DURATION: 0.35,// Step 3: Solid logo crossfade duration
-  HERO_STAGGER_DELAY: 0.06,     // Step 4: Stagger interval between hero elements
+  COUNTER_FADE_DURATION: 0.18,  // Step 1: Counter & progress line fade duration
+  PANEL_FADE_DURATION: 0.38,    // Step 2: White panel fade duration
+  LOGO_CROSSFADE_DURATION: 0.3, // Step 3: Solid logo crossfade duration
+  HERO_STAGGER_DELAY: 0.045,    // Step 4: Stagger interval between hero elements
 }
 
 export default function Preloader() {
