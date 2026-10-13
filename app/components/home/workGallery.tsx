@@ -212,7 +212,7 @@ export default function WorkGallery({ limit, showViewMore, featuredOnly = false 
       {/* ── Section header ──────────────────────────────────────── */}
       <div
         ref={headerRef}
-        className="px-6 md:px-10 pb-8 md:pb-12 overflow-hidden"
+        className="pt-12 md:pt-0 px-6 md:px-10 pb-8 md:pb-12 overflow-hidden"
       >
         {/* Inner wrapper: height = text height only, so top:50% = text midline */}
         <div className="relative">

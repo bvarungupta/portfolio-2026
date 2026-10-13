@@ -200,7 +200,7 @@ export default function ParallaxImages() {
         style={{
           width: 236,
           right: -90,
-          top: '64vh',
+          top: '72vh',
           zIndex: 2,
         }}
       >
