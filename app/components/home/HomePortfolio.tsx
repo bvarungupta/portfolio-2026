@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { Rise } from "cube-motion/react"
 import WorkGallery from "./workGallery"
-import MouseColorBloom from "./MouseColorBloom"
 import ParallaxImages from "./ParallaxImages"
 import EmailSection from "./EmailSection"
 import VisualIdentityGallery from "./visualIdentityGallery"
@@ -37,7 +36,6 @@ export default function HomePortfolio() {
         className="absolute top-0 h-screen w-auto object-contain object-top pointer-events-none select-none hidden md:block"
         style={{ zIndex: 0, opacity: 0.18, right: "-40px" }}
       />
-      <MouseColorBloom />
 
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         <div className="relative min-h-[calc(100vh-120px)] flex flex-col justify-center items-center text-center gap-6 overflow-hidden md:overflow-visible">

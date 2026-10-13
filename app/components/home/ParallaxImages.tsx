@@ -1,21 +1,25 @@
 "use client"
 
-import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import AngelRevealFigure from './AngelRevealFigure'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Config mirrors ABHAY / TEJAS in page.tsx
 const ABHAY = {
-  src: '/images/HomeImages/left-angel-bw.webp',
+  bw: '/images/HomeImages/left-angel-bw.webp',
+  color: '/images/HomeImages/left-angel-color.webp',
   width: 640,
+  height: 426,
 }
 
 const TEJAS = {
-  src: '/images/HomeImages/Right-angel-bw.webp',
+  bw: '/images/HomeImages/Right-angel-bw.webp',
+  color: '/images/HomeImages/Right-angel-color.webp',
   width: 550,
+  height: 550,
 }
 
 export default function ParallaxImages() {
@@ -102,16 +106,18 @@ export default function ParallaxImages() {
               transformOrigin: 'center center',
             }}
           >
-            <Image
-              src={ABHAY.src}
+            <AngelRevealFigure
+              name="left"
+              src={ABHAY.bw}
+              paintedSrc={ABHAY.color}
               alt="Abhay - Client Collaboration"
-              width={640}
-              height={Math.round((640 * 501) / 752)}
+              width={ABHAY.width}
+              height={ABHAY.height}
               priority
               loading="eager"
               fetchPriority="high"
+              sizes="(max-width: 1024px) 50vw, 640px"
               className="w-full h-auto object-contain block"
-              style={{ width: '100%', height: 'auto' }}
             />
           </div>
         </div>
@@ -134,15 +140,17 @@ export default function ParallaxImages() {
               transformOrigin: 'center center',
             }}
           >
-            <Image
-              src={TEJAS.src}
+            <AngelRevealFigure
+              name="right"
+              src={TEJAS.bw}
+              paintedSrc={TEJAS.color}
               alt="Tejas - Client Collaboration"
-              width={550}
-              height={Math.round((550 * 641) / 642)}
+              width={TEJAS.width}
+              height={TEJAS.height}
               loading="eager"
               fetchPriority="low"
+              sizes="(max-width: 1024px) 50vw, 550px"
               className="w-full h-auto object-contain block"
-              style={{ width: '100%', height: 'auto' }}
             />
           </div>
         </div>
@@ -167,16 +175,19 @@ export default function ParallaxImages() {
             transformOrigin: 'center center',
           }}
         >
-          <Image
-            src={ABHAY.src}
+          <AngelRevealFigure
+            name="left"
+            src={ABHAY.bw}
+            paintedSrc={ABHAY.color}
             alt="Abhay - Client Collaboration"
             width={270}
-            height={Math.round((270 * 501) / 752)}
+            height={180}
             priority
             loading="eager"
             fetchPriority="high"
+            sizes="270px"
+            wave={true}
             className="w-full h-auto object-contain block"
-            style={{ width: '100%', height: 'auto' }}
           />
         </div>
       </div>
@@ -199,15 +210,18 @@ export default function ParallaxImages() {
             transformOrigin: 'center center',
           }}
         >
-          <Image
-            src={TEJAS.src}
+          <AngelRevealFigure
+            name="right"
+            src={TEJAS.bw}
+            paintedSrc={TEJAS.color}
             alt="Tejas - Client Collaboration"
             width={236}
-            height={Math.round((236 * 641) / 642)}
+            height={236}
             loading="eager"
             fetchPriority="low"
+            sizes="236px"
+            wave={true}
             className="w-full h-auto object-contain block"
-            style={{ width: '100%', height: 'auto' }}
           />
         </div>
       </div>
