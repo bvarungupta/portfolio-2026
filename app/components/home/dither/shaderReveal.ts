@@ -100,15 +100,22 @@ void main() {
     float d = distance(p, s.xy) / uRadius;
     m = max(m, s.z * pow(clamp(1.0 - d * d, 0.0, 1.0), uFalloff));
   }
-  if (uWaveOn > 0.5) {
-    float u = dot(p / uSize - 0.5, normalize(uWave.yz));
-    float k = (u - uWave.x) / uWaveWidth;
-    m = max(m, exp(-k * k));
-  }
-
   vec2 np = p / 100.0 * uNoiseScale;
   float n = fbm(np + vec2(uTime * 0.13, -uTime * 0.09));
-  float field = m + (n - 0.5) * uNoise;
+  float field = 0.0;
+
+  if (uWaveOn > 0.5) {
+    // Mobile scroll bloom: uWave.x advances across figure from -1.05 to +1.05
+    float u = dot(p / uSize - 0.5, normalize(uWave.yz));
+    float k = (uWave.x - u) / uWaveWidth;
+    float waveM = clamp(0.5 + k * 0.5, 0.0, 1.0);
+    // Organic bloom edge: noise modulates along the advancing frontier
+    float edgeFactor = 4.0 * waveM * (1.0 - waveM);
+    field = waveM + (n - 0.5) * 0.85 * edgeFactor;
+  } else {
+    // Desktop hover: cursor stamps with trailing noise
+    field = m + (n - 0.5) * uNoise;
+  }
   const float T = 0.5;
 
   float reveal = smoothstep(T - uSoft, T + uSoft, field);
@@ -278,12 +285,12 @@ export function attachShaderReveal(
   const ptsArray = new Float32Array(MAX_POINTS * 3)
   const t0 = performance.now()
 
-  // Touch wave: direction leaning towards central hero area
-  let wavePos = -1
+  // Mobile scroll bloom: progress from 0.0 (monochrome) to 1.0 (full colour)
+  let waveProgress = 0
   const isLeft = name === 'left' || name === 'abhay'
   const waveDir = isLeft ? [0.35, 1] : [-0.35, 1]
-  const WAVE_WIDTH = 0.13
-  const waveVisible = () => touch && wavePos > -0.95 && wavePos < 0.95
+  const WAVE_WIDTH = 0.30
+  const waveVisible = () => touch && waveProgress > 0.005
 
   // Show only controls canvas visibility. The base monochrome image NEVER disappears.
   const show = (on: boolean) => {
@@ -404,7 +411,8 @@ export function attachShaderReveal(
     gl.uniform1f(U.noiseScale, config.shNoiseScale)
     gl.uniform1f(U.soft, config.shSoftness)
     gl.uniform1f(U.time, config.shAnimate ? ((now - t0) / 1000) * config.shSpeed : 0)
-    gl.uniform3f(U.wave, wavePos, waveDir[0], waveDir[1])
+    const front = -1.05 + 2.10 * waveProgress
+    gl.uniform3f(U.wave, front, waveDir[0], waveDir[1])
     gl.uniform1f(U.waveOn, waving ? 1 : 0)
     gl.uniform1f(U.waveWidth, WAVE_WIDTH)
 
@@ -448,12 +456,8 @@ export function attachShaderReveal(
     setup()
   }
 
-  // Preload painted color image early during idle
-  if (typeof window !== 'undefined') {
-    const ric = (window as Window & { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback
-    if (ric) ric(loadPainted)
-    else setTimeout(loadPainted, 200)
-  }
+  // Load painted color image
+  loadPainted()
 
   let resizeTimer: ReturnType<typeof setTimeout> | undefined
   const onResize = () => {
@@ -485,9 +489,11 @@ export function attachShaderReveal(
 
   const unScroll = onScrollFrame((y) => {
     if (touch) {
-      const range = Math.min(340, window.innerHeight * 0.42)
+      loadPainted()
+      // Mobile scroll reveal range: completes within hero scroll (approx 360px)
+      const range = Math.min(360, window.innerHeight * 0.45)
       const was = waveVisible()
-      wavePos = -1 + 2 * Math.min(1, Math.max(0, y / range))
+      waveProgress = Math.min(1, Math.max(0, y / range))
       if (was || waveVisible()) kick()
       return
     }

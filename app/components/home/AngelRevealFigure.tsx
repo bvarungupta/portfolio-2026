@@ -37,6 +37,7 @@ export default function AngelRevealFigure({
   const glRef = useRef<HTMLCanvasElement>(null)
   const [fallbackMode, setFallbackMode] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [fallbackProgress, setFallbackProgress] = useState(0)
 
   useEffect(() => {
     const wrap = wrapRef.current
@@ -59,25 +60,37 @@ export default function AngelRevealFigure({
     }
   }, [name, paintedSrc, wave])
 
-  // Mouse hover tracking for fallback mode only
+  // Fallback mode tracking (hover on desktop, scroll on mobile)
   useEffect(() => {
     if (!fallbackMode) return
     const wrap = wrapRef.current
     if (!wrap) return
 
-    const onEnter = () => setIsHovered(true)
-    const onLeave = () => setIsHovered(false)
+    const touch = wave || !window.matchMedia('(pointer: fine)').matches
+    if (touch) {
+      const onScroll = () => {
+        const range = Math.min(360, window.innerHeight * 0.45)
+        setFallbackProgress(Math.min(1, Math.max(0, window.scrollY / range)))
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      onScroll()
+      return () => window.removeEventListener('scroll', onScroll)
+    } else {
+      const onEnter = () => setIsHovered(true)
+      const onLeave = () => setIsHovered(false)
 
-    wrap.addEventListener('mouseenter', onEnter)
-    wrap.addEventListener('mouseleave', onLeave)
+      wrap.addEventListener('mouseenter', onEnter)
+      wrap.addEventListener('mouseleave', onLeave)
 
-    return () => {
-      wrap.removeEventListener('mouseenter', onEnter)
-      wrap.removeEventListener('mouseleave', onLeave)
+      return () => {
+        wrap.removeEventListener('mouseenter', onEnter)
+        wrap.removeEventListener('mouseleave', onLeave)
+      }
     }
-  }, [fallbackMode])
+  }, [fallbackMode, wave])
 
   const isRight = name === 'right' || name === 'tejas'
+  const isTouchFallback = fallbackMode && (wave || (typeof window !== 'undefined' && !window.matchMedia('(pointer: fine)').matches))
 
   return (
     <div ref={wrapRef} className="relative w-full h-auto select-none pointer-events-auto">
@@ -107,9 +120,10 @@ export default function AngelRevealFigure({
       {fallbackMode && (
         <div
           aria-hidden="true"
-          className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-opacity duration-700 ease-out ${
-            isHovered ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-opacity duration-700 ease-out"
+          style={{
+            opacity: isTouchFallback ? fallbackProgress : (isHovered ? 1 : 0),
+          }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
