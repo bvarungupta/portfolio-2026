@@ -43,7 +43,7 @@ export default function HomePortfolio() {
         <div className="relative min-h-[calc(100vh-120px)] flex flex-col justify-center items-center text-center gap-6 overflow-hidden md:overflow-visible">
           <ParallaxImages />
 
-          <Rise as="div" targets="children" className="relative flex flex-col items-center gap-6 md:bg-white md:px-6 md:py-4" style={{ zIndex: 5 }}>
+          <Rise as="div" targets="children" className="relative flex flex-col items-center gap-6" style={{ zIndex: 5 }}>
             <Image
               id="hero-logo-outline"
               src="/images/common/vg-outline.svg"
