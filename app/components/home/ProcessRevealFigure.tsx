@@ -40,6 +40,9 @@ export default function ProcessRevealFigure({
     const card = cardRef.current
     if (!wrap || !canvas || !paintedSrc) return
 
+    // On mobile screens (<768px), colour version is displayed by default; skip WebGL setup
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return
+
     // If user prefers reduced motion, keep monochrome image static
     if (prefersReducedMotion()) return
 
@@ -87,52 +90,73 @@ export default function ProcessRevealFigure({
   }, [fallbackMode, cardRef])
 
   return (
-    <div
-      ref={wrapRef}
-      className="relative w-full h-auto select-none pointer-events-auto leading-none overflow-hidden"
-      style={{ display: 'block', lineHeight: 0 }}
-    >
-      {/* ── Base Monochrome Artwork (Renders immediately) ────────────────── */}
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        priority={priority}
-        unoptimized
-        sizes={sizes}
-        className={className}
-        style={{ width: '100%', height: 'auto', display: 'block' }}
-      />
+    <>
+      {/* ── Mobile: Colour artwork by default (no hover required) ─────────── */}
+      <div
+        className="block md:hidden relative w-full h-auto select-none leading-none overflow-hidden"
+        style={{ lineHeight: 0 }}
+      >
+        <Image
+          src={paintedSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          priority={priority}
+          unoptimized
+          sizes={sizes}
+          className={className}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
+      </div>
 
-      {/* ── WebGL Shader Reveal Canvas ───────────────────────────────────── */}
-      <canvas
-        ref={glRef}
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ visibility: 'hidden' }}
-      />
+      {/* ── Desktop: Monochrome base with hover colour reveal ─────────────── */}
+      <div
+        ref={wrapRef}
+        className="hidden md:block relative w-full h-auto select-none pointer-events-auto leading-none overflow-hidden"
+        style={{ lineHeight: 0 }}
+      >
+        {/* Base Monochrome Artwork */}
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          priority={priority}
+          unoptimized
+          sizes={sizes}
+          className={className}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
 
-      {/* ── Graceful Fallback: Layered Image Opacity (if WebGL unavailable) ─ */}
-      {fallbackMode && (
-        <div
+        {/* WebGL Shader Reveal Canvas */}
+        <canvas
+          ref={glRef}
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-opacity duration-700 ease-out"
-          style={{
-            opacity: isHovered ? 1 : 0,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={paintedSrc}
-            alt=""
-            width={width}
-            height={height}
-            className={className}
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        </div>
-      )}
-    </div>
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ visibility: 'hidden' }}
+        />
+
+        {/* Graceful Fallback if WebGL unavailable */}
+        {fallbackMode && (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-opacity duration-700 ease-out"
+            style={{
+              opacity: isHovered ? 1 : 0,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={paintedSrc}
+              alt=""
+              width={width}
+              height={height}
+              className={className}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
+        )}
+      </div>
+    </>
   )
 }

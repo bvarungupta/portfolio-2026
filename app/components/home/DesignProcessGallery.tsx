@@ -12,7 +12,7 @@ const processSteps = [
     step: "01",
     dots: 1,
     title: "Research",
-    copy: "I start by understanding the problem before designing the solution. I spend 1–2 weeks on desktop research, user interviews, surveys, and competitive analysis to understand the people, context, and constraints behind the problem.",
+    copy: "I start by understanding the problem before designing the solution. I spend time on user research, user interviews, surveys, and competitive analysis to understand the people, context, and constraints behind the problem.",
     name: "research",
     bw: "/images/design-process/research-bw.webp",
     color: "/images/design-process/research-color.webp",
