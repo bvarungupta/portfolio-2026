@@ -48,9 +48,9 @@ function HelmetModel({ tubeAngleRef }: { tubeAngleRef: React.MutableRefObject<nu
   const helmet = useGLTF("/models/rubens.glb")
   const scene = useMemo(() => helmet.scene.clone(true), [helmet.scene])
   const modelRef = useRef<Object3D>(null)
-  
+
   const baseRotation = useMemo(() => ({ x: Math.PI / 8, y: Math.PI / 2 }), [])
-  
+
   const glassMaterial = useMemo(
     () =>
       new MeshPhysicalMaterial({
@@ -253,7 +253,7 @@ export default function VisualExplorationsGalleryV1() {
   const tubeSpinVelocity = useRef(0)
   const tubeNaturalDir = useRef(1)
   const tubeAngle = useRef(0)
-  
+
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
   const [hoveredImageUrl, setHoveredImageUrl] = useState<string | null>(null)
   const [previousImageUrl, setPreviousImageUrl] = useState<string | null>(null)
@@ -334,7 +334,7 @@ export default function VisualExplorationsGalleryV1() {
   const onPointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     if (rect.width <= 0 || rect.height <= 0) return
-    
+
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
     setCursorPos({ x, y })
@@ -545,7 +545,7 @@ export default function VisualExplorationsGalleryV1() {
 
       {/* Click Project Single view detail modal */}
       {portalRoot && selectedProject && createPortal(
-        <div 
+        <div
           className={`project-single-view ${showOverlay ? 'visible' : ''}`}
           onClick={handleCloseProject}
         >

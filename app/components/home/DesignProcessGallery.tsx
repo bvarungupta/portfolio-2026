@@ -1,8 +1,9 @@
 "use client"
 
-import { Reveal } from 'cube-motion/react'
-import { Riffle, Turntable, Laptop, Terminal } from "@lucasmarkes/hairline/react"
+import { useRef } from "react"
+import { Reveal } from "cube-motion/react"
 import { Geist_Mono } from "next/font/google"
+import ProcessRevealFigure from "./ProcessRevealFigure"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
 
@@ -12,23 +13,90 @@ const processSteps = [
     dots: 1,
     title: "Research",
     copy: "I start by understanding the problem before designing the solution. I spend 1–2 weeks on desktop research, user interviews, surveys, and competitive analysis to understand the people, context, and constraints behind the problem.",
-    Illustration: Riffle,
+    name: "research",
+    bw: "/images/design-process/research-bw.webp",
+    color: "/images/design-process/research-color.webp",
+    width: 2748,
+    height: 1932,
   },
   {
     step: "03",
     dots: 2,
     title: "Design",
     copy: "With the direction clear, I move into design. I explore concepts, structure the experience, and refine the visual system across typography, color, components, and interaction, taking everything through high-fidelity design, prototyping, and developer handoff.",
-    Illustration: Laptop,
+    name: "design",
+    bw: "/images/design-process/design-bw.webp",
+    color: "/images/design-process/design-color.webp",
+    width: 2748,
+    height: 1932,
   },
   {
     step: "04",
     dots: 3,
     title: "Build",
     copy: "I take the final designs into production, working closely with developers through implementation, QA, and launch. I handle the handoff, resolve edge cases, and make sure the finished product stays true to the design while working as it should.",
-    Illustration: Terminal,
+    name: "build",
+    bw: "/images/design-process/build-bw.webp",
+    color: "/images/design-process/build-color.webp",
+    width: 2750,
+    height: 1930,
   },
 ]
+
+function ProcessCard({ item }: { item: (typeof processSteps)[number] }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  return (
+    <div
+      ref={cardRef}
+      className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
+    >
+      {/* Dot indicator bar */}
+      <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
+        {Array.from({ length: item.dots }).map((_, i) => (
+          <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
+        ))}
+      </div>
+
+      {/* Card text content */}
+      <div className="px-3 pt-5 md:px-5 md:pt-6 flex flex-col flex-1">
+        <div className={`${geistMono.className} text-base md:text-lg text-gray-500 font-normal mb-2 tracking-tight`}>
+          {item.step}
+        </div>
+
+        <h3
+          className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
+          style={{ fontFamily: "FunnelDisplay, sans-serif" }}
+        >
+          {item.title}
+        </h3>
+
+        <p
+          className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-4 md:mb-6 w-full max-w-none"
+          style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
+        >
+          {item.copy}
+        </p>
+      </div>
+
+      {/* Dedicated illustration container grounded directly against the card's bottom border (increased by 0.25x) */}
+      <div className="w-full flex justify-center items-end mt-auto px-0 sm:px-1 md:px-2 leading-none select-none -mb-1.5 md:-mb-2">
+        <div className="w-full max-w-[425px] md:max-w-[475px] flex items-end justify-center">
+          <ProcessRevealFigure
+            name={item.name}
+            src={item.bw}
+            paintedSrc={item.color}
+            alt={`${item.title} illustration`}
+            width={item.width}
+            height={item.height}
+            cardRef={cardRef}
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function DesignProcessGallery() {
   return (
@@ -61,50 +129,9 @@ export default function DesignProcessGallery() {
 
       {/* ── 3 Cards Grid (negative-margin breakout on desktop) ── */}
       <Reveal as="div" targets="children" stagger={200} className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-0 md:-mx-28 lg:-mx-44 xl:-mx-56 px-0 mt-6">
-        {processSteps.map((item) => {
-          const Illustration = item.Illustration
-          return (
-            <div
-              key={item.step}
-              className="group relative bg-white border border-gray-300 rounded-none flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-gray-500 hover:shadow-md"
-            >
-              {/* Dot indicator bar */}
-              <div className="px-3 md:px-5 py-2 border-b border-gray-300 bg-white flex items-center gap-1.5 min-h-[32px]">
-                {Array.from({ length: item.dots }).map((_, i) => (
-                  <span key={i} className="w-2 h-2 rounded-full bg-gray-500 inline-block" />
-                ))}
-              </div>
-
-              {/* Card body */}
-              <div className="px-3 py-5 md:px-5 md:py-6 flex flex-col justify-between flex-1">
-                <div className="w-full">
-                  <div className={`${geistMono.className} text-base md:text-lg text-gray-500 font-normal mb-2 tracking-tight`}>
-                    {item.step}
-                  </div>
-
-                  <h3
-                    className="text-2xl md:text-3xl font-medium tracking-tight text-black mb-2 md:mb-2.5"
-                    style={{ fontFamily: "FunnelDisplay, sans-serif" }}
-                  >
-                    {item.title}
-                  </h3>
-
-                  <p
-                    className="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-1.5 w-full max-w-none"
-                    style={{ fontFamily: "FunnelDisplay, sans-serif", fontWeight: 300 }}
-                  >
-                    {item.copy}
-                  </p>
-                </div>
-
-                {/* Hairline illustration */}
-                <div className="w-full flex justify-center items-center pt-0 pb-0 mt-1">
-                  <Illustration className="w-full max-w-[280px] md:max-w-[320px] aspect-[4/3]" theme="light" />
-                </div>
-              </div>
-            </div>
-          )
-        })}
+        {processSteps.map((item) => (
+          <ProcessCard key={item.step} item={item} />
+        ))}
       </Reveal>
     </div>
   )

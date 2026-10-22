@@ -185,10 +185,12 @@ export function prefersReducedMotion(): boolean {
 export function attachShaderReveal(
   wrap: HTMLDivElement,
   canvas: HTMLCanvasElement,
-  name: 'left' | 'right' | 'abhay' | 'tejas',
+  name: 'left' | 'right' | 'abhay' | 'tejas' | string,
   paintedSrc: string,
   touch = false,
-  config = SHADER_REVEAL_DEFAULTS
+  config = SHADER_REVEAL_DEFAULTS,
+  triggerEl?: HTMLElement | null,
+  options?: { disableTouchBloom?: boolean }
 ): (() => void) | null {
   const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false })
   if (!gl) return null
@@ -325,7 +327,9 @@ export function attachShaderReveal(
     painted.decoding = 'async'
     painted.onload = setup
     painted.onerror = () => { painted = null }
-    painted.src = paintedSrc
+    // Ensure painted color texture is always fetched fresh and matches current B&W image
+    const bustUrl = paintedSrc.includes('?') ? paintedSrc : `${paintedSrc}?v=3`
+    painted.src = bustUrl
   }
 
   // Client coordinate -> figure-local coordinate, accounting for parent rotation and scale
@@ -348,8 +352,16 @@ export function attachShaderReveal(
 
   const track = (now: number) => {
     const w = wrap.clientWidth, h = wrap.clientHeight
-    const p = pointer ? toLocal(pointer.x, pointer.y) : null
-    const near = p && p.x > -config.radius && p.y > -config.radius && p.x < w + config.radius && p.y < h + config.radius
+    let p = pointer ? toLocal(pointer.x, pointer.y) : null
+    if (p && triggerEl) {
+      p = {
+        x: Math.max(0, Math.min(w, p.x)),
+        y: Math.max(0, Math.min(h, p.y)),
+      }
+    }
+    const near = triggerEl
+      ? Boolean(pointer)
+      : Boolean(p && p.x > -config.radius && p.y > -config.radius && p.x < w + config.radius && p.y < h + config.radius)
     if (!p || !near) {
       if (head && config.trail) stamps.push({ x: head.x, y: head.y, t: now })
       head = null
@@ -419,9 +431,28 @@ export function attachShaderReveal(
     // Accurate texture coordinate mapping:
     // Left angel: both source images are 1504x1002 (scale=1, offset=0)
     // Right angel: BW is 1166x1166, Color is 1284x1284 (scale=1166/1284, offset=(0, 118/1284))
-    if (!isLeft) {
+    // Design process illustrations: guarantee exact identical size and dimensions to monochrome layer
+    const isTejas = name === 'right' || name === 'tejas'
+    if (isTejas) {
       gl.uniform2f(U.scale, 1166.0 / 1284.0, 1166.0 / 1284.0)
       gl.uniform2f(U.offset, 0.0, (1284.0 - 1166.0) / 1284.0)
+    } else if (img && painted && img.naturalWidth && img.naturalHeight && painted.naturalWidth && painted.naturalHeight) {
+      const bwAspect = img.naturalWidth / img.naturalHeight
+      const colAspect = painted.naturalWidth / painted.naturalHeight
+      if (Math.abs(bwAspect - colAspect) > 0.002) {
+        if (colAspect > bwAspect) {
+          const s = bwAspect / colAspect
+          gl.uniform2f(U.scale, s, 1.0)
+          gl.uniform2f(U.offset, (1.0 - s) / 2.0, 0.0)
+        } else {
+          const s = colAspect / bwAspect
+          gl.uniform2f(U.scale, 1.0, s)
+          gl.uniform2f(U.offset, 0.0, 1.0 - s)
+        }
+      } else {
+        gl.uniform2f(U.scale, 1.0, 1.0)
+        gl.uniform2f(U.offset, 0.0, 0.0)
+      }
     } else {
       gl.uniform2f(U.scale, 1.0, 1.0)
       gl.uniform2f(U.offset, 0.0, 0.0)
@@ -481,14 +512,20 @@ export function attachShaderReveal(
   canvas.addEventListener('webglcontextrestored', onRestored)
 
   if (!touch) {
-    window.addEventListener('mousemove', onMove, { passive: true })
-    document.documentElement.addEventListener('mouseleave', onLeave)
+    if (triggerEl) {
+      triggerEl.addEventListener('mousemove', onMove, { passive: true })
+      triggerEl.addEventListener('mouseleave', onLeave)
+    } else {
+      window.addEventListener('mousemove', onMove, { passive: true })
+      document.documentElement.addEventListener('mouseleave', onLeave)
+    }
   }
 
   window.addEventListener('resize', onResize)
 
   const unScroll = onScrollFrame((y) => {
     if (touch) {
+      if (options?.disableTouchBloom) return
       loadPainted()
       // Mobile scroll reveal range: completes within hero scroll (approx 360px)
       const range = Math.min(360, window.innerHeight * 0.45)
@@ -501,8 +538,13 @@ export function attachShaderReveal(
   })
 
   return () => {
-    window.removeEventListener('mousemove', onMove)
-    document.documentElement.removeEventListener('mouseleave', onLeave)
+    if (triggerEl) {
+      triggerEl.removeEventListener('mousemove', onMove)
+      triggerEl.removeEventListener('mouseleave', onLeave)
+    } else {
+      window.removeEventListener('mousemove', onMove)
+      document.documentElement.removeEventListener('mouseleave', onLeave)
+    }
     window.removeEventListener('resize', onResize)
     imgEl?.removeEventListener('load', setup)
     unScroll()
