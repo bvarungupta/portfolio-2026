@@ -80,6 +80,62 @@ const mobileSocialLinks = [
   },
 ]
 
+function DesktopRollText({
+  text,
+  isHovered,
+  isDarkPage,
+  shouldReduceMotion,
+}: {
+  text: string
+  isHovered: boolean
+  isDarkPage: boolean
+  shouldReduceMotion: boolean | null
+}) {
+  return (
+    <span
+      className={`hidden md:inline-flex items-center text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] transition-colors duration-300 ${
+        isDarkPage
+          ? "text-zinc-100 group-hover:text-orange-500"
+          : "text-zinc-900 group-hover:text-orange-500"
+      }`}
+      style={{ fontFamily: "FunnelDisplay, sans-serif" }}
+      aria-hidden="true"
+    >
+      {text.split("").map((char, i) => (
+        <span
+          key={i}
+          className="relative inline-block overflow-hidden pointer-events-none"
+          style={{ height: "1.15em" }}
+        >
+          {/* Primary letter moving up on hover */}
+          <span
+            className={`block transition-transform ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              shouldReduceMotion ? "duration-0" : "duration-[650ms]"
+            } ${isHovered ? "-translate-y-full" : "translate-y-0"} group-hover:-translate-y-full`}
+            style={{
+              transitionDelay: shouldReduceMotion ? "0ms" : `${i * 38}ms`,
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+
+          {/* Duplicate letter rolling in from below */}
+          <span
+            className={`absolute top-0 left-0 block transition-transform ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              shouldReduceMotion ? "duration-0" : "duration-[650ms]"
+            } ${isHovered ? "translate-y-0" : "translate-y-full"} group-hover:translate-y-0`}
+            style={{
+              transitionDelay: shouldReduceMotion ? "0ms" : `${i * 38}ms`,
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export default function SplitNavMenu({
   isOpen,
   onClose,
@@ -233,7 +289,6 @@ export default function SplitNavMenu({
                 {items.map((item, index) => {
                   const active = isItemActive(item)
                   const isHovered = hoveredIndex === index
-                  const hasOtherHovered = hoveredIndex !== null && !isHovered
 
                   return (
                     <motion.li
@@ -252,21 +307,27 @@ export default function SplitNavMenu({
                           onMouseEnter={() => setHoveredIndex(index)}
                           onMouseLeave={() => setHoveredIndex(null)}
                           className="group flex items-center text-left w-fit cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-500 rounded-sm py-0.5"
-                          style={{
-                            opacity: hasOtherHovered ? 0.35 : 1,
-                          }}
+                          aria-label={item.name}
                         >
-                          {/* Large typography title with restrained editorial hover shift */}
+                          {/* Mobile text: prominent, clean typography */}
                           <span
-                            className={`text-[clamp(3.25rem,13vw,4.5rem)] md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] transition-all duration-300 ${
+                            className={`inline-block md:hidden text-[clamp(3.25rem,13vw,4.5rem)] font-light tracking-tight leading-[1.05] transition-colors duration-300 ${
                               isDarkPage
-                                ? "text-zinc-100 group-hover:text-orange-500 group-hover:translate-x-2"
-                                : "text-zinc-900 group-hover:text-orange-500 group-hover:translate-x-2"
+                                ? "text-zinc-100 group-hover:text-orange-500"
+                                : "text-zinc-900 group-hover:text-orange-500"
                             }`}
                             style={{ fontFamily: "FunnelDisplay, sans-serif" }}
                           >
                             {item.name}
                           </span>
+
+                          {/* Desktop: Buttery smooth letter-by-letter vertical roll with subtle rightward glide */}
+                          <DesktopRollText
+                            text={item.name}
+                            isHovered={isHovered}
+                            isDarkPage={isDarkPage}
+                            shouldReduceMotion={shouldReduceMotion}
+                          />
                         </a>
                       ) : (
                         <button
@@ -278,31 +339,37 @@ export default function SplitNavMenu({
                           onMouseEnter={() => setHoveredIndex(index)}
                           onMouseLeave={() => setHoveredIndex(null)}
                           className="group flex items-center text-left w-fit cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-500 rounded-sm py-0.5"
-                          style={{
-                            opacity: hasOtherHovered ? 0.35 : 1,
-                          }}
+                          aria-label={item.name}
                         >
-                          {/* Active dot indicator */}
+                          {/* Active dot indicator — mobile only */}
                           {active && (
                             <span
-                              className="w-2.5 h-2.5 rounded-full bg-orange-500 mr-3.5 shrink-0 self-center"
+                              className="md:hidden w-2.5 h-2.5 rounded-full bg-orange-500 mr-3.5 shrink-0 self-center"
                               aria-hidden="true"
                             />
                           )}
 
-                          {/* Large typography title with restrained editorial hover shift */}
+                          {/* Mobile text: prominent, clean typography */}
                           <span
-                            className={`text-[clamp(3.25rem,13vw,4.5rem)] md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] transition-all duration-300 ${
+                            className={`inline-block md:hidden text-[clamp(3.25rem,13vw,4.5rem)] font-light tracking-tight leading-[1.05] transition-colors duration-300 ${
                               active
                                 ? "text-orange-500"
                                 : isDarkPage
-                                  ? "text-zinc-100 group-hover:text-orange-500 group-hover:translate-x-2"
-                                  : "text-zinc-900 group-hover:text-orange-500 group-hover:translate-x-2"
+                                  ? "text-zinc-100 group-hover:text-orange-500"
+                                  : "text-zinc-900 group-hover:text-orange-500"
                             }`}
                             style={{ fontFamily: "FunnelDisplay, sans-serif" }}
                           >
                             {item.name}
                           </span>
+
+                          {/* Desktop: Buttery smooth letter-by-letter vertical roll with subtle rightward glide */}
+                          <DesktopRollText
+                            text={item.name}
+                            isHovered={isHovered}
+                            isDarkPage={isDarkPage}
+                            shouldReduceMotion={shouldReduceMotion}
+                          />
                         </button>
                       )}
                     </motion.li>
