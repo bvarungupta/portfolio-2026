@@ -34,7 +34,7 @@ export default function Footer() {
             alt="Varun Gupta at work"
             width={56}
             height={56}
-            className="w-12 h-12 mb-4 opacity-80"
+            className="w-12 h-12 mb-4 opacity-75"
           />
           <h3
             className="text-3xl md:text-4xl font-light text-gray-900 leading-snug"
@@ -57,8 +57,8 @@ export default function Footer() {
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="2" y="4" width="20" height="16" rx="2"/>
-              <path d="m2 7 10 7 10-7"/>
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m2 7 10 7 10-7" />
             </svg>
             {copied === 'email' ? 'Copied!' : 'bvarungupta@gmail.com'}
           </button>
@@ -70,9 +70,9 @@ export default function Footer() {
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-              <rect x="2" y="9" width="4" height="12"/>
-              <circle cx="4" cy="4" r="2"/>
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
             </svg>
             LinkedIn
           </a>
@@ -90,9 +90,9 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4">
             {[
-              { href: 'https://linkedin.com/in/bvarungupta', src: '/images/HomeImages/social/linkedin.svg',  alt: 'LinkedIn'  },
-              { href: 'https://behance.net/bvarungupta',     src: '/images/HomeImages/social/behance.svg',   alt: 'Behance'   },
-              { href: 'https://dribbble.com/bvarungupta',         src: '/images/HomeImages/social/dribbble.svg',  alt: 'Dribbble'  },
+              { href: 'https://linkedin.com/in/bvarungupta', src: '/images/HomeImages/social/linkedin.svg', alt: 'LinkedIn' },
+              { href: 'https://behance.net/bvarungupta', src: '/images/HomeImages/social/behance.svg', alt: 'Behance' },
+              { href: 'https://dribbble.com/bvarungupta', src: '/images/HomeImages/social/dribbble.svg', alt: 'Dribbble' },
             ].map((s) => (
               <Link key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer">
                 <Image
