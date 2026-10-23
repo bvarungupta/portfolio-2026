@@ -19,6 +19,14 @@ const navLinks = [
   { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen.png', color: '#f97316', size: 42 },
   { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316', size: 42 },
   { label: 'Lab', href: '/lab', icon: '/images/varun-image-hover-images/microscope.png', color: '#f97316', size: 42 },
+  {
+    label: 'Resume',
+    href: 'https://drive.google.com/file/d/1gVS7dO5vmJz11-2KYrHCzc8IlHcqFIwP/view?usp=drive_link',
+    icon: '/images/varun-image-hover-images/pen-tool.png',
+    color: '#f97316',
+    size: 42,
+    external: true,
+  },
 ]
 
 export default function Footer() {
@@ -160,6 +168,9 @@ export default function Footer() {
                   )}
                   <Link
                     href={l.href}
+                    {...(l.external || l.href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
                     onMouseEnter={() => {
                       setHoveredLink(l.label)
                       setActiveLinks(prev => prev[l.label] ? prev : { ...prev, [l.label]: true })

@@ -1,49 +1,38 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 import { useColumnBlinds } from "./ColumnBlindsTransition"
+import SplitNavMenu, { SplitNavMenuItem } from "./SplitNavMenu"
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollToPlugin)
 
-declare global {
-  interface Window {
-    playSpiralIn?: () => Promise<void>;
-  }
-}
-
-const navItems = [
-  { name: "Work", href: "/work", icon: "/images/varun-image-hover-images/pen.png", size: 42 },
-  { name: "Exploration", href: "/#visual-explorations", icon: "/images/varun-image-hover-images/burshes.png", size: 42 },
+const splitNavItems: SplitNavMenuItem[] = [
   { name: "Home", href: "/" },
-  { name: "Lab", href: "/lab", icon: "/images/varun-image-hover-images/microscope.png", size: 42 },
-  { name: "About", href: "/about", icon: "/images/varun-image-hover-images/controller2.png", size: 42 },
+  { name: "Work", href: "/work" },
+  { name: "About", href: "/about" },
+  {
+    name: "Resume",
+    href: "https://drive.google.com/file/d/1gVS7dO5vmJz11-2KYrHCzc8IlHcqFIwP/view?usp=drive_link",
+    external: true,
+  },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
-  const router = useRouter()
   const { navigateWithBlinds, prefetchWithBlinds } = useColumnBlinds()
-  const navRef = useRef<HTMLElement>(null)
-  const [isMounted, setIsMounted] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
-  const [activeIcons, setActiveIcons] = useState<Record<string, boolean>>({})
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuButtonHovered, setIsMenuButtonHovered] = useState(false)
 
   const isDarkPage = pathname === "/lab/specimen"
 
-  // Prevent hydration mismatch by waiting for client mount
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // Idle prefetch for primary destinations (/work, /about, /lab) without downloading heavy media
+  // Idle prefetch for primary destinations (/work, /about, /lab)
   useEffect(() => {
     const idlePrefetch = () => {
-      const targets = ['/work', '/about', '/lab']
+      const targets = ["/work", "/about", "/lab"]
       targets.forEach((route) => {
         if (route !== pathname) {
           prefetchWithBlinds(route)
@@ -51,10 +40,19 @@ export default function Navbar() {
       })
     }
 
-    if (typeof window !== 'undefined') {
-      if ('requestIdleCallback' in window) {
-        const id = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(idlePrefetch, { timeout: 3000 })
-        return () => (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id)
+    if (typeof window !== "undefined") {
+      if ("requestIdleCallback" in window) {
+        const id = (
+          window as unknown as {
+            requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number
+          }
+        ).requestIdleCallback(idlePrefetch, { timeout: 3000 })
+        return () =>
+          (
+            window as unknown as {
+              cancelIdleCallback: (id: number) => void
+            }
+          ).cancelIdleCallback(id)
       } else {
         const timer = setTimeout(idlePrefetch, 1500)
         return () => clearTimeout(timer)
@@ -62,96 +60,34 @@ export default function Navbar() {
     }
   }, [pathname, prefetchWithBlinds])
 
-  useEffect(() => {
-    // Create the SVG displacement map for liquid glass effect
-    const mapSvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
-        <radialGradient id="lensGradient">
-          <stop offset="0%" stop-color="white" stop-opacity="1" />
-          <stop offset="55%" stop-color="gray" stop-opacity="0.4" />
-          <stop offset="80%" stop-color="black" stop-opacity="0.6" />
-          <stop offset="100%" stop-color="white" stop-opacity="1" />
-        </radialGradient>
-        <rect width="1" height="1" fill="url(#lensGradient)" />
-      </svg>
-    `
+  const scrollToTop = () => {
+    gsap.to(window, {
+      duration: 1.2,
+      scrollTo: {
+        y: 0,
+        offsetY: 0,
+      },
+      ease: "power2.inOut",
+    })
+  }
 
-    const encodedMap = encodeURIComponent(mapSvg)
+  const scrollToExplorationsSection = () => {
+    const explorationsSection =
+      document.querySelector('[data-section="visual-explorations"]') ||
+      document.querySelector("#visual-explorations") ||
+      Array.from(document.querySelectorAll("h2"))
+        .find((el) => el.textContent?.toLowerCase().includes("explorations"))
+        ?.closest("div")
 
-    // Create and inject the filter SVG
-    const filterSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    filterSvg.style.position = "fixed"
-    filterSvg.style.top = "-10000px"
-    filterSvg.innerHTML = `
-      <defs>
-        <filter id="liquid-lens" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
-          <feImage href="data:image/svg+xml;charset=utf-8,${encodedMap}" result="displacementMap" />
-          <feDisplacementMap in="SourceGraphic" in2="displacementMap" scale="40" xChannelSelector="R" yChannelSelector="G" result="displaced" />
-          <feGaussianBlur in="displaced" stdDeviation="3" result="blurred" />
-          <feMorphology operator="dilate" radius="1" in="blurred" result="expanded" />
-          <feComposite in="expanded" in2="SourceGraphic" operator="over" />
-        </filter>
-      </defs>
-    `
-
-    document.body.appendChild(filterSvg)
-
-    // Animate navbar entrance
-    if (navRef.current) {
-      gsap.fromTo(navRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.2 }
-      )
-    }
-
-    return () => {
-      if (filterSvg && filterSvg.parentNode) {
-        filterSvg.parentNode.removeChild(filterSvg)
-      }
-    }
-  }, [])
-
-  const handleNavigation = (item: typeof navItems[0], e: React.MouseEvent) => {
-    e.preventDefault()
-
-    // Clear hover state immediately on navigation click
-    setHoveredItem(null)
-
-    // Add click animation
-    if (navRef.current) {
-      gsap.to(navRef.current, {
-        scale: 0.95,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1,
-        ease: "power2.inOut"
+    if (explorationsSection) {
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: {
+          y: explorationsSection,
+          offsetY: 60,
+        },
+        ease: "power2.inOut",
       })
-    }
-
-    if (item.name === "Exploration" || item.name === "Explorations") {
-      if (pathname === '/') {
-        scrollToExplorationsSection()
-      } else {
-        navigateWithTransition('/', () => {
-          setTimeout(() => {
-            scrollToExplorationsSection()
-          }, 500)
-        })
-      }
-    } else if (item.name === "About") {
-      navigateWithTransition('/about')
-    } else if (item.name === "Home") {
-      if (pathname !== '/') {
-        navigateWithTransition('/')
-      } else {
-        // Already on home, scroll to top
-        scrollToTop()
-      }
-    } else {
-      // Handle other navigation items
-      if (pathname !== item.href) {
-        navigateWithTransition(item.href)
-      }
     }
   }
 
@@ -159,159 +95,133 @@ export default function Navbar() {
     navigateWithBlinds(href, callback)
   }
 
-  const scrollToTop = () => {
-    gsap.to(window, {
-      duration: 1.2,
-      scrollTo: {
-        y: 0,
-        offsetY: 0
-      },
-      ease: "power2.inOut"
-    })
-  }
-
-  const scrollToWorkSection = () => {
-    // Find work section and scroll to it
-    const workSection = document.querySelector('[data-section="work"]') ||
-      document.querySelector('.gallery-wrapper') ||
-      Array.from(document.querySelectorAll('h2')).find(el =>
-        el.textContent?.toLowerCase().includes('work')
-      )?.parentElement
-
-    if (workSection) {
-      gsap.to(window, {
-        duration: 1.2,
-        scrollTo: {
-          y: workSection,
-          offsetY: 100
-        },
-        ease: "power2.inOut"
-      })
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (isMenuOpen) {
+      setIsMenuOpen(false)
+    }
+    if (pathname !== "/") {
+      navigateWithTransition("/")
+    } else {
+      scrollToTop()
     }
   }
 
-  const scrollToExplorationsSection = () => {
-    const explorationsSection = document.querySelector('[data-section="visual-explorations"]') ||
-      document.querySelector('#visual-explorations') ||
-      Array.from(document.querySelectorAll('h2')).find(el =>
-        el.textContent?.toLowerCase().includes('explorations')
-      )?.closest('div')
+  const handleSplitNavNavigate = (item: SplitNavMenuItem) => {
+    setIsMenuOpen(false)
 
-    if (explorationsSection) {
-      gsap.to(window, {
-        duration: 1.2,
-        scrollTo: {
-          y: explorationsSection,
-          offsetY: 60
-        },
-        ease: "power2.inOut"
-      })
+    if (item.name === "Exploration" || item.name === "Explorations") {
+      if (pathname === "/") {
+        scrollToExplorationsSection()
+      } else {
+        navigateWithTransition("/", () => {
+          setTimeout(() => {
+            scrollToExplorationsSection()
+          }, 500)
+        })
+      }
+    } else if (item.name === "About") {
+      navigateWithTransition("/about")
+    } else if (item.name === "Home") {
+      if (pathname !== "/") {
+        navigateWithTransition("/")
+      } else {
+        scrollToTop()
+      }
+    } else {
+      if (pathname !== item.href) {
+        navigateWithTransition(item.href)
+      }
     }
   }
-
 
   // Route change reset
   useEffect(() => {
-    setHoveredItem(null)
+    setIsMenuOpen(false)
   }, [pathname])
 
   return (
-    <div data-hero-element="navbar" className="fixed top-0 left-0 right-0 flex justify-center px-3 py-4 pointer-events-none" style={{ zIndex: 10005 }}>
-      <nav
-        ref={navRef}
-        className={`flex items-center rounded-none py-1 relative transition-all duration-300 hover:shadow-lg pointer-events-auto w-full max-w-full md:w-auto justify-between md:justify-start ${isMounted
-          ? "gap-1 md:gap-6 px-3 md:px-6"
-          : "gap-1 px-3"
-          }`}
+    <>
+      {/* ── Top-Left Floating Logo (mix-blend-mode: difference, 0.75x mobile, full desktop) ── */}
+      <button
+        type="button"
+        onClick={handleLogoClick}
+        onMouseEnter={() => {
+          if (pathname !== "/") prefetchWithBlinds("/")
+        }}
+        aria-label="Varun Gupta Portfolio — Home"
+        className="fixed z-[10020] top-[max(20px,env(safe-area-inset-top))] left-[max(20px,env(safe-area-inset-left))] md:top-8 md:left-10 cursor-pointer w-11 h-11 md:w-14 md:h-14 flex items-center justify-center p-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-500 rounded-sm group transition-transform duration-200 hover:scale-105 active:scale-95"
         style={{
-          background: isDarkPage ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.08)',
-          backdropFilter: 'url(#liquid-lens) blur(2px)',
-          border: isDarkPage ? '2px solid rgba(255, 255, 255, 0.15)' : '2px solid rgb(212, 212, 216)',
-          boxShadow: `
-            inset 0 1px 0 rgba(255, 255, 255, 0.2),
-            inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-            0 8px 24px rgba(0, 0, 0, 0.1)
-          `
+          mixBlendMode: "difference",
         }}
       >
-        {/* Corner squares - half outside */}
-        <div className={`absolute -top-1 -left-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
-        <div className={`absolute -top-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
-        <div className={`absolute -bottom-1 -left-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
-        <div className={`absolute -bottom-1 -right-1 w-2 h-2 ${isDarkPage ? "bg-zinc-700" : "bg-zinc-300"}`} />
-        {navItems.map((item, index) => {
-          const isHovered = hoveredItem === item.name;
-          return (
-            <div key={item.name} className={`flex items-center ${isMounted ? "gap-1 md:gap-6" : "gap-1"}`}>
-              <div className="relative">
-                {/* Floating Nav Icon */}
-                {item.icon && activeIcons[item.name] && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '100%',
-                      left: '50%',
-                      transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                      opacity: isHovered ? 1 : 0,
-                      transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                      pointerEvents: 'none',
-                      zIndex: 20,
-                    }}
-                  >
-                    <img
-                      src={item.icon}
-                      alt=""
-                      style={{
-                        width: `${item.size || 28}px`,
-                        height: `${item.size || 28}px`,
-                        maxWidth: 'none',
-                        display: 'block',
-                        objectFit: 'contain',
-                      }}
-                    />
-                  </div>
-                )}
-                <button
-                  onMouseEnter={() => {
-                    setHoveredItem(item.name)
-                    setActiveIcons(prev => prev[item.name] ? prev : { ...prev, [item.name]: true })
-                    if (item.href && item.href !== pathname) prefetchWithBlinds(item.href)
-                  }}
-                  onTouchStart={() => {
-                    if (item.href && item.href !== pathname) prefetchWithBlinds(item.href)
-                  }}
-                  onMouseLeave={() => setHoveredItem(null)}
-                  onClick={(e) => handleNavigation(item, e)}
-                  className={`cursor-pointer font-light transition-all duration-300 relative hover:text-orange-500 hover:scale-105 ${isMounted ? "text-xs md:text-sm" : "text-sm"
-                    } ${(pathname === item.href) ||
-                      (item.name === "Work" && pathname.startsWith('/works/')) ||
-                      (item.name === "Home" && pathname === '/')
-                      ? "text-orange-500"
-                      : isDarkPage
-                        ? "text-white"
-                        : "text-zinc-700"
-                    }`}
-                  style={{ fontFamily: 'FunnelDisplay, sans-serif', fontWeight: '400' }}
-                >
-                  {item.name === "Home" ? (
-                    <Image
-                      src="/images/common/vg26.svg"
-                      alt="Home"
-                      width={22}
-                      height={22}
-                      className={`transition-opacity duration-300 ${pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-70'}`}
-                      style={isDarkPage ? { filter: 'invert(1)' } : {}}
-                    />
-                  ) : item.name}
-                </button>
-              </div>
-              {index < navItems.length - 1 && (
-                <span className={`${isDarkPage ? "text-zinc-500" : "text-zinc-300"} ${isMounted ? "text-[7px] md:text-[10px]" : "text-[10px]"}`}>•</span>
-              )}
-            </div>
-          )
-        })}
-      </nav>
-    </div>
+        <svg
+          viewBox="0 0 720 865"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-[22.5px] h-auto md:w-[36px] pointer-events-none"
+          aria-hidden="true"
+        >
+          <path
+            d="M392.186 106.521C376.916 99.1653 359.205 110.292 359.205 127.242V392.859C359.205 410.521 340.123 421.592 324.79 412.826L281.325 387.978C149.674 312.285 65.5666 174.616 57.8063 22.9991C57.157 10.3132 46.921 0 34.2184 0H23C10.2975 0 0 10.2975 0 23V391.158C0 518.364 73.1125 636.029 189.139 691.682L327.814 758.48C343.084 765.835 360.795 754.708 360.795 737.758V472.142C360.795 454.48 379.876 443.409 395.21 452.174L438.675 477.022C570.326 552.715 654.433 690.384 662.194 842.001C662.843 854.687 673.079 865 685.782 865H697C709.703 865 720 854.703 720 842V473.842C720 346.636 646.888 228.971 530.861 173.318L392.186 106.521Z"
+            fill="#ffffff"
+          />
+        </svg>
+      </button>
+
+      {/* ── Top-Right Floating Hamburger & Morphing Close Icon (mix-blend-mode: difference, 0.75x mobile, full desktop) ── */}
+      <button
+        type="button"
+        onClick={() => setIsMenuOpen((prev) => !prev)}
+        onMouseEnter={() => setIsMenuButtonHovered(true)}
+        onMouseLeave={() => setIsMenuButtonHovered(false)}
+        aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={isMenuOpen}
+        className="fixed z-[10020] top-[max(20px,env(safe-area-inset-top))] right-[max(20px,env(safe-area-inset-right))] md:top-8 md:right-10 cursor-pointer w-11 h-11 md:w-14 md:h-14 flex items-center justify-center p-2 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-500"
+        style={{
+          mixBlendMode: "difference",
+        }}
+      >
+        <div
+          className="relative w-[22.5px] h-[22.5px] md:w-[36px] md:h-[36px] flex items-center justify-center transition-transform duration-300 ease-out"
+          style={{
+            transform: isMenuOpen && isMenuButtonHovered ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        >
+          {/* Top Line */}
+          <span
+            className={`absolute h-[1.75px] md:h-[2.5px] w-[22.5px] md:w-[36px] bg-white rounded-full transition-all duration-300 ease-out pointer-events-none ${
+              isMenuOpen
+                ? "translate-y-0 rotate-45"
+                : "-translate-y-[3.75px] md:-translate-y-[6px] rotate-0"
+            }`}
+            style={{
+              transformOrigin: "center",
+            }}
+          />
+          {/* Bottom Line */}
+          <span
+            className={`absolute h-[1.75px] md:h-[2.5px] w-[22.5px] md:w-[36px] bg-white rounded-full transition-all duration-300 ease-out pointer-events-none ${
+              isMenuOpen
+                ? "translate-y-0 -rotate-45"
+                : "translate-y-[3.75px] md:translate-y-[6px] rotate-0"
+            }`}
+            style={{
+              transformOrigin: "center",
+            }}
+          />
+        </div>
+      </button>
+
+      {/* ── Animated Split-Screen Navigation Overlay ── */}
+      <SplitNavMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        items={splitNavItems}
+        pathname={pathname}
+        onNavigate={handleSplitNavNavigate}
+        isDarkPage={isDarkPage}
+      />
+    </>
   )
 }
