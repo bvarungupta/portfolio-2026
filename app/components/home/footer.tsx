@@ -34,7 +34,7 @@ export default function Footer() {
             alt="Varun Gupta at work"
             width={56}
             height={56}
-            className="w-12 h-12 mb-4 opacity-75"
+            className="w-12 h-12 mb-4 opacity-80"
           />
           <h3
             className="text-3xl md:text-4xl font-light text-gray-900 leading-snug"
