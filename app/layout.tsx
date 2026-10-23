@@ -78,8 +78,36 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
+  manifest: '/site.webmanifest',
   icons: {
-    icon: '/images/common/vg-white.svg?v=2',
+    icon: [
+      {
+        url: '/images/common/vg-white.svg',
+        type: 'image/svg+xml',
+      },
+      {
+        url: '/images/common/vg-white.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/images/common/vg26.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
   },
 }
 

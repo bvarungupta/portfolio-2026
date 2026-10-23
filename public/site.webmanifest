@@ -1,0 +1,21 @@
+{
+  "name": "Varun Gupta — Product Designer",
+  "short_name": "Varun Gupta",
+  "description": "Varun Gupta is a product designer who designs brand, product, and systems for early-stage startups.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0E0E0E",
+  "theme_color": "#0E0E0E",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
