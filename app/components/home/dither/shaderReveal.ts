@@ -289,7 +289,7 @@ export function attachShaderReveal(
 
   // Mobile scroll bloom: progress from 0.0 (monochrome) to 1.0 (full colour)
   let waveProgress = 0
-  const isLeft = name === 'left' || name === 'abhay'
+  const isLeft = name === 'left' || name === 'abhay' || name === 'footer-left'
   const waveDir = isLeft ? [0.35, 1] : [-0.35, 1]
   const WAVE_WIDTH = 0.30
   const waveVisible = () => touch && waveProgress > 0.005
@@ -328,7 +328,7 @@ export function attachShaderReveal(
     painted.onload = setup
     painted.onerror = () => { painted = null }
     // Ensure painted color texture is always fetched fresh and matches current B&W image
-    const bustUrl = paintedSrc.includes('?') ? paintedSrc : `${paintedSrc}?v=3`
+    const bustUrl = paintedSrc.includes('?') ? paintedSrc : `${paintedSrc}?v=30`
     painted.src = bustUrl
   }
 
@@ -527,6 +527,15 @@ export function attachShaderReveal(
     if (touch) {
       if (options?.disableTouchBloom) return
       loadPainted()
+      if (name.startsWith('footer')) {
+        const r = wrap.getBoundingClientRect()
+        const range = window.innerHeight * 0.7
+        const progress = Math.min(1, Math.max(0, (window.innerHeight - r.top) / range))
+        const was = waveVisible()
+        waveProgress = progress
+        if (was || waveVisible()) kick()
+        return
+      }
       // Mobile scroll reveal range: completes within hero scroll (approx 360px)
       const range = Math.min(360, window.innerHeight * 0.45)
       const was = waveVisible()

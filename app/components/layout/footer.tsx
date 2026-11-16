@@ -3,15 +3,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DISABLE_WELCOME } from '../../lib/welcomeConfig'
-import { RuixenGradientFooter } from '@/components/ui/ruixen-gradient-footer'
+import AngelRevealFigure from '../home/AngelRevealFigure'
 
 const links = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5' },
   { label: 'Behance', href: 'https://behance.net/bvarungupta', icon: '/images/HomeImages/behance.svg', color: '#0057ff' },
   { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta', icon: '/images/HomeImages/dribbble.svg', color: '#ea4c89' },
-  { label: 'Figma', href: 'https://figma.com/@bvarungupta', icon: '/images/ToolsIcons/figma-icon.svg', color: '#f24e1e' },
   { label: 'Medium', href: 'https://medium.com/@bvarungupta', icon: '/images/HomeImages/medium.svg', color: '#000000' },
 ]
 
@@ -35,6 +36,10 @@ export default function Footer() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const [activeLinks, setActiveLinks] = useState<Record<string, boolean>>({})
 
+  const footerRef = useRef<HTMLElement>(null)
+  const leftCloudRef = useRef<HTMLDivElement>(null)
+  const rightCloudRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (DISABLE_WELCOME) {
       setWelcomeActive(false)
@@ -54,45 +59,193 @@ export default function Footer() {
     }
   }, [])
 
+  // Scroll-based Parallax: as user scrolls down, clouds move away; as user scrolls up, clouds come closer
+  useEffect(() => {
+    const leftEl = leftCloudRef.current
+    const rightEl = rightCloudRef.current
+    const footerEl = footerRef.current
+    if (!leftEl || !rightEl || !footerEl) return
+
+    let currentProgress = 0
+    let targetProgress = 0
+    let rafId = 0
+
+    const applyTransform = (p: number) => {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
+
+      if (isMobile) {
+        // Mobile: Large angels pushed outward (cropped left/right), closer vertically.
+        // Scroll Parallax:
+        // As user scrolls down (p -> 1): Left cloud drifts left (-X), Right cloud drifts right (+X) (moving away).
+        // As user scrolls up (p -> 0): Left cloud glides right (+X), Right cloud glides left (-X) (moving closer).
+        const leftX = 14 - p * 28
+        const rightX = -14 + p * 28
+
+        // Vertical drift: strictly moves away from content on scroll down, never encroach into text
+        const leftY = -p * 8
+        const rightY = p * 8
+
+        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${leftY.toFixed(2)}px, 0)`
+        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${rightY.toFixed(2)}px, 0)`
+      } else {
+        // Desktop: bottom wings parting
+        const leftX = 36 - p * 34
+        const rightX = -36 + p * 34
+        const y = (1 - p) * 6
+        const scale = 0.95 + p * 0.05
+
+        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${y.toFixed(2)}%, 0) scale(${scale.toFixed(3)})`
+        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${y.toFixed(2)}%, 0) scale(${scale.toFixed(3)})`
+      }
+    }
+
+    const tick = () => {
+      currentProgress += (targetProgress - currentProgress) * 0.14
+      if (Math.abs(targetProgress - currentProgress) < 0.0005) {
+        currentProgress = targetProgress
+      }
+      applyTransform(currentProgress)
+      if (Math.abs(targetProgress - currentProgress) > 0.0005) {
+        rafId = requestAnimationFrame(tick)
+      } else {
+        rafId = 0
+      }
+    }
+
+    const computeTarget = () => {
+      const rect = footerEl.getBoundingClientRect()
+      const windowH = window.innerHeight
+      // Distance from footer top entering screen bottom to footer bottom reaching screen bottom
+      const totalDist = Math.max(1, rect.height)
+      const dist = windowH - rect.top
+      const p = Math.min(1, Math.max(0, dist / totalDist))
+      targetProgress = p
+      if (!rafId) {
+        rafId = requestAnimationFrame(tick)
+      }
+    }
+
+    const handleScroll = () => {
+      computeTarget()
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
+
+    // Connect to Lenis smooth scroll
+    let lenisUnsub: (() => void) | null = null
+    const attachLenis = () => {
+      const lenis = (window as any).__lenis
+      if (lenis && !lenisUnsub) {
+        lenis.on('scroll', handleScroll)
+        lenisUnsub = () => lenis.off('scroll', handleScroll)
+        return true
+      }
+      return false
+    }
+
+    if (!attachLenis()) {
+      const interval = setInterval(() => {
+        if (attachLenis()) clearInterval(interval)
+      }, 100)
+      setTimeout(() => clearInterval(interval), 3000)
+    }
+
+    // Connect to GSAP ticker for guaranteed scroll frames
+    const tickerCallback = () => {
+      computeTarget()
+    }
+    gsap.ticker.add(tickerCallback)
+
+    computeTarget()
+    currentProgress = targetProgress
+    applyTransform(currentProgress)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+      lenisUnsub?.()
+      gsap.ticker.remove(tickerCallback)
+      if (rafId) cancelAnimationFrame(rafId)
+    }
+  }, [welcomeActive])
+
   if (pathname === '/' && welcomeActive) return null
 
   return (
-    <RuixenGradientFooter
-      gradientHeight="280px"
-      minReveal={0.045}
-      bars={15}
-      blur={14}
-      peak={0.98}
-      valley={0.35}
-      className="mt-20 relative bg-white pt-10"
+    <footer
+      ref={footerRef}
+      className="mt-20 relative bg-white pt-[calc(48vw+12px)] sm:pt-12 pb-[calc(49vw-34px)] sm:pb-6 overflow-hidden"
     >
-      {/* ── Footer Content ── */}
-      <div className="max-w-5xl mx-auto w-full px-6 md:px-10 pb-6 relative z-10">
+      {/* ── Parallax Cloud Layer with WebGL Shader Reveal ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        {/* Left Cloud: Anchored at top-0, pushed outward -left-[16vw], zero overlap */}
+        <div
+          ref={leftCloudRef}
+          className="absolute top-0 -left-[16vw] sm:top-auto sm:bottom-0 sm:left-[3vw] w-[96vw] sm:w-[50vw] max-w-[700px] pointer-events-auto select-none opacity-100"
+          style={{ willChange: 'transform' }}
+        >
+          <AngelRevealFigure
+            name="footer-left"
+            src="/images/footer/leftcloud-bw.webp"
+            paintedSrc="/images/footer/leftcloud-color.webp?v=30"
+            alt="Left Cloud Atmosphere"
+            width={3548}
+            height={1774}
+            className="w-full h-auto object-contain block"
+            loading="lazy"
+            sizes="(max-width: 768px) 96vw, 48vw"
+          />
+        </div>
+
+        {/* Right Cloud: Anchored at bottom-0, pushed outward -right-[16vw], zero overlap */}
+        <div
+          ref={rightCloudRef}
+          className="absolute bottom-0 -right-[16vw] sm:bottom-0 sm:right-[3vw] w-[92vw] sm:w-[46.7vw] max-w-[653px] pointer-events-auto select-none opacity-100"
+          style={{ willChange: 'transform' }}
+        >
+          <AngelRevealFigure
+            name="footer-right"
+            src="/images/footer/rightcloud-bw.webp"
+            paintedSrc="/images/footer/rightcloud-color.webp?v=30"
+            alt="Right Cloud Atmosphere"
+            width={3312}
+            height={1774}
+            className="w-full h-auto object-contain block"
+            loading="lazy"
+            sizes="(max-width: 768px) 92vw, 45vw"
+          />
+        </div>
+      </div>
+
+      {/* ── Footer Content (Option 1: centered, elevated z-10 for zero overlap) ── */}
+      <div className="max-w-xl mx-auto w-full px-5 sm:px-6 pb-6 relative z-10">
         {/* Big name */}
-        <div className="pb-6 text-center relative flex items-center justify-center gap-0">
+        <div className="pb-4 sm:pb-6 text-center relative flex items-center justify-center gap-0">
           {/* Left branch */}
           <img
             src="/images/HomeImages/branch.svg"
             aria-hidden="true"
-            className="hidden md:block shrink-0 pointer-events-none select-none"
+            className="hidden sm:block shrink-0 pointer-events-none select-none"
             style={{
-              height: '160px', width: 'auto',
+              height: '140px',
+              width: 'auto',
               transform: 'rotate(90deg)',
               filter: 'brightness(0) opacity(0.18)',
-              marginRight: '-30px',
+              marginRight: '-24px',
             }}
           />
 
           <div className="flex flex-col items-center">
             <h2
-              className="text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-black select-none"
+              className="text-[clamp(2.5rem,7vw,5.5rem)] leading-none tracking-tight text-black select-none"
               aria-hidden="true"
             >
               <span style={{ fontFamily: 'VarunCapsSans, sans-serif', fontSize: '1.4em' }}>V</span>
               <span style={{ fontFamily: 'SatishSans, sans-serif', marginLeft: '6px' }}>arun</span>
             </h2>
             <p
-              className="mt-4 text-sm text-gray-700 font-light"
+              className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-gray-700 font-light"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               Product Designer
@@ -103,192 +256,147 @@ export default function Footer() {
           <img
             src="/images/HomeImages/branch.svg"
             aria-hidden="true"
-            className="hidden md:block shrink-0 pointer-events-none select-none"
+            className="hidden sm:block shrink-0 pointer-events-none select-none"
             style={{
-              height: '160px', width: 'auto',
+              height: '140px',
+              width: 'auto',
               transform: 'rotate(90deg) scaleX(-1)',
               filter: 'brightness(0) opacity(0.18)',
-              marginLeft: '-30px',
+              marginLeft: '-24px',
             }}
           />
         </div>
 
-        <div className="border-t border-gray-200/80" />
+        {/* Short divider line between Varun and links */}
+        <div className="w-36 sm:w-60 mx-auto border-t border-gray-200/80" />
 
-        {/* Bottom row: logo, nav links & social links */}
-        <div data-gradient-trigger className="py-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Logo + year */}
-          <div className="flex items-center gap-3">
+        {/* Footer items: 2x2 Nav links & 2x2 Social links, left-aligned with close rows */}
+        <div className="py-5 sm:py-6 flex flex-col items-center gap-4 sm:gap-5 w-full">
+          <div className="flex flex-row items-start justify-center gap-6 sm:gap-10 w-full">
+            {/* 2x2 Nav links (left-aligned, rows close together) */}
+            <nav className="grid grid-cols-2 gap-x-4 sm:gap-x-7 gap-y-0.5 text-left">
+              {navLinks.map((l) => {
+                const isHovered = hoveredLink === l.label
+                return (
+                  <div key={l.label} className="relative">
+                    {l.icon && activeLinks[l.label] && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '22px',
+                          left: '50%',
+                          transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                          opacity: isHovered ? 1 : 0,
+                          transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                          pointerEvents: 'none',
+                          zIndex: 20,
+                        }}
+                      >
+                        <img
+                          src={l.icon}
+                          alt=""
+                          style={{
+                            width: `${l.size || 28}px`,
+                            height: `${l.size || 28}px`,
+                            maxWidth: 'none',
+                            display: 'block',
+                            objectFit: 'contain',
+                          }}
+                        />
+                      </div>
+                    )}
+                    <Link
+                      href={l.href}
+                      {...(l.external || l.href.startsWith('http')
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}
+                      onMouseEnter={() => {
+                        setHoveredLink(l.label)
+                        setActiveLinks((prev) => (prev[l.label] ? prev : { ...prev, [l.label]: true }))
+                      }}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5"
+                      style={{
+                        fontFamily: 'FunnelDisplay, sans-serif',
+                        color: isHovered ? l.color : '#374151',
+                      }}
+                    >
+                      {l.label}
+                    </Link>
+                  </div>
+                )
+              })}
+            </nav>
+
+            {/* 2x2 Social links (left-aligned, rows close together) */}
+            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-7 gap-y-0.5 text-left">
+              {links.map((l) => {
+                const isHovered = hoveredLink === l.label
+                return (
+                  <div key={l.label} className="relative">
+                    {l.icon && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '22px',
+                          left: '50%',
+                          transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                          opacity: isHovered ? 1 : 0,
+                          transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                          pointerEvents: 'none',
+                          zIndex: 20,
+                        }}
+                      >
+                        <img
+                          src={l.icon}
+                          alt=""
+                          style={{
+                            width: '26px',
+                            height: '26px',
+                            maxWidth: 'none',
+                            display: 'block',
+                          }}
+                        />
+                      </div>
+                    )}
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => setHoveredLink(l.label)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5"
+                      style={{
+                        fontFamily: 'FunnelDisplay, sans-serif',
+                        color: isHovered ? l.color : '#374151',
+                      }}
+                    >
+                      {l.label}
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Logo + Copyright centered below the 4 columns */}
+          <div className="pt-2 flex items-center justify-center gap-2.5 text-center">
             <Image
               src="/images/common/vg-outline.svg"
               alt="Varun Gupta Portfolio Logo"
-              width={28}
-              height={28}
+              width={22}
+              height={22}
               className="opacity-50"
             />
             <span
-              className="text-sm font-light tracking-wide text-gray-700"
+              className="text-xs sm:text-sm font-light tracking-wide text-gray-700"
               style={{ fontFamily: 'FunnelDisplay, sans-serif' }}
             >
               © 2026 Varun Gupta
             </span>
           </div>
-
-          {/* Nav links (2 rows on mobile, 1 row on desktop) */}
-          <nav className="grid grid-cols-2 gap-x-10 gap-y-3 text-center sm:flex sm:flex-row sm:items-center sm:gap-6">
-            {navLinks.map((l) => {
-              const isHovered = hoveredLink === l.label;
-              return (
-                <div key={l.label} className="relative">
-                  {l.icon && activeLinks[l.label] && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '24px',
-                        left: '50%',
-                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                        opacity: isHovered ? 1 : 0,
-                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                        pointerEvents: 'none',
-                        zIndex: 20,
-                      }}
-                    >
-                      <img
-                        src={l.icon}
-                        alt=""
-                        style={{
-                          width: `${l.size || 28}px`,
-                          height: `${l.size || 28}px`,
-                          maxWidth: 'none',
-                          display: 'block',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    </div>
-                  )}
-                  <Link
-                    href={l.href}
-                    {...(l.external || l.href.startsWith('http')
-                      ? { target: '_blank', rel: 'noopener noreferrer' }
-                      : {})}
-                    onMouseEnter={() => {
-                      setHoveredLink(l.label)
-                      setActiveLinks(prev => prev[l.label] ? prev : { ...prev, [l.label]: true })
-                    }}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    className="text-sm font-light tracking-wide transition-colors duration-200"
-                    style={{
-                      fontFamily: 'FunnelDisplay, sans-serif',
-                      color: isHovered ? l.color : '#374151',
-                    }}
-                  >
-                    {l.label}
-                  </Link>
-                </div>
-              )
-            })}
-          </nav>
-
-          {/* Social links (3 in Row 1, 2 in Row 2 on mobile; 1 row on desktop) */}
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
-            {/* Row 1 on mobile */}
-            <div className="flex items-center gap-6">
-              {links.slice(0, 3).map((l) => {
-                const isHovered = hoveredLink === l.label;
-                return (
-                  <div key={l.label} className="relative">
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '24px',
-                        left: '50%',
-                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                        opacity: isHovered ? 1 : 0,
-                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                        pointerEvents: 'none',
-                        zIndex: 20,
-                      }}
-                    >
-                      <img
-                        src={l.icon}
-                        alt=""
-                        style={{
-                          width: '26px',
-                          height: '26px',
-                          maxWidth: 'none',
-                          display: 'block',
-                        }}
-                      />
-                    </div>
-                    <a
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={() => setHoveredLink(l.label)}
-                      onMouseLeave={() => setHoveredLink(null)}
-                      className="text-sm font-light tracking-wide transition-colors duration-200"
-                      style={{
-                        fontFamily: 'FunnelDisplay, sans-serif',
-                        color: isHovered ? l.color : '#374151',
-                      }}
-                    >
-                      {l.label}
-                    </a>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* Row 2 on mobile */}
-            <div className="flex items-center gap-6">
-              {links.slice(3).map((l) => {
-                const isHovered = hoveredLink === l.label;
-                return (
-                  <div key={l.label} className="relative">
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '24px',
-                        left: '50%',
-                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                        opacity: isHovered ? 1 : 0,
-                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                        pointerEvents: 'none',
-                        zIndex: 20,
-                      }}
-                    >
-                      <img
-                        src={l.icon}
-                        alt=""
-                        style={{
-                          width: '26px',
-                          height: '26px',
-                          maxWidth: 'none',
-                          display: 'block',
-                        }}
-                      />
-                    </div>
-                    <a
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={() => setHoveredLink(l.label)}
-                      onMouseLeave={() => setHoveredLink(null)}
-                      className="text-sm font-light tracking-wide transition-colors duration-200"
-                      style={{
-                        fontFamily: 'FunnelDisplay, sans-serif',
-                        color: isHovered ? l.color : '#374151',
-                      }}
-                    >
-                      {l.label}
-                    </a>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
         </div>
       </div>
-    </RuixenGradientFooter>
+    </footer>
   )
 }

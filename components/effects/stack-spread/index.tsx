@@ -387,16 +387,12 @@ function StackSpreadStage({
           }}
         >
           <h2
-            className="w-full whitespace-pre-line text-[4.5vw] font-normal leading-none! tracking-tight max-md:text-[10vw]"
-            style={{ color: textColor, fontFamily: 'FunnelDisplay, sans-serif' }}
+            className="w-full whitespace-pre-line text-[4vw] font-normal leading-none! tracking-tight max-md:text-[9vw] flex items-baseline justify-center gap-[0.35em]"
+            style={{ color: textColor }}
           >
-            {headlineMain}
-
-           <span className="opacity-60"> {" "}
-              {headlineSub}
-               {" "}
-              </span>
-              {headlineEnd}
+            {renderHeadingWord(headlineMain)}
+            {renderHeadingWord(headlineSub, true)}
+            {renderHeadingWord(headlineEnd)}
           </h2>
           <p
             className="mt-[1.2vw] w-full max-w-[42ch] text-[1.15vw] leading-relaxed tracking-tight max-md:mt-3 max-md:text-[3.6vw]"
@@ -445,6 +441,20 @@ export interface StackSpreadProps {
   headlineSub?: string;
   headlineEnd?: string;
   description?: string;
+}
+
+function renderHeadingWord(word?: string, isMuted = false) {
+  if (!word) return null;
+  const first = word.charAt(0);
+  const rest = word.slice(1);
+  return (
+    <span className={`inline-flex items-baseline ${isMuted ? "opacity-60" : ""}`}>
+      <span style={{ fontFamily: "VarunCapsSans, sans-serif", fontSize: "1.35em" }}>
+        {first}
+      </span>
+      <span style={{ fontFamily: "SatishSans, sans-serif" }}>{rest}</span>
+    </span>
+  );
 }
 
 export default function StackSpread({

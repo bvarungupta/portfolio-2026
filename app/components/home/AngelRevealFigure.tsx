@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { attachShaderReveal, prefersReducedMotion } from './dither/shaderReveal'
 
 interface AngelRevealFigureProps {
-  name: 'left' | 'right' | 'abhay' | 'tejas'
+  name: 'left' | 'right' | 'abhay' | 'tejas' | 'footer-left' | 'footer-right' | string
   src: string
   paintedSrc: string
   width: number
@@ -69,6 +69,12 @@ export default function AngelRevealFigure({
     const touch = wave || !window.matchMedia('(pointer: fine)').matches
     if (touch) {
       const onScroll = () => {
+        if (name.startsWith('footer')) {
+          const r = wrap.getBoundingClientRect()
+          const range = window.innerHeight * 0.7
+          setFallbackProgress(Math.min(1, Math.max(0, (window.innerHeight - r.top) / range)))
+          return
+        }
         const range = Math.min(360, window.innerHeight * 0.45)
         setFallbackProgress(Math.min(1, Math.max(0, window.scrollY / range)))
       }
