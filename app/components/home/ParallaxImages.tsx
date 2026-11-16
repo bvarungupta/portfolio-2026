@@ -16,7 +16,7 @@ const ABHAY = {
 }
 
 const TEJAS = {
-  bw: '/images/HomeImages/Right-angel-bw.webp',
+  bw: '/images/HomeImages/Right-angel-bw1.webp',
   color: '/images/HomeImages/Right-angel-color.webp',
   width: 550,
   height: 550,

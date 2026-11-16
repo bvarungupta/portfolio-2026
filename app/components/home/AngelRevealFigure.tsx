@@ -129,19 +129,10 @@ export default function AngelRevealFigure({
           <img
             src={paintedSrc}
             alt=""
-            width={isRight ? 1284 : width}
-            height={isRight ? 1284 : height}
+            width={width}
+            height={height}
             className={className}
-            style={
-              isRight
-                ? {
-                    width: `${(1284 / 1166) * 100}%`,
-                    height: `${(1284 / 1166) * 100}%`,
-                    maxWidth: 'none',
-                    maxHeight: 'none',
-                  }
-                : { width: '100%', height: 'auto' }
-            }
+            style={{ width: '100%', height: 'auto' }}
           />
         </div>
       )}

@@ -430,10 +430,10 @@ export function attachShaderReveal(
 
     // Accurate texture coordinate mapping:
     // Left angel: both source images are 1504x1002 (scale=1, offset=0)
-    // Right angel: BW is 1166x1166, Color is 1284x1284 (scale=1166/1284, offset=(0, 118/1284))
-    // Design process illustrations: guarantee exact identical size and dimensions to monochrome layer
+    // Right angel: Right-angel-bw1.webp (2568x2568) and Color (1284x1284) share exact 1:1 framing (scale=1, offset=0)
+    // Legacy Right angel fallback: BW was 1166x1166, Color was 1284x1284 (scale=1166/1284, offset=(0, 118/1284))
     const isTejas = name === 'right' || name === 'tejas'
-    if (isTejas) {
+    if (isTejas && img && img.naturalWidth === 1166 && img.naturalHeight === 1166) {
       gl.uniform2f(U.scale, 1166.0 / 1284.0, 1166.0 / 1284.0)
       gl.uniform2f(U.offset, 0.0, (1284.0 - 1166.0) / 1284.0)
     } else if (img && painted && img.naturalWidth && img.naturalHeight && painted.naturalWidth && painted.naturalHeight) {
