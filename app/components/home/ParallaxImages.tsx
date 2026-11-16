@@ -95,8 +95,8 @@ export default function ParallaxImages() {
           className="absolute h-auto pointer-events-none"
           style={{
             width: 'clamp(380px, 32.4vw, 640px)',
-            left: '45px',
-            top: '8.5%',
+            left: '15px',
+            top: '7.5%',
             zIndex: 2,
           }}
         >
@@ -129,8 +129,8 @@ export default function ParallaxImages() {
           className="absolute h-auto pointer-events-none"
           style={{
             width: 'clamp(324px, 27.9vw, 550px)',
-            right: '0px',
-            top: '63%',
+            right: '25px',
+            top: '58.5%',
             zIndex: 2,
           }}
         >
@@ -163,9 +163,9 @@ export default function ParallaxImages() {
         data-hero-angel="left"
         className="fixed block md:hidden pointer-events-none"
         style={{
-          width: 270,
-          left: -115,
-          top: '14.5vh',
+          width: 282,
+          left: -135,
+          top: '13.5vh',
           zIndex: 2,
         }}
       >
@@ -199,8 +199,8 @@ export default function ParallaxImages() {
         className="fixed block md:hidden pointer-events-none"
         style={{
           width: 236,
-          right: -90,
-          top: '72vh',
+          right: -70,
+          top: '70.5vh',
           zIndex: 2,
         }}
       >

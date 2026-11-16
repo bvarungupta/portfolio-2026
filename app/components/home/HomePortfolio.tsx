@@ -41,7 +41,7 @@ export default function HomePortfolio() {
         <div className="relative min-h-[calc(100vh-120px)] flex flex-col justify-center items-center text-center gap-6 overflow-hidden md:overflow-visible">
           <ParallaxImages />
 
-          <Rise as="div" targets="children" className="relative flex flex-col items-center gap-6" style={{ zIndex: 5 }}>
+          <Rise as="div" targets="children" className="relative flex flex-col items-center gap-6 -translate-y-9 md:translate-y-0" style={{ zIndex: 5 }}>
             <Image
               id="hero-logo-outline"
               src="/images/common/vg-outline.svg"
@@ -64,7 +64,7 @@ export default function HomePortfolio() {
             </p>
           </Rise>
 
-          <div data-hero-element="email" className="absolute bottom-28 md:bottom-20 left-0 right-0 flex justify-center items-center" style={{ zIndex: 5 }}>
+          <div data-hero-element="email" className="absolute bottom-36 md:bottom-20 left-0 right-0 flex justify-center items-center" style={{ zIndex: 5 }}>
             <EmailSection />
           </div>
         </div>
