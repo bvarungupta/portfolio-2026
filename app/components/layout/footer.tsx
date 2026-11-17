@@ -9,6 +9,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DISABLE_WELCOME } from '../../lib/welcomeConfig'
 import AngelRevealFigure from '../home/AngelRevealFigure'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const links = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5' },
   { label: 'Behance', href: 'https://behance.net/bvarungupta', icon: '/images/HomeImages/behance.svg', color: '#0057ff' },
@@ -59,125 +61,122 @@ export default function Footer() {
     }
   }, [])
 
-  // Scroll-based Parallax: as user scrolls down, clouds move away; as user scrolls up, clouds come closer
+  // Scroll-based Slide-In: left and right clouds smoothly slide in from both sides as footer enters
   useEffect(() => {
     const leftEl = leftCloudRef.current
     const rightEl = rightCloudRef.current
     const footerEl = footerRef.current
     if (!leftEl || !rightEl || !footerEl) return
 
-    let currentProgress = 0
-    let targetProgress = 0
-    let rafId = 0
+    const mm = gsap.matchMedia()
 
-    const applyTransform = (p: number) => {
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
+    // Desktop: Left & right clouds slide in smoothly from both sides to frame the content
+    mm.add('(min-width: 640px)', () => {
+      gsap.fromTo(
+        leftEl,
+        {
+          xPercent: -40,
+          y: 20,
+          scale: 0.93,
+        },
+        {
+          xPercent: 0,
+          y: 0,
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: footerEl,
+            start: 'top bottom+=200',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        }
+      )
 
-      if (isMobile) {
-        // Mobile: Large angels pushed outward (cropped left/right), closer vertically.
-        // Scroll Parallax:
-        // As user scrolls down (p -> 1): Left cloud drifts left (-X), Right cloud drifts right (+X) (moving away).
-        // As user scrolls up (p -> 0): Left cloud glides right (+X), Right cloud glides left (-X) (moving closer).
-        const leftX = 18 - p * 36
-        const rightX = -18 + p * 36
+      gsap.fromTo(
+        rightEl,
+        {
+          xPercent: 40,
+          y: 20,
+          scale: 0.93,
+        },
+        {
+          xPercent: 0,
+          y: 0,
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: footerEl,
+            start: 'top bottom+=200',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        }
+      )
+    })
 
-        // Vertical drift: strictly moves away from content on scroll down, never encroach into text
-        const leftY = -p * 12
-        const rightY = p * 12
+    // Mobile: Top & bottom clouds slide in from left and right edges
+    mm.add('(max-width: 639px)', () => {
+      gsap.fromTo(
+        leftEl,
+        {
+          xPercent: -35,
+          y: -10,
+        },
+        {
+          xPercent: 0,
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: footerEl,
+            start: 'top bottom+=150',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        }
+      )
 
-        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${leftY.toFixed(2)}px, 0)`
-        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${rightY.toFixed(2)}px, 0)`
-      } else {
-        // Desktop: Dramatic scroll parallax — angels sweep inward towards center as user scrolls down
-        // At p = 0 (entering from bottom): parted outward by -16% / +16% (wide theatrical entrance)
-        // At p = 1 (scrolled fully into view): glides inward smoothly to 0% (intimate framing position)
-        const leftX = -(1 - p) * 16
-        const rightX = (1 - p) * 16
-        const y = (1 - p) * 16
-        const scale = 0.94 + p * 0.06
+      gsap.fromTo(
+        rightEl,
+        {
+          xPercent: 35,
+          y: 10,
+        },
+        {
+          xPercent: 0,
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: footerEl,
+            start: 'top bottom+=150',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        }
+      )
+    })
 
-        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
-        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
-      }
+    const handleRefresh = () => {
+      ScrollTrigger.refresh()
     }
-
-    const tick = () => {
-      currentProgress += (targetProgress - currentProgress) * 0.14
-      if (Math.abs(targetProgress - currentProgress) < 0.0005) {
-        currentProgress = targetProgress
-      }
-      applyTransform(currentProgress)
-      if (Math.abs(targetProgress - currentProgress) > 0.0005) {
-        rafId = requestAnimationFrame(tick)
-      } else {
-        rafId = 0
-      }
-    }
-
-    const computeTarget = () => {
-      const rect = footerEl.getBoundingClientRect()
-      const windowH = window.innerHeight
-      // Distance from footer top entering screen bottom to footer bottom reaching screen bottom
-      const totalDist = Math.max(1, rect.height)
-      const dist = windowH - rect.top
-      const p = Math.min(1, Math.max(0, dist / totalDist))
-      targetProgress = p
-      if (!rafId) {
-        rafId = requestAnimationFrame(tick)
-      }
-    }
-
-    const handleScroll = () => {
-      computeTarget()
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleScroll, { passive: true })
-
-    // Connect to Lenis smooth scroll
-    let lenisUnsub: (() => void) | null = null
-    const attachLenis = () => {
-      const lenis = (window as any).__lenis
-      if (lenis && !lenisUnsub) {
-        lenis.on('scroll', handleScroll)
-        lenisUnsub = () => lenis.off('scroll', handleScroll)
-        return true
-      }
-      return false
-    }
-
-    if (!attachLenis()) {
-      const interval = setInterval(() => {
-        if (attachLenis()) clearInterval(interval)
-      }, 100)
-      setTimeout(() => clearInterval(interval), 3000)
-    }
-
-    // Connect to GSAP ticker for guaranteed scroll frames
-    const tickerCallback = () => {
-      computeTarget()
-    }
-    gsap.ticker.add(tickerCallback)
-
-    computeTarget()
-    currentProgress = targetProgress
-    applyTransform(currentProgress)
+    window.addEventListener('welcome-finished', handleRefresh)
+    window.addEventListener('resize', handleRefresh)
+    const timer = setTimeout(handleRefresh, 400)
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleScroll)
-      lenisUnsub?.()
-      gsap.ticker.remove(tickerCallback)
-      if (rafId) cancelAnimationFrame(rafId)
+      clearTimeout(timer)
+      window.removeEventListener('welcome-finished', handleRefresh)
+      window.removeEventListener('resize', handleRefresh)
+      mm.revert()
     }
   }, [welcomeActive])
-
-  if (pathname === '/' && welcomeActive) return null
 
   return (
     <footer
       ref={footerRef}
-      className="mt-20 relative bg-white pt-[calc(48vw_+_16px)] sm:pt-12 pb-[calc(49vw_-_22px)] sm:pb-6 overflow-hidden"
+      className={`mt-20 relative bg-white pt-[calc(48vw_+_16px)] sm:pt-12 pb-[calc(49vw_-_22px)] sm:pb-6 overflow-hidden ${
+        pathname === '/' && welcomeActive ? 'invisible pointer-events-none' : ''
+      }`}
     >
       {/* ── Parallax Cloud Layer with WebGL Shader Reveal ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -195,7 +194,9 @@ export default function Footer() {
             width={3548}
             height={1774}
             className="w-full h-auto object-contain block"
-            loading="lazy"
+            priority={true}
+            loading="eager"
+            fetchPriority="high"
             sizes="(max-width: 768px) 96vw, 48vw"
           />
         </div>
@@ -214,7 +215,9 @@ export default function Footer() {
             width={3312}
             height={1774}
             className="w-full h-auto object-contain block"
-            loading="lazy"
+            priority={true}
+            loading="eager"
+            fetchPriority="high"
             sizes="(max-width: 768px) 92vw, 45vw"
           />
         </div>

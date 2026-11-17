@@ -124,6 +124,8 @@ export default function RootLayout({
         <link rel="preload" href="/fonts/FunnelDisplay/FunnelDisplay-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/images/common/vg26.svg" as="image" type="image/svg+xml" />
         <link rel="preload" href="/images/common/vg-outline.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/images/footer/leftcloud-bw.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/images/footer/rightcloud-bw.webp" as="image" type="image/webp" />
       </head>
       <body suppressHydrationWarning>
         <ColumnBlindsProvider>
