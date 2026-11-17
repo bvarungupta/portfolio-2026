@@ -16,6 +16,7 @@ const processSteps = [
     name: "research",
     bw: "/images/design-process/research1-bw.webp",
     color: "/images/design-process/research-color.webp",
+    dither: "/images/design-process/research-dither.webp",
     width: 2748,
     height: 1932,
   },
@@ -27,6 +28,7 @@ const processSteps = [
     name: "design",
     bw: "/images/design-process/design1-bw.webp",
     color: "/images/design-process/design-color.webp",
+    dither: "/images/design-process/design-dither.webp",
     width: 2748,
     height: 1932,
   },
@@ -38,6 +40,7 @@ const processSteps = [
     name: "build",
     bw: "/images/design-process/build1-bw.webp",
     color: "/images/design-process/build-color.webp",
+    dither: undefined,
     width: 2750,
     height: 1930,
   },
@@ -86,6 +89,7 @@ function ProcessCard({ item }: { item: (typeof processSteps)[number] }) {
             name={item.name}
             src={item.bw}
             paintedSrc={item.color}
+            mobileSrc={item.dither}
             alt={`${item.title} illustration`}
             width={item.width}
             height={item.height}

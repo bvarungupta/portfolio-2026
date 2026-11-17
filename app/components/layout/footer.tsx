@@ -177,7 +177,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="mt-20 relative bg-white pt-[calc(48vw+12px)] sm:pt-12 pb-[calc(49vw-34px)] sm:pb-6 overflow-hidden"
+      className="mt-20 relative bg-white pt-[calc(48vw_+_16px)] sm:pt-12 pb-[calc(49vw_-_22px)] sm:pb-6 overflow-hidden"
     >
       {/* ── Parallax Cloud Layer with WebGL Shader Reveal ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

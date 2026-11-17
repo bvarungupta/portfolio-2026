@@ -8,6 +8,7 @@ interface ProcessRevealFigureProps {
   name: string
   src: string
   paintedSrc: string
+  mobileSrc?: string
   width: number
   height: number
   alt: string
@@ -21,6 +22,7 @@ export default function ProcessRevealFigure({
   name,
   src,
   paintedSrc,
+  mobileSrc,
   width,
   height,
   alt,
@@ -91,13 +93,13 @@ export default function ProcessRevealFigure({
 
   return (
     <>
-      {/* ── Mobile: Colour artwork by default (no hover required) ─────────── */}
+      {/* ── Mobile: Dither / colour artwork by default (no hover required) ─ */}
       <div
         className="block md:hidden relative w-full h-auto select-none leading-none overflow-hidden"
         style={{ lineHeight: 0 }}
       >
         <Image
-          src={paintedSrc}
+          src={mobileSrc || paintedSrc}
           alt={alt}
           width={width}
           height={height}
