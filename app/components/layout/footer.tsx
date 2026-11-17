@@ -78,23 +78,23 @@ export default function Footer() {
         // Scroll Parallax:
         // As user scrolls down (p -> 1): Left cloud drifts left (-X), Right cloud drifts right (+X) (moving away).
         // As user scrolls up (p -> 0): Left cloud glides right (+X), Right cloud glides left (-X) (moving closer).
-        const leftX = 14 - p * 28
-        const rightX = -14 + p * 28
+        const leftX = 18 - p * 36
+        const rightX = -18 + p * 36
 
         // Vertical drift: strictly moves away from content on scroll down, never encroach into text
-        const leftY = -p * 8
-        const rightY = p * 8
+        const leftY = -p * 12
+        const rightY = p * 12
 
         leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${leftY.toFixed(2)}px, 0)`
         rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${rightY.toFixed(2)}px, 0)`
       } else {
-        // Desktop: bottom wings parting outward away from center, never encroaching into text
-        // At p = 0 (scrolled up / resting): 0% (exact safe framing clearance)
-        // At p = 1 (scrolled down): drifts outward away from center (left drifts -12%, right drifts +12%)
-        const leftX = -p * 12
-        const rightX = p * 12
-        const y = (1 - p) * 6
-        const scale = 0.95 + p * 0.05
+        // Desktop: Dramatic scroll parallax — angels sweep inward towards center as user scrolls down
+        // At p = 0 (entering from bottom): parted outward by -16% / +16% (wide theatrical entrance)
+        // At p = 1 (scrolled fully into view): glides inward smoothly to 0% (intimate framing position)
+        const leftX = -(1 - p) * 16
+        const rightX = (1 - p) * 16
+        const y = (1 - p) * 16
+        const scale = 0.94 + p * 0.06
 
         leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
         rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
@@ -181,10 +181,10 @@ export default function Footer() {
     >
       {/* ── Parallax Cloud Layer with WebGL Shader Reveal ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Left Cloud: Anchored at top-0 on mobile; on desktop pinned outside central content (crops off-screen to left, zero overlap) */}
+        {/* Left Cloud: Anchored at top-0 on mobile; on desktop brought closer, dynamically moving away as screen size shrinks (zero overlap) */}
         <div
           ref={leftCloudRef}
-          className="absolute top-0 -left-[16vw] sm:top-auto sm:bottom-0 sm:left-auto sm:right-[calc(50%+220px)] w-[96vw] sm:w-[clamp(450px,40vw,680px)] pointer-events-auto select-none opacity-100"
+          className="absolute top-0 -left-[16vw] sm:top-auto sm:bottom-0 sm:left-auto sm:right-[calc(50%+clamp(180px,265px-5vw,220px))] w-[96vw] sm:w-[clamp(450px,40vw,680px)] pointer-events-auto select-none opacity-100"
           style={{ willChange: 'transform' }}
         >
           <AngelRevealFigure
@@ -200,10 +200,10 @@ export default function Footer() {
           />
         </div>
 
-        {/* Right Cloud: Anchored at bottom-0 on mobile; on desktop pinned outside central content (crops off-screen to right, zero overlap) */}
+        {/* Right Cloud: Anchored at bottom-0 on mobile; on desktop brought closer, dynamically moving away as screen size shrinks (zero overlap) */}
         <div
           ref={rightCloudRef}
-          className="absolute bottom-0 -right-[16vw] sm:bottom-0 sm:right-auto sm:left-[calc(50%+220px)] w-[92vw] sm:w-[clamp(430px,38vw,640px)] pointer-events-auto select-none opacity-100"
+          className="absolute bottom-0 -right-[16vw] sm:bottom-0 sm:right-auto sm:left-[calc(50%+clamp(180px,265px-5vw,220px))] w-[92vw] sm:w-[clamp(430px,38vw,640px)] pointer-events-auto select-none opacity-100"
           style={{ willChange: 'transform' }}
         >
           <AngelRevealFigure
