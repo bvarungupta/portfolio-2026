@@ -39,7 +39,7 @@ const processSteps = [
     copy: "I take the final designs into production, working closely with developers through implementation, QA, and launch. I handle the handoff, resolve edge cases, and make sure the finished product stays true to the design while working as it should.",
     name: "build",
     bw: "/images/design-process/build1-bw.webp",
-    color: "/images/design-process/build-color.webp",
+    color: "/images/design-process/build-dither.webp",
     dither: undefined,
     width: 2750,
     height: 1930,
