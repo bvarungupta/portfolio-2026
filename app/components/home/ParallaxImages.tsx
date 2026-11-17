@@ -88,14 +88,14 @@ export default function ParallaxImages() {
     <>
       {/* ── Desktop — full-width viewport-aligned container ────────────────── */}
       <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full pointer-events-none overflow-visible">
-        {/* Left Angel (Desktop) */}
+        {/* Left Angel (Desktop) - Full original size restored, intimate nearest framing */}
         <div
           ref={abhayDesktop}
           data-hero-angel="left"
           className="absolute h-auto pointer-events-none"
           style={{
             width: 'clamp(380px, 32.4vw, 640px)',
-            left: '15px',
+            left: 'clamp(-35px, 1.5vw - 10px, 15px)',
             top: '7.5%',
             zIndex: 2,
           }}
@@ -122,21 +122,21 @@ export default function ParallaxImages() {
           </div>
         </div>
 
-        {/* Right Angel (Desktop) */}
+        {/* Right Angel (Desktop) - Full original size restored, nearest & closest without overlap */}
         <div
           ref={tejasDesktop}
           data-hero-angel="right"
           className="absolute h-auto pointer-events-none"
           style={{
             width: 'clamp(324px, 27.9vw, 550px)',
-            right: '25px',
-            top: '58.5%',
+            right: 'clamp(15px, 2vw, 35px)',
+            top: '62%',
             zIndex: 2,
           }}
         >
           <div
             style={{
-              transform: 'rotate(-29deg) scale(1.5)',
+              transform: 'rotate(-32deg) scale(1.5)',
               transformOrigin: 'center center',
             }}
           >

@@ -88,14 +88,16 @@ export default function Footer() {
         leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${leftY.toFixed(2)}px, 0)`
         rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${rightY.toFixed(2)}px, 0)`
       } else {
-        // Desktop: bottom wings parting
-        const leftX = 36 - p * 34
-        const rightX = -36 + p * 34
+        // Desktop: bottom wings parting outward away from center, never encroaching into text
+        // At p = 0 (scrolled up / resting): 0% (exact safe framing clearance)
+        // At p = 1 (scrolled down): drifts outward away from center (left drifts -12%, right drifts +12%)
+        const leftX = -p * 12
+        const rightX = p * 12
         const y = (1 - p) * 6
         const scale = 0.95 + p * 0.05
 
-        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${y.toFixed(2)}%, 0) scale(${scale.toFixed(3)})`
-        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${y.toFixed(2)}%, 0) scale(${scale.toFixed(3)})`
+        leftEl.style.transform = `translate3d(${leftX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
+        rightEl.style.transform = `translate3d(${rightX.toFixed(2)}%, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
       }
     }
 
@@ -179,10 +181,10 @@ export default function Footer() {
     >
       {/* ── Parallax Cloud Layer with WebGL Shader Reveal ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Left Cloud: Anchored at top-0, pushed outward -left-[16vw], zero overlap */}
+        {/* Left Cloud: Anchored at top-0 on mobile; on desktop pinned outside central content (crops off-screen to left, zero overlap) */}
         <div
           ref={leftCloudRef}
-          className="absolute top-0 -left-[16vw] sm:top-auto sm:bottom-0 sm:left-[3vw] w-[96vw] sm:w-[50vw] max-w-[700px] pointer-events-auto select-none opacity-100"
+          className="absolute top-0 -left-[16vw] sm:top-auto sm:bottom-0 sm:left-auto sm:right-[calc(50%+220px)] w-[96vw] sm:w-[clamp(450px,40vw,680px)] pointer-events-auto select-none opacity-100"
           style={{ willChange: 'transform' }}
         >
           <AngelRevealFigure
@@ -198,10 +200,10 @@ export default function Footer() {
           />
         </div>
 
-        {/* Right Cloud: Anchored at bottom-0, pushed outward -right-[16vw], zero overlap */}
+        {/* Right Cloud: Anchored at bottom-0 on mobile; on desktop pinned outside central content (crops off-screen to right, zero overlap) */}
         <div
           ref={rightCloudRef}
-          className="absolute bottom-0 -right-[16vw] sm:bottom-0 sm:right-[3vw] w-[92vw] sm:w-[46.7vw] max-w-[653px] pointer-events-auto select-none opacity-100"
+          className="absolute bottom-0 -right-[16vw] sm:bottom-0 sm:right-auto sm:left-[calc(50%+220px)] w-[92vw] sm:w-[clamp(430px,38vw,640px)] pointer-events-auto select-none opacity-100"
           style={{ willChange: 'transform' }}
         >
           <AngelRevealFigure
