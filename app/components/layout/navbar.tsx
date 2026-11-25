@@ -14,6 +14,7 @@ const splitNavItems: SplitNavMenuItem[] = [
   { name: "Home", href: "/" },
   { name: "Work", href: "/work" },
   { name: "About", href: "/about" },
+  { name: "Lab", href: "/lab" },
   {
     name: "Resume",
     href: "https://drive.google.com/file/d/1gVS7dO5vmJz11-2KYrHCzc8IlHcqFIwP/view?usp=drive_link",

@@ -1,7 +1,6 @@
 "use client"
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
@@ -11,32 +10,19 @@ import AngelRevealFigure from '../home/AngelRevealFigure'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const links = [
+const EMAIL_ADDRESS = 'bvarungupta@gmail.com'
+
+const socialLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/bvarungupta', icon: '/images/HomeImages/linkedin.svg', color: '#0077b5' },
   { label: 'Behance', href: 'https://behance.net/bvarungupta', icon: '/images/HomeImages/behance.svg', color: '#0057ff' },
   { label: 'Dribbble', href: 'https://dribbble.com/bvarungupta', icon: '/images/HomeImages/dribbble.svg', color: '#ea4c89' },
-  { label: 'Medium', href: 'https://medium.com/@bvarungupta', icon: '/images/HomeImages/medium.svg', color: '#000000' },
-]
-
-const navLinks = [
-  { label: 'Works', href: '/#work', icon: '/images/varun-image-hover-images/pen.png', color: '#f97316', size: 42 },
-  { label: 'About', href: '/about', icon: '/images/varun-image-hover-images/football.png', color: '#f97316', size: 42 },
-  { label: 'Lab', href: '/lab', icon: '/images/varun-image-hover-images/microscope.png', color: '#f97316', size: 42 },
-  {
-    label: 'Resume',
-    href: 'https://drive.google.com/file/d/1gVS7dO5vmJz11-2KYrHCzc8IlHcqFIwP/view?usp=drive_link',
-    icon: '/images/varun-image-hover-images/pen-tool.png',
-    color: '#f97316',
-    size: 42,
-    external: true,
-  },
 ]
 
 export default function Footer() {
   const pathname = usePathname()
   const [welcomeActive, setWelcomeActive] = useState(!DISABLE_WELCOME)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
-  const [activeLinks, setActiveLinks] = useState<Record<string, boolean>>({})
+  const [mailCopied, setMailCopied] = useState(false)
 
   const footerRef = useRef<HTMLElement>(null)
   const leftCloudRef = useRef<HTMLDivElement>(null)
@@ -174,7 +160,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className={`mt-20 relative bg-white pt-[calc(48vw_+_16px)] sm:pt-12 pb-[calc(49vw_-_22px)] sm:pb-6 overflow-hidden ${
+      className={`${pathname?.startsWith('/lab/iso-pad') ? 'mt-0' : 'mt-20'} relative bg-white pt-[calc(48vw_+_16px)] sm:pt-12 pb-[calc(49vw_-_22px)] sm:pb-6 overflow-hidden ${
         pathname === '/' && welcomeActive ? 'invisible pointer-events-none' : ''
       }`}
     >
@@ -275,112 +261,109 @@ export default function Footer() {
         {/* Short divider line between Varun and links */}
         <div className="w-36 sm:w-60 mx-auto border-t border-gray-200/80" />
 
-        {/* Footer items: 2x2 Nav links & 2x2 Social links, left-aligned with close rows */}
+        {/* Footer items: Socials only (LinkedIn, Behance, Dribbble, Mail copy) */}
         <div className="py-5 sm:py-6 flex flex-col items-center gap-4 sm:gap-5 w-full">
-          <div className="flex flex-row items-start justify-center gap-6 sm:gap-10 w-full">
-            {/* 2x2 Nav links (left-aligned, rows close together) */}
-            <nav className="grid grid-cols-2 gap-x-4 sm:gap-x-7 gap-y-0.5 text-left">
-              {navLinks.map((l) => {
-                const isHovered = hoveredLink === l.label
-                return (
-                  <div key={l.label} className="relative">
-                    {l.icon && activeLinks[l.label] && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          bottom: '22px',
-                          left: '50%',
-                          transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                          opacity: isHovered ? 1 : 0,
-                          transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                          pointerEvents: 'none',
-                          zIndex: 20,
-                        }}
-                      >
-                        <img
-                          src={l.icon}
-                          alt=""
-                          style={{
-                            width: `${l.size || 28}px`,
-                            height: `${l.size || 28}px`,
-                            maxWidth: 'none',
-                            display: 'block',
-                            objectFit: 'contain',
-                          }}
-                        />
-                      </div>
-                    )}
-                    <Link
-                      href={l.href}
-                      {...(l.external || l.href.startsWith('http')
-                        ? { target: '_blank', rel: 'noopener noreferrer' }
-                        : {})}
-                      onMouseEnter={() => {
-                        setHoveredLink(l.label)
-                        setActiveLinks((prev) => (prev[l.label] ? prev : { ...prev, [l.label]: true }))
-                      }}
-                      onMouseLeave={() => setHoveredLink(null)}
-                      className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5"
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-9 w-full">
+            {socialLinks.map((l) => {
+              const isHovered = hoveredLink === l.label
+              return (
+                <div key={l.label} className="relative">
+                  {l.icon && (
+                    <div
                       style={{
-                        fontFamily: 'FunnelDisplay, sans-serif',
-                        color: isHovered ? l.color : '#374151',
+                        position: 'absolute',
+                        bottom: '22px',
+                        left: '50%',
+                        transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                        pointerEvents: 'none',
+                        zIndex: 20,
                       }}
                     >
-                      {l.label}
-                    </Link>
-                  </div>
-                )
-              })}
-            </nav>
+                      <img
+                        src={l.icon}
+                        alt=""
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          maxWidth: 'none',
+                          display: 'block',
+                        }}
+                      />
+                    </div>
+                  )}
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={() => setHoveredLink(l.label)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5"
+                    style={{
+                      fontFamily: 'FunnelDisplay, sans-serif',
+                      color: isHovered ? l.color : '#374151',
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                </div>
+              )
+            })}
 
-            {/* 2x2 Social links (left-aligned, rows close together) */}
-            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-7 gap-y-0.5 text-left">
-              {links.map((l) => {
-                const isHovered = hoveredLink === l.label
-                return (
-                  <div key={l.label} className="relative">
-                    {l.icon && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          bottom: '22px',
-                          left: '50%',
-                          transform: `translateX(-50%) rotate(${isHovered ? '12deg' : '-15deg'}) scale(${isHovered ? 1.05 : 0.1})`,
-                          opacity: isHovered ? 1 : 0,
-                          transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
-                          pointerEvents: 'none',
-                          zIndex: 20,
-                        }}
-                      >
-                        <img
-                          src={l.icon}
-                          alt=""
-                          style={{
-                            width: '26px',
-                            height: '26px',
-                            maxWidth: 'none',
-                            display: 'block',
-                          }}
-                        />
-                      </div>
-                    )}
-                    <a
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={() => setHoveredLink(l.label)}
-                      onMouseLeave={() => setHoveredLink(null)}
-                      className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5"
-                      style={{
-                        fontFamily: 'FunnelDisplay, sans-serif',
-                        color: isHovered ? l.color : '#374151',
-                      }}
-                    >
-                      {l.label}
-                    </a>
-                  </div>
-                )
-              })}
+            {/* Mail (click copies email to clipboard) */}
+            <div className="relative">
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '22px',
+                  left: '50%',
+                  transform: `translateX(-50%) rotate(${hoveredLink === 'Mail' ? '10deg' : '-15deg'}) scale(${hoveredLink === 'Mail' ? 1.05 : 0.1})`,
+                  opacity: hoveredLink === 'Mail' ? 1 : 0,
+                  transition: 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease',
+                  pointerEvents: 'none',
+                  zIndex: 20,
+                }}
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ display: 'block', filter: 'drop-shadow(0 3px 6px rgba(249,115,22,0.22))' }}
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="5" width="24" height="18" rx="5.5" fill="#f97316" />
+                  <path
+                    d="M5.5 9.2L12.7 14.3C13.48 14.85 14.52 14.85 15.3 14.3L22.5 9.2"
+                    stroke="#ffffff"
+                    strokeWidth="2.1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                    navigator.clipboard.writeText(EMAIL_ADDRESS).catch(() => {})
+                  }
+                  setMailCopied(true)
+                  setTimeout(() => setMailCopied(false), 2000)
+                }}
+                onMouseEnter={() => setHoveredLink('Mail')}
+                onMouseLeave={() => setHoveredLink(null)}
+                aria-label="Copy email address"
+                className="text-xs sm:text-sm font-light tracking-wide leading-tight transition-colors duration-200 block py-0.5 cursor-pointer"
+                style={{
+                  fontFamily: 'FunnelDisplay, sans-serif',
+                  color: mailCopied ? '#f97316' : hoveredLink === 'Mail' ? '#f97316' : '#374151',
+                }}
+              >
+                {mailCopied ? 'Copied!' : 'Mail'}
+              </button>
             </div>
           </div>
 
