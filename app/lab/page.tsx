@@ -31,6 +31,10 @@ export default function Lab() {
 
       <LabHeader />
 
+      <p className="-mt-8 mb-10 text-center text-xs text-zinc-400">
+        Desktop recommended for the best experience.
+      </p>
+
       {/* Section 1: Tools & Instruments */}
       <div className="mb-10">
         <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-zinc-400 mb-3.5">
